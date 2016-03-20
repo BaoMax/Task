@@ -1,0 +1,171 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+html,body{
+	height: 100%;
+}
+body{
+	font-size: 12px;
+	font-family: "Microsoft Yahei";
+	background-color: #dedede;
+	overflow: auto;
+	min-width: 680px;
+}
+nav{
+	background-color: #333;
+	width: 100%;
+	overflow: auto;
+}
+nav img{
+	float: left;
+	margin: 0.5em 0em 1em 2em;
+}
+nav ul{
+	display: inline-block;
+	float: right;
+	margin: 1.5em 1em 1em 0em;
+}
+nav li{
+	float: left;
+	list-style: disc;
+}
+nav li a{
+	color: #fff;
+	text-decoration: none;
+	padding-right: 1.5em;
+}
+nav li a.active,a:hover{
+	color: #999;
+}
+div.center{
+	position: relative;
+}
+div.left{
+	margin-right: 360px;
+	min-width: 320px;
+}
+div.right{
+	float: right;
+}
+article{
+	background-color: #fff;
+	padding: 1.5em;
+	margin: 2em;
+	box-shadow: 5px 3px #cbcbcb;
+}
+article h2,h3,h4{
+	margin: 1em 0em;
+}
+article h3{
+	color: #746062;
+}
+article h4{
+	color: #81807c;
+}
+article p{
+	text-indent: 2em;
+	line-height: 160%;
+	font-size: 14px;
+}
+article img{
+	width: 50%;
+	margin: 1em 0em;
+}
+article ul{
+	list-style: none;
+	font-size: 14px;
+	text-indent: 2em;
+	line-height: 180%;
+	margin-bottom: 1em;
+}
+div.img-list{
+	width: 100px;
+	height: 100px;
+	border: 1px solid #cecece;
+	padding: 1em;
+	text-align: center;
+	display: inline-block;
+	margin: 0.5em;
+}
+div.img-list p{
+	text-indent: 0em;
+	line-height: 100%;
+	font-size: 12px;
+}
+div.img-list img{
+	width: 100px;
+	height: 80px;
+}
+article ol{
+	margin: 1em 3em;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 200%;
+}
+article table{
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+}
+article table td,th{
+	border: 1px solid #ccc;
+	text-indent: 1em;
+	padding: 2px;
+}
+article table th{
+	background-color: #000;
+	color: #fff;
+}
+article table tr:last-child{
+	background-color: #dedede;
+}
+footer{
+	clear: both;
+	color: #fff;
+	text-align: center;
+	width: 100%;
+	height: 60px;
+	background-color: #333;
+}
+footer p{
+	padding: 2em;
+}
+aside{
+	background-color: #fff;
+	padding: 1.5em;
+	width: 320px;
+	margin-right: 1em;
+	text-indent: 1em;
+}
+aside h2{
+	border-left: 3px solid #dedede;
+	font-size: 16px;
+	line-height: 200%;
+}
+aside form div.text,.tip{
+	line-height: 150%;
+	margin: 0.5em 0em;
+}
+aside form div span{
+	width: 30%;
+	display: inline-block;
+	text-align: right;
+	padding-right: 1em;
+	vertical-align: top;
+}
+aside form div.tip{
+	margin-left: 110px;
+}
+aside form div textarea{
+	width: 60%;
+	height: 100px;
+}
+aside form input[type="submit"]{
+	width: 100%;
+	background-color: #3355d0;
+	border-radius: 10px;
+	height: 40px;
+	color: #fff;
+	font-size: 14px;
+}
