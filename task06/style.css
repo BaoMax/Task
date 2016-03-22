@@ -1,0 +1,351 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+body{
+	width: 892px;
+	height: 1386px;
+	padding: 0px 44px;
+	margin:auto;
+	/*border-bottom: 1px solid #938e8c;*/
+}
+header{
+	border-bottom: 2px solid #938e8c;
+	overflow: auto;
+}
+header .title{
+	float: left;
+	width: 110px;
+	height: 61px;
+	background-color: #d45d5c;
+}
+header .title p{
+	font-size: 12px;
+	color: #fff;
+	font-family: "SimHei";
+	padding-top: 3.5em;
+	padding-left: 5px;
+}
+header p.right{
+	float: right;
+	font-size: 12px;
+	color: #d45d5a;
+	font-family: "SimHei";
+	margin-top: 46px;
+}
+article{
+	margin-top:3em; 
+	overflow: hidden;
+}
+div.img-left{
+	width: 641px;
+	height: 301px;
+	background: url(img/top.jpg);
+	z-index: 10;
+	float: left;
+}
+div.img-left .top-left,.top-right{
+	width: 191px;
+	height: 301px;
+	z-index: 100;
+	opacity: 0.7;
+}
+div.img-left .top-left{
+	float: left;
+}
+div.img-left .top-right{
+	float: right;
+}
+div.img-right{
+	float: right;
+	width: 203px;
+	border-top: 2px solid #cc8091;
+}
+div.img-right .up-title{
+	font-family:"Microsoft YaHei"; 
+	font-size: 24px;
+	color: #000;
+	text-decoration: underline;
+	text-transform: capitalize;
+	font-variant: small-caps;
+	line-height: 40px;
+}
+div.img-right .up-content{
+	font-size: 12px;
+	color: #676767;
+	font-family: "KaiTi";
+	line-height: 10px;
+}
+div.img-right .text{
+	position: relative;
+}
+.p-32,.p-css,.p-small{
+	color: #cc8091;
+	font-family: "Microsoft YaHei"; 
+}
+.p-right{
+	display: inline-block;
+}
+.p-700{
+	font-size: 116px;
+	color: #75b86b;
+	font-family: "Microsoft YaHei"; 
+	font-style: italic;
+	margin-left: -16px;
+	margin-top: -10px;
+}
+.p-32{
+	font-size: 55px;
+	display: inline-block;
+}
+.p-css{
+	font-size: 21px;
+}
+.p-small{
+	color: #d6d4d3;
+	font-size: 12px;
+}
+div.nav{
+	width: 641px;
+}
+div.nav .text1{
+	width: 40%;
+	float: left;
+}
+div.nav .title{
+	font-size: 16px;
+	font-family: "Microsoft YaHei";
+	text-decoration: underline;
+	text-transform: capitalize;
+}
+div.nav .title1{
+	color: #418c59;
+}
+div.nav .content,ul{
+	font-size: 12px;
+	line-height: 16px;
+	font-family: "Microsoft YaHei";
+	color: #767777;
+	margin-right: 15px;
+}
+div.nav .text2{
+	width: 30%;
+	float: left;
+}
+div.nav .title2{
+	color: #d2994f;
+}
+div.nav .text3{
+	width: 30%;
+	float: right;
+}
+div.nav .title3{
+	color: #cc7680;
+}
+div.nav ul{
+	margin-top: 3em;
+	list-style: none;
+}
+div.bottom-left{
+	float: left;
+	width: 415px;
+}
+div.bottom-left .the{
+	font-family: "SimHei";
+	font-size: 72px;
+	color: #f5e327;
+	font-weight: bold;
+	font-style: italic;
+	text-transform: uppercase;
+}
+div.bottom-left .the+span{
+	font-size: 42px;
+	color: #11456b;
+	font-family: "SimHei";
+	font-weight: bold;
+	line-height: 16px;
+	text-transform: uppercase;
+	margin-left: 20px;
+}
+div.bottom-left .cn-text{
+	font-size: 33px;
+	color: #11456b;
+	font-family: "SimHei";
+	font-weight: bold;
+	line-height: 150%;
+	border-bottom: 2px solid #11456b;
+}
+div.bottom-left .content{
+	font-size: 12px;
+	color: #767777;
+	line-height: 16px;
+	font-family: "SimSun";
+	margin-top: 1em;
+	width: 100%；
+}
+div.bottom-left .content span{
+	font-family: "Microsoft YaHei";
+	color: #f5e327;
+	font-size: 70px;
+	display: inline-block;
+	float: left;
+	line-height: 70px;
+	margin-bottom: 5px;
+	margin-right: 5px;
+}
+div.bottom-left .content img{
+	width: 180px;
+	height: 220px;
+	float: right;
+	margin-left: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+div.bottom-right{
+	float: right;
+}
+div.bottom-right .image{
+	background: url(img/bottom-right.jpg) no-repeat;
+	height: 275px;
+	width: 458px;
+	z-index: 10;
+	position: relative;
+}
+div.bottom-right .image .shade{
+	width: 458px;
+	height: 61px;
+	background-color: #000;
+	opacity: 0.4;
+	position: absolute;
+	bottom: 19px;
+}
+div.bottom-right .image .shade p{
+	height: 100%;
+	margin-left: 3em;
+	line-height: 500%;
+}
+div.bottom-right .image .shade span:first-child{
+	border-left: 3px solid #72b16a;
+	height: 44px;
+	font-size: 26px;
+	color: #fff;
+	font-family: "Microsoft YaHei";
+	padding-left: 10px;
+}
+div.bottom-right .image .shade p span:last-child{
+	font-size: 12px;
+	color: #72b16a;
+	font-style: italic;
+	line-height: 140%;
+	font-family: "Microsoft YaHei";
+	margin-left: 8px;
+}
+div.bottom-right .text{
+	width: 459px;
+	height: 318px;
+	background-color: #eeedd6;
+	position: relative;
+}
+div.bottom-right .text .list{
+	padding: 2em;
+}
+div.bottom-right .text span.triangle{
+	border-left: 5px solid transparent;
+	/*border-top: 5px solid transparent;*/
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #11456c;
+	margin-right: 10px;
+	position: relative;
+	bottom: 6px;
+}
+div.bottom-right .text .list p{
+	color: #5a5b5b;
+	text-align: left;
+	line-height: 200%;
+	font-size: 16px;
+	font-family: "SimSun";
+	padding-left: 5px;
+}
+div.bottom-right .text p span .algin-right{
+	font-size: 12px;
+	color: #5a5b5b;
+	font-style: italic;
+	text-align: right;
+}
+div.bottom-right .text .pat-left{
+	width: 260px;
+	height: 160px;
+	background-color: #d45d5c;
+	position: relative;
+	bottom: -12px;
+	float: left;
+}
+div.bottom-right .text .pat-left p.p-left{
+	font-size: 110px;
+	font-family: "Microsoft YaHei";
+	color: #fff;
+	padding: 5px;
+	float: left;
+}
+div.bottom-right .text .pat-left p.p-right{
+	border-left: 2px solid #fff;
+	float: left;
+	position: relative;
+	top: 21%;
+	height: 86px;
+	padding-left: 5px;
+}
+div.bottom-right .text .pat-left p.p1{
+	position: relative;
+	top: 20%;
+	color: #fff;
+	font-size: 21px;
+	line-height: 24px;
+	font-family: "SimHei";
+	font-style: italic;
+	text-transform: uppercase;
+}
+div.bottom-right .text .pat-left p.pl{
+	position: relative;
+	top: 20%;
+	font-size: 12px;
+	color: #fff;
+	line-height: 100%;
+	text-transform: lowercase;
+	word-wrap: break-word;
+	font-family: "SimHei";
+}
+div.bottom-right .text .pat-right{
+	float: left;
+	font-size: 14px;
+	color: #5a5b5b;
+	font-style: italic;
+	font-family: "SimHei";
+	line-height: 16px;
+	margin-left: 10px;
+	width: 160px;
+	position: relative;
+	top: 10%;
+}
+div.bottom-right .text .pat-right span{
+	font-size: 72px;
+	color: rgb(212, 93, 92);
+}
+div.bottom-right .text .pat-right span.left{
+	float: left;
+	position: relative;
+	left: -30px;
+	top: 10px;
+}
+div.bottom-right .text .pat-right span.right{
+	float: right;
+	position: relative;
+	left: -10px;
+	top: 20px;
+}
+hr{
+	margin-top: 3em;
+	width: 100%;
+	height: 1px;
+	color: #938e8c;
+}
