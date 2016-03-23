@@ -7,7 +7,7 @@ body{
 	height: 1386px;
 	padding: 0px 44px;
 	margin:auto;
-	/*border-bottom: 1px solid #938e8c;*/
+	font-family: "Microsoft YaHei";
 }
 header{
 	border-bottom: 2px solid #938e8c;
@@ -26,7 +26,7 @@ header .title p{
 	padding-top: 3.5em;
 	padding-left: 5px;
 }
-header p.right{
+header .right{
 	float: right;
 	font-size: 12px;
 	color: #d45d5a;
@@ -62,7 +62,6 @@ div.img-right{
 	border-top: 2px solid #cc8091;
 }
 div.img-right .up-title{
-	font-family:"Microsoft YaHei"; 
 	font-size: 24px;
 	color: #000;
 	text-decoration: underline;
@@ -81,7 +80,6 @@ div.img-right .text{
 }
 .p-32,.p-css,.p-small{
 	color: #cc8091;
-	font-family: "Microsoft YaHei"; 
 }
 .p-right{
 	display: inline-block;
@@ -89,7 +87,6 @@ div.img-right .text{
 .p-700{
 	font-size: 116px;
 	color: #75b86b;
-	font-family: "Microsoft YaHei"; 
 	font-style: italic;
 	margin-left: -16px;
 	margin-top: -10px;
@@ -114,7 +111,6 @@ div.nav .text1{
 }
 div.nav .title{
 	font-size: 16px;
-	font-family: "Microsoft YaHei";
 	text-decoration: underline;
 	text-transform: capitalize;
 }
@@ -124,7 +120,6 @@ div.nav .title1{
 div.nav .content,ul{
 	font-size: 12px;
 	line-height: 16px;
-	font-family: "Microsoft YaHei";
 	color: #767777;
 	margin-right: 15px;
 }
@@ -184,7 +179,6 @@ div.bottom-left .content{
 	width: 100%；
 }
 div.bottom-left .content span{
-	font-family: "Microsoft YaHei";
 	color: #f5e327;
 	font-size: 70px;
 	display: inline-block;
@@ -229,7 +223,6 @@ div.bottom-right .image .shade span:first-child{
 	height: 44px;
 	font-size: 26px;
 	color: #fff;
-	font-family: "Microsoft YaHei";
 	padding-left: 10px;
 }
 div.bottom-right .image .shade p span:last-child{
@@ -237,7 +230,6 @@ div.bottom-right .image .shade p span:last-child{
 	color: #72b16a;
 	font-style: italic;
 	line-height: 140%;
-	font-family: "Microsoft YaHei";
 	margin-left: 8px;
 }
 div.bottom-right .text{
@@ -251,7 +243,6 @@ div.bottom-right .text .list{
 }
 div.bottom-right .text span.triangle{
 	border-left: 5px solid transparent;
-	/*border-top: 5px solid transparent;*/
 	border-right: 5px solid transparent;
 	border-bottom: 5px solid #11456c;
 	margin-right: 10px;
@@ -282,7 +273,6 @@ div.bottom-right .text .pat-left{
 }
 div.bottom-right .text .pat-left p.p-left{
 	font-size: 110px;
-	font-family: "Microsoft YaHei";
 	color: #fff;
 	padding: 5px;
 	float: left;
