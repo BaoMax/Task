@@ -9,8 +9,6 @@ html,body{
 header{
 	line-height: 300%;
 	margin: 1em 3em 0em 3em;
-	/*padding-top: 1em;*/
-	/*overflow: auto;*/
 }
 header p{
 	background: url(img/header-left.jpg) no-repeat left center;
@@ -97,11 +95,6 @@ section.tips ul li{
 	display: inline-block;
 	width: 24%;
 	margin: 5% 0%;
-	/*padding: 2% 5%;*/
-	/*line-height: 200%;*/
-}
-section.tips ul li img{
-	/*padding: */
 }
 section.tips ul li p{
 	padding: 0% 24%;
@@ -122,7 +115,6 @@ section.content .title{
 	color: #8f908f;
 	background: url(img/content-1.png) no-repeat top center;
 	padding: 150px 0px;
-	/*margin:1em 0em;*/
 }
 section.content .city-select{
 	background: url(img/map.jpg);
@@ -190,7 +182,6 @@ section.content .city-select .shade{
 	background-color: rgba(190,78,72,0.8);
 }
 section.activity{
-	/*margin: 10em 10em;*/
 	margin:10% 10%;
 }
 section.activity > div{
@@ -199,7 +190,6 @@ section.activity > div{
 	margin: 0em auto;
 }
 section.activity .image{
-	/*margin: 2em;*/
 	padding: 1em;
 	border:1px solid #dadada;
 	display: inline-block;
@@ -243,17 +233,332 @@ section.info .left{
 	background: url(img/bottom-1.jpg);
 	height: 567px;
 	width: 63%;
+	color: #fff;
+	text-align: center;
+}
+section.info .left div{
+	padding-top: 10em;
+}
+section.info .left div h1{
+	font-size: 158px;
+}
+section.info .left div h2{
+	font-size: 50px;
+}
+section.info .left div p{
+	font-size: 22px;
 }
 section.info .right{
 	float: right;
-	height: 567px;
-	width: 36%;
-	background-color: #000;
+	width: 20%;
+	position: relative;
+	padding: 10% 8%;
 }
-section.info .right:before{
+section.info span.tran{
+	border-top: 25px solid transparent;
+	border-right: 25px solid #fff;
+	border-bottom: 25px solid transparent;
+	position: absolute;
+	top: 45%;
+	left: -8%;
+}
+section.info .right h1{
+	font-size: 20px;
+	font-weight: normal;
+	text-align: center;
+}
+section.info .right h1 span{
+	color: #f09190;
+}
+section.info .right p{
+	margin: 2em;
+	font-size: 12px;
+	font-family: "SimSun";
+	color: #b0b0b0;
+	line-height: 300%;
+}
+section.info .right .button{
+	font-size: 14px;
+	color: #f0a8aa;
+	border:1px solid #e4666a;
+	width: 40%;
+	text-align: center;
+	line-height: 30px;
+	height: 30px;
+	margin: 0px auto;
+}
+section.info .right .button:hover{
+	background-color: #e4666a;
+	cursor: pointer;
+}
+section.info .right div.list{
+	position: relative;
+}
+section.info .right ul{
+	float: left;
+	position: absolute;
+	left: 40%;
+}
+section.info .right li{
+	float: left;
+	list-style: none;
+	list-style-image: url(img/list-image.png);
+	margin: 1em;
+}
+section.info .right li.selected{
+	list-style-image: url(img/list-selected.png);
+}
+section.info:after{
+	content: ".";
+	visibility: hidden;
+	height: 0px;
+	display: block;
+	clear: both;
+}
+section.more-bottom .new-life{
+	width: 31.5%;
+	height: 520px;
+	float: left;
+}
+section.more-bottom .new-life:hover p.title::after{
+	width: 80px;
+}
+section.more-bottom .first{
+	background-color: #e7504d;
+}
+section.more-bottom .second{
+	background-color: #fff;
+}
+section.more-bottom .new-life p.title{
+	font-size: 21px;
+	font-family: "SimHei";
+	color: #fff;
+	text-align: center;
+	line-height: 150%;
+}
+section.more-bottom .new-life p.second{
+	color: #000;
+}
+section.more-bottom .new-life > div{
+	padding-top: 15em;
+}
+section.more-bottom .new-life p.title:after{
 	content: "";
-	border-top: 5px solid transparent;
-	border-right: 5px solid #fff;
-	border-bottom: 5px solid transparent;
-	z-index: 1000;
+	display: block;
+	width: 30px;
+	border-bottom: 3px solid #fff;
+	margin: 10px auto;
+	-webkit-transition:all ease .5s;
+	transition: all ease .5s;
+}
+section.more-bottom .new-life p.second:after{
+	border-bottom-color: #000;
+}
+section.more-bottom .new-life .button{
+	font-size: 14px;
+	color: #fff;
+	border:1px solid #fff;
+	width: 40%;
+	text-align: center;
+	line-height: 40px;
+	height: 40px;
+	margin: 1.5em auto;
+}
+section.more-bottom .new-life .button:hover{
+	cursor: pointer;
+}
+section.more-bottom .new-life div.second{
+	color: #000;
+	border-color:#000;
+}
+section.more-bottom .image{
+	background: url(img/bottom-more.jpg);
+	height: 520px;
+	float: left;
+	background-size: cover;
+	width: 37%;
+	position: relative;
+}
+section.more-bottom .image span{
+	border-top: 25px solid transparent;
+	border-bottom: 25px solid transparent;
+	border-left: 25px solid #fff;
+	position: absolute;
+	top: 55%;
+}
+section.more-bottom:after{
+	content: ".";
+	height: 0px;
+	visibility: hidden;
+	display: block;
+	clear: both;
+}
+section.from{
+	margin: 5em;
+}
+section.from > h2{
+	text-align: center;
+	font-size: 21px;
+	font-family: "SimSun";
+	color: #000;
+	width: 50%;
+	margin: auto;
+}
+section.from > h2:after{
+	content: "";
+	display: block;
+	width: 20px;
+	border-bottom: 3px solid #ea6563;
+	margin: 10px auto;
+}
+section.from > p{
+	color: #aaa;
+	font-size: 12px;
+	text-align: center;
+	width: 35%;
+	margin: auto;
+}
+section.from > div{
+	margin: 10em 0em;
+}
+section.from .left-info{
+	float: left;
+	width: 30%;
+}
+section.from .left-info h2{
+	font-family: "SimHei";
+	font-size: 14px;
+	color: #665f5d;
+	margin:1em;
+}
+section.from .left-info p{
+	font-family: "SimSun";
+	font-size: 12px;
+	color: #c2bfbe;
+	margin:1em;
+	line-height: 200%;
+}
+section.from .left-info p:after,section.from .left-info h2.more:after{
+	content: "more";
+	background: url(img/more.png) no-repeat 90% 60%;
+	padding-left: 15px;
+	display: block;
+	text-align: right;
+	font-family: "SimSun";
+	font-size: 12px;
+	font-weight: normal;
+	color: #000;
+}
+section.from .right-info{
+	float: left;
+	width: 50%;
+	margin-left: 5em;
+	margin-top: 2em;
+}
+section.from .right-info input{
+	border: 0px;
+	width: 40%;
+	background-color: #ededee;
+	height: 30px;
+	margin-right: 2em;
+	margin-top: 1em;
+	text-indent: 1em;
+}
+section.from .right-info textarea{
+	height: 100%;
+	border: 0px;
+	width: 100%;
+	background-color: #ededee;
+	height: 100px;
+	margin-right: 2em;
+	margin-top: 1em;
+	width: 85%;
+	text-indent: 1em;
+	padding-top: 1em;
+}
+section.from .right-info input[type="submit"]{
+	width: 85%;
+	height: 40px;
+}
+section.from .right-info input[type="submit"]:hover{
+	cursor: pointer;
+	background-color: #ddd;
+}
+section.from:after{
+	display: block;
+	clear: both;
+	content: ".";
+	height: 0px;
+	visibility: hidden;
+}
+section.contact{
+	background-color: #32353e;
+	width: 100%;
+	color: #fff;
+	text-align: center;
+	padding: 2em 0em;
+}
+section.contact h1{
+	font-family: "SimHei";
+	font-size: 21px;
+	width: 35%;
+	margin: 0em auto;
+}
+section.contact p{
+	font-size: 12px;
+	font-family: "SimSun";
+	width: 35%;
+	margin: 1em auto;
+	line-height: 150%;
+}
+section.contact > div{
+	width: 40%;
+	height: 40px;
+	margin: 2.5em auto;
+	position: relative;
+}
+section.contact > div input[type="text"]{
+	width: 80%;
+	height: 100%;
+	line-height: 100%;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	border: 0px;
+	text-indent: 1em;
+}
+section.contact > div input[type="submit"]{
+	width: 20%;
+	height: 100%;
+	line-height: 100%;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	border: 0px;
+	color: #fff;
+	background-color: #6f7278;
+	font-size: 15px;
+}
+section.contact li{
+	display: inline-block;
+	padding: 1.5em;
+}
+footer{
+	background-color: #2f3039;
+	width: 100%;
+	height: 40px;
+	position: relative;
+}
+footer p{
+	font-family: "SimSun";
+	font-size: 12px;
+    color: #fff;
+    line-height: 40px;
+    height: 40px;
+    display: inline-block;
+	position: absolute;
+	padding: 0em 5em;
+}
+footer p.back{
+	right: 0px;
 }
