@@ -1,0 +1,365 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+html,#main{
+	min-width: 1280px;
+	/*min-height: 1200px;*/
+/*	height: 1200px; */
+}
+header{
+	height: 65px;
+	background-color: #228ac0;
+	width: 100%;
+	/*position: fixed;*/
+	/*top: 0px;*/
+	/*left: 0px;*/
+	position: relative;
+}
+header div.left-ico{
+	background: url(img/top.png) no-repeat left center;
+	height: 36px;
+	width: 36px;
+	position: absolute;
+	left: 60px;
+	top: 10px;
+}
+header input.search{
+	position: absolute;
+	right: 200px;
+	top: 20px;
+	border-radius: 10px;
+	line-height: 200%;
+	width: 250px;
+	border: 0px;
+	padding-left: 33px; 
+	outline: none;
+	background: #fff url(img/search.png) no-repeat 10px 2px;
+}
+header .login{
+	background: url(img/login.png) no-repeat left center;
+	padding-left: 20px;
+	color: #fff;
+	font-size: 12px;
+	font-family: "SimHei";
+	display: inline-block;
+	position: absolute;
+	right: 120px;
+	top: 24px;
+}
+#main{
+	position: absolute;
+	top: 65px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+}
+aside{
+	width: 260px;
+	background-color: #2a2e3d;
+	min-height: 600px;
+	float: left;
+}
+article{
+	min-height: 600px;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+	background-color: #eeedec;
+}
+#part-1{
+	text-align: center;
+	padding: 2em 6em 2em 5em;
+	height: 55px;
+}
+#part-1:after{
+	content: ".";
+	height: 0px;
+	visibility: hidden;
+	display: block;
+	clear: both;
+}
+aside .outer{
+	width: 55px;
+	height: 55px;
+	border-radius: 50%;
+	border: 1px solid #fff;
+	position: relative;
+	float: left;
+}
+aside .logo{
+	width: 47px;
+	height: 47px;
+	background-color: #bababe;
+	border-radius: 50%;
+	margin: auto;
+	position: absolute;
+	top: 0px;left: 0px;right: 0px;bottom: 0px;
+}
+#name{
+	font-size: 16px;
+	font-family: "SimHei";
+	color: #fff;
+	float: right;
+	line-height: 55px;
+	height: 55px;
+}
+#part-2{
+	width: 100%;
+}
+#part-2:after{
+	content: ".";
+	height: 0px;
+	visibility: hidden;
+	display: block;
+	clear: both;
+}
+#part-2 .left{
+	float: left;
+	border-right: 2px solid #323647;
+	text-align: right;
+}
+#part-2 .left,#part-2 .right{
+	width: 49%;
+	line-height: 150%;
+	margin: 10px 0px;
+}
+#part-2 .right{
+	float: right;
+	text-align: left;
+}
+#part-2 .num{
+	font-family: "SimHei";
+	font-size: 16px;
+	color: #6e8095;
+	margin: 0px 30px;
+}
+#part-2 .text{
+	font-family: "SimSun";
+	font-size: 12px;
+	color: #6e8095;
+	margin: 0px 30px;
+}
+#part-3{
+	width: 100%;
+	font-size: 12px;
+	font-family: "SimHei";
+	color: #657589
+}
+#part-3 nav ul{
+	list-style: none;
+	width: 100%;
+}
+#part-3 nav > ul > li{
+	padding-left: 30px;
+	padding: 1em 0em 1em 7em;
+	/*text-indent: 4em;*/
+}
+#part-3 nav > ul > li:hover{
+	cursor: pointer;
+	background-color: #383d4e;
+}
+#part-3 ul li.report{
+	background: url(img/report.png) no-repeat 20% 7%;
+}
+#part-3 ul li.collection,#part-3 ul li.pic,#part-3 ul li.record{
+	background: url(img/star.png) no-repeat 20% 50%;
+}
+#part-3 ul li.share{
+	background: url(img/share.png) no-repeat 20% 50%;
+}
+#part-3 ul li.info{
+	background: url(img/account.png) no-repeat 20% 50%;
+}
+#part-3 ul li.selected{
+	color: #fff;
+	background-color: #383d4e;
+}
+#part-3 ul li.selected > ul > li{
+	color: #657589;
+	margin: 1em 0em;
+}
+#part-3 ul li.selected > ul > li i{
+	background: url(img/down-selected.png) no-repeat 0px 0px;
+	background-position: -1px -27px;
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin: 1px 3px;
+	opacity: 0.4;
+	transform: rotate(-90deg);
+	-webkit-transition:all ease .2s;
+	transition: all ease .2s;
+}
+#part-3 ul li.selected > ul > li:hover i{
+	transform: rotate(90deg);
+	-webkit-transform: rotate(0deg); /* Safari and Chrome */
+}
+#part-3 ul li.selected > ul > li{
+	color: #fff;
+}
+#part-3 ul li.selected > ul > li:hover b{
+	opacity: 1;
+}
+#part-3 ul li.selected > ul > li b{
+	background: url(img/floder-selected.png) no-repeat left center;
+	opacity: 0.4;
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin: 0px 3px;
+}
+#part-3 ul li.selected > ul > li.foucs{
+	color: #fff;
+}
+#part-3 ul li.selected > ul > li.foucs:hover i{
+	transform: rotate(0deg)
+	-webkit-transform: rotate(0deg); /* Safari and Chrome */
+}
+#part-3 ul li.selected > ul > li.foucs i{
+	opacity: 1;
+	transform: rotate(0deg);
+}
+#part-3 ul li.selected > ul > li.foucs b{
+	opacity: 1;
+}
+#part-3 ul.file li{
+	color: #657589;
+	padding-left: 15px;
+	margin: 1em 2.5em;
+	background: url(img/file.png) no-repeat left center;
+}
+#part-3 ul.file li.first{
+	color: #fff;
+	background: url(img/file-selected.png) no-repeat left center;
+}
+#title{
+	background-color: #fff;
+	height: 30px;
+	font-family: "SimHei";
+	font-size: 13px;
+	color: #ccc;
+}
+#title p{
+	height: 30px;
+	line-height: 30px;
+	margin-left: 1em;
+}
+#title span{
+	padding: 0px 10px;
+}
+#title span:last-child{
+	color: #86adce;
+}
+#content{
+	position: absolute;
+	top: 30px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	overflow: hidden;
+	overflow-y:auto;
+	margin: 20px 60px;
+}
+#box-1{
+	height: 106px;
+	width: 100%;
+	background-color: #fff;
+}
+#box-1 .input-1,.input-2,.input-3,.button{
+	display: inline-block;
+	margin-left: 20px;
+	float: left;
+}
+#box-1 lable{
+	font-size: 12px;
+	font-family: "SimHei";
+	color: #b5b5b5;
+	margin: 10px;
+}
+#box-1 select{
+	padding: 2px 20px 2px 5px;
+	margin: 20px 0px 0px 0px;
+	outline: none;
+	appearance:none;
+	-webkit-appearance:none;
+	background: url(img/select.png) no-repeat scroll 90% 50%;
+}
+.input-2{
+	width: 250px;
+}
+.input-2 select{
+	width: 150px;
+}
+#buy{
+	float: left;
+	width: 200px;
+}
+#change{
+	background: url(img/change.png) no-repeat 0px 30px;
+	height: 100px;
+	width: 50px;
+	float: right;
+	padding-top: 42px;
+	text-indent: 14px;
+	font-size: 12px;
+	font-family: "SimHei";
+	color: #fff;
+}
+.input-2:after{
+	content: ".";
+	height: 0px;
+	visibility: hidden;
+	display: block;
+	clear: both;
+}
+.input-3 input{
+	width: 120px;
+}
+.input-3 select{
+	padding: 10px;
+	width: 80px;
+}
+.input-3 select:last-child{
+	width: 125px;
+}
+.button{
+	width: 50px;
+	height: 25px;
+	background-color: #388ac1;
+	border-radius: 2px;
+	text-align: center;
+	margin-top: 40px;
+	margin-left: 30px;
+	font-size: 12px;
+	font-family: "SimHei";
+	color: #fff;
+	line-height: 200%;
+}
+#box-1:after{
+	content: ".";
+	height: 0px;
+	visibility: hidden;
+	display: block;
+	clear: both;
+}
+#box-2{
+	height: 85px;
+	width: 100%;
+	margin-top: 20px;
+}
+#box-2 .left-to{
+	width: 3%;
+	height: 100%;
+	background: #fff url(img/left.png) no-repeat center center;
+	margin-right: 10px;
+	float: left;
+}
+.money{
+	width: 12%;
+	background-color: #fff;
+	height: 100%;
+	float: left;
+	margin-right: 10px; 
+}
+
