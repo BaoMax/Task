@@ -192,12 +192,12 @@ aside .logo{
 	-webkit-transition:all ease .2s;
 	transition: all ease .2s;
 }
+#part-3 ul li.selected > ul > li:hover{
+	color: #fff;
+}
 #part-3 ul li.selected > ul > li:hover i{
 	transform: rotate(90deg);
 	-webkit-transform: rotate(0deg); /* Safari and Chrome */
-}
-#part-3 ul li.selected > ul > li{
-	color: #fff;
 }
 #part-3 ul li.selected > ul > li:hover b{
 	opacity: 1;
