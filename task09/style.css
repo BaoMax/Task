@@ -4,7 +4,7 @@
 }
 html,#main{
 	min-width: 1280px;
-	/*min-height: 1200px;*/
+	min-height: 1280px;
 /*	height: 1200px; */
 }
 header{
@@ -57,7 +57,8 @@ header .login{
 aside{
 	width: 260px;
 	background-color: #2a2e3d;
-	min-height: 600px;
+	/*min-height: 600px;*/
+	min-height: 1280px;
 	float: left;
 }
 article{
@@ -152,7 +153,7 @@ aside .logo{
 }
 #part-3 nav > ul > li{
 	padding-left: 30px;
-	padding: 1em 0em 1em 7em;
+	padding: 1.2em 0em 1.2em 7em;
 	/*text-indent: 4em;*/
 }
 #part-3 nav > ul > li:hover{
@@ -257,9 +258,9 @@ aside .logo{
 	left: 0px;
 	right: 0px;
 	bottom: 0px;
-	overflow: hidden;
-	overflow-y:auto;
-	margin: 20px 60px;
+	/*overflow: hidden;
+	overflow-y:auto;*/
+	padding: 20px 60px;
 }
 #box-1{
 	height: 106px;
@@ -271,7 +272,7 @@ aside .logo{
 	margin-left: 20px;
 	float: left;
 }
-#box-1 lable{
+#box-1 label{
 	font-size: 12px;
 	font-family: "SimHei";
 	color: #b5b5b5;
@@ -297,7 +298,7 @@ aside .logo{
 }
 #change{
 	background: url(img/change.png) no-repeat 0px 30px;
-	height: 100px;
+	height: 60px;
 	width: 50px;
 	float: right;
 	padding-top: 42px;
@@ -306,24 +307,23 @@ aside .logo{
 	font-family: "SimHei";
 	color: #fff;
 }
-.input-2:after{
+#box-1 .input-2:after{
 	content: ".";
 	height: 0px;
 	visibility: hidden;
 	display: block;
 	clear: both;
 }
-.input-3 input{
+#box-1 .input-3 input{
 	width: 120px;
 }
-.input-3 select{
-	padding: 10px;
+#box-1 .input-3 select{
 	width: 80px;
 }
-.input-3 select:last-child{
+#box-1 .input-3 select:last-child{
 	width: 125px;
 }
-.button{
+#box-1 .button{
 	width: 50px;
 	height: 25px;
 	background-color: #388ac1;
@@ -333,10 +333,9 @@ aside .logo{
 	margin-left: 30px;
 	font-size: 12px;
 	font-family: "SimHei";
-	color: #fff;
 	line-height: 200%;
 }
-#box-1:after{
+#box-1:after,#box-2:after,#box-3:after,#box-4:after,#box-5:after{
 	content: ".";
 	height: 0px;
 	visibility: hidden;
@@ -346,20 +345,438 @@ aside .logo{
 #box-2{
 	height: 85px;
 	width: 100%;
-	margin-top: 20px;
+	margin-top: 20px; 
 }
-#box-2 .left-to{
-	width: 3%;
+#box-2 .left-to,.right-to{
+	width: 5%;
+	height: 100%;
+	float: left;
+}
+#box-2 .left-to > div,#box-2 .right-to > div{
 	height: 100%;
 	background: #fff url(img/left.png) no-repeat center center;
 	margin-right: 10px;
+}
+#box-2 .right-to > div{
+	transform:rotate(180deg);
+	-webkit-transform: rotate(180deg); /* Safari and Chrome */
+}
+#box-2 .money{
+	width: 15%;
+	height: 100%;
 	float: left;
 }
-.money{
-	width: 12%;
+#box-2 .money > div{
+	height: 100%;
+	background-color: #fff;
+	margin-right: 10px;
+	font-family: "Microsoft YaHei";
+	text-align: center;
+}
+#box-2 .histroy{
+	width: 15%;
 	background-color: #fff;
 	height: 100%;
 	float: left;
-	margin-right: 10px; 
 }
-
+#box-2 .selected > div h4{
+	border-top: 3px solid #4389c9;
+}
+#box-2 .money h4{
+	font-size: 12px;
+	color: #323333;
+	font-weight: normal;
+	line-height: 150%;
+	padding-top: 1em;
+	padding-bottom: 0.5em;
+	text-indent: 10px;
+}
+#box-2 .money h1{
+	font-size: 21px;
+	color: #ec6500;
+	padding-left: 20px;
+	background: url(img/rmb.png) no-repeat 30% 50%;
+}
+#box-2 .histroy p{
+	font-family: "Microsoft YaHei";
+	font-size: 12px;
+	color: #535353;
+	text-align: center;
+	height: 85px;
+	line-height: 85px;
+	padding-left: 10px;
+	background: url(img/calendar.png) no-repeat 10% center;
+}
+/*#box-2:after{
+	content: ".";
+	height: 0px;
+	visibility: hidden;
+	display: block;
+	clear: both;
+}*/
+#box-3{
+	height: 85px;
+	width: 100%;
+	margin-top: 20px; 
+}
+#box-3 .green,.red,.blue,.yellow{
+	background-color: #fff;
+	height: 100%;
+	width: 23%;
+	float: left;
+}
+#box-3 .green,.red,.blue{
+	margin-right:2.6%; 
+}
+#box-3 .green > div,.red > div,.blue > div,.yellow > div{
+	display: inline-block;
+	width: 50%;
+	line-height: 200%;
+	height: 100%;
+	padding-left: 20px;
+}
+#box-3 .green > div{
+	border-left: 3px solid #66c0b0;
+}
+#box-3 .green > b{
+	background-color: #66c0b0;
+}
+#box-3 .blue > div{
+	border-left: 3px solid #388ac1;
+}
+#box-3 .blue > b{
+	background-color: #388ac1;
+}
+#box-3 .red > div{
+	border-left: 3px solid #d04b36;
+}
+#box-3 .red > b{
+	background-color: #d04b36;
+}
+#box-3 .yellow > div{
+	border-left: 3px solid #e2cd47;
+}
+#box-3 .yellow > b{
+	background-color: #e2cd47;
+}
+#box-3 > div b{
+	height: 60px;
+	width: 60px;
+	display: inline-block;
+	position: relative;
+	top: 13px;
+	left: 10px;
+}
+#box-3 > div p.num{
+	padding-top: 20px;
+	font-size: 12px;
+	font-family: "SimHei";
+	color: #000;
+}
+#box-3 > div p.text{
+	font-size: 10px;
+	font-family: "SimHei";
+	color: #aaaaaa;
+}
+/*#box-3:after{
+	content: ".";
+	height: 0px;
+	visibility: hidden;
+	display: block;
+	clear: both;
+}*/
+#box-4,#box-5{
+	width: 100%;
+	height: 400px;
+	margin-top: 20px; 
+}
+#tab > div,#excel > div,#sum > div,#time > div{
+	border: 1px solid #cfd1d4;
+	border-radius: 10px;
+}
+#tab{
+	width: 60%;
+	height: 100%;
+	float: left;
+}
+#excel{
+	width: 55%;
+	height: 100%;
+	float: left;
+}
+#tab > div,#time > div{
+	margin-right: 10px;
+	background-color: #fff;
+	height: 100%;
+}
+#sum{
+	width: 40%;
+	height: 100%;
+	float: left;
+}
+#time{
+	width: 45%;
+	height: 100%;
+	float: left;
+}
+#sum > div,#excel > div{
+	background-color: #fff;
+	height: 100%;
+}
+.thead{
+	width: 100%;
+	height: 45px;
+	background-color: #f4f5f6;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	font-family: "SimHei";
+	font-size: 12px;
+	color: #aaa;
+	line-height: 45px;
+	text-indent: 2em;
+}
+#pro-tab{
+	margin: 10px 20px;
+	height: 300px;
+	overflow: hidden;
+	position: relative;
+}
+#pro-tab input{
+	display: none;
+}
+#pro-tab label{
+	font-size: 12px;
+	font-family: "Microsoft YaHei";
+	color: #535353;
+	width: 90px;
+	background-color: #ededf0;
+	margin-right: 5px;
+	height: 30px;
+	float: left;
+	text-align: center;
+	border-radius: 3px;
+	line-height: 30px;
+	position: relative;
+}
+#pro-tab .table{
+	position: absolute;
+	top: 30px;
+	left: 0px;
+	display: none;
+	border: 1px solid #cfd1d4;
+	padding: 20px 30px;
+	height: 220px;
+	width: 87%;
+	border-radius: 10px;
+	border-top-left-radius: 0px;
+	background-color: #fff;
+	border-collapse: collapse;
+}
+#pro-tab .table table{
+	border-collapse: collapse;
+	width: 100%;
+}
+#pro-tab .table table td{
+	border: 1px solid #cfd1d4;
+	width: 25%;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+}
+#pro-tab input:checked + label{
+	border: 1px solid #cfd1d4;
+	border-bottom: none;
+	background: #fff;
+	z-index: 10;
+}
+#pro-tab input:checked + label + .table{
+	display: block;
+}
+#sum > div > div{
+	margin: 10px 0px 00px 30px;
+	height: 300px;
+}
+#sum div div p{
+	font-size: 12px;
+	font-family: "Microsoft YaHei";
+	line-height: 150%;
+	text-indent: 1em;
+}
+#sum p.paragraph-1{
+	color: #c3c2c2;
+	font-weight: normal;
+}
+#sum p.paragraph-2{
+	color: #535353;
+}
+#sum div.price{
+	display: inline-block;
+	width: 30%;
+	border-right: 1px solid #dadada;
+}
+#sum div.person{
+	display: inline-block;
+	width: 60%;
+}
+#sum p.undeline{
+	margin-right: 4em;
+	border-bottom: 1px solid #dadada;
+}
+#sum div.sum-table{
+	border-bottom: 1px solid  #dadada;
+}
+#sum div.info{
+	height: 180px;
+	margin-right: 40px;
+}
+#sum div input{
+	margin-top:6px; 
+	position: relative;
+	top: 3px;
+}
+#sum div input:checked + p{
+	color: #000;
+}
+#sum div input + p{
+	display: inline-block;
+	text-indent: 5px;
+}
+#sum div button{
+	background-color: #398bc2;
+	width: 60px;
+	line-height: 200%;
+	font-size: 12px;
+	font-family: "SimHei";
+	border: 0px;
+	border-radius: 5px;
+	float: right;
+	margin-right: 40px;
+	margin-top: 6px;
+}
+#excel table{
+	height: 300px;
+	width: 90%;
+	border-collapse:collapse;
+	margin: 20px 0px 0px 40px;
+	font-family: "SimHei";
+	text-align: center;
+}
+#excel table th{
+	font-size: 13px;
+	color: #231815;
+}
+#excel table td{
+	font-size: 12px;
+	color: #323333;
+	min-width: 80px;
+}
+#excel table .search-num{
+	text-align: left;
+	text-indent: 10px;
+}
+#exce1 table tr,th,td{
+	border: 1px solid #cacbcb;
+}
+#excel table tr:hover td{
+	background-color: #f4f5f7;
+	cursor: pointer;
+}
+#excel table td i{
+	margin-left: 2em;
+	display: inline-block;
+	width: 200px;
+	height: 5px;
+	background-color: #ddd;
+	position: relative;
+}
+#excel table td i b{
+	display: inline-block;
+	height: 5px;
+	position: absolute;
+	z-index: 100;
+}
+#excel table td i b.top-red{
+	width: 85%;
+	background-color: red;
+}
+#excel table td i b.top-org{
+	width: 80%;
+	background-color: #ef8010;
+}
+#excel table td i b.top-yellow{
+	width: 70%;
+	background-color: #ef8050;
+}
+#excel table td i b.top-bule{
+	background-color: #7fcbf0;
+}
+#excel table td i b.bule-1{
+	width: 65%;
+}
+#excel table td i b.bule-2{
+	width: 60%;
+}
+#excel table td i b.bule-3{
+	width: 55%;
+}
+#excel table td i b.bule-4{
+	width: 53%;
+}
+#excel table td i b.bule-5{
+	width: 50%;
+}
+#excel table td i b.bule-6{
+	width: 47%;
+}
+#excel table td i b.bule-7{
+	width: 45%;
+}
+#time .calendar{
+	margin: 20px 20px 0px 20px;
+	width: 90%;
+	height: 300px;
+}
+#time .calendar select{
+	height: 25px;
+	padding: 0px 5px;
+}
+#time .calendar button{
+	line-height: 150%;
+	padding: 0px 3px;
+}
+#time .calendar .time-select{
+	padding-bottom: 1em;
+	border-bottom: 1px solid #a9cfec;
+}
+#time .calendar .week{
+	margin: 1em 0;
+	border-top: 1px solid #a9cfec;
+	border-bottom: 1px solid #ececed;
+	height: 30px;
+	line-height: 30px;
+}
+#time .calendar .week span{
+	width: 12%;
+	display: inline-block;
+	margin-left: 1px;
+	text-align: center;
+}
+#time .calendar .day-table .day{
+	width: 12%;
+	height: 45px;
+	text-align: center;
+	line-height: 150%;
+	display: inline-block;
+	border: 1px solid #fff;
+	font-family: "SimHei";
+	font-size: 12px;
+}
+#time .calendar .day-table .day:hover{
+	border: 1px solid #f8d564;
+}
+#time .calendar .red-text{
+	color: red;
+}
+#time .calendar .day-table .first-day{
+	margin-left: 56%;
+}
