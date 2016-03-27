@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task10</title>
+	<style type="text/css">
+
+		#contianer{
+			display: flex;
+			display: -wbkit-flex;
+			justify-content: space-between;
+			flex-flow: row nowrap;
+		}
+		.pro-1,.pro-2,.pro-3,.pro-4{
+			width: 150px;
+			padding: 20px;
+		}
+		.pro-1,.pro-2,.pro-3{
+			border: 1px solid #f00;
+		}
+		.pro-1{
+			height: 120px;
+		}
+		.pro-2{
+			height: 100px;
+		}
+		.pro-3{
+			height: 40px;
+		}
+		.pro-4{
+			height: 200px;
+			border: 1px solid #0f0;
+		}
+		@media screen and (min-width: 640px){
+			#contianer{
+				align-items: center;
+			}
+			.pro-1,.pro-2,.pro-3,.pro-4{
+				flex:0 0 auto;
+			}
+		}
+		@media screen and (max-width: 640px){
+			#contianer{
+				align-items: flex-start;
+				flex-flow: row wrap;
+			}
+			.pro-4{
+			   order:-1;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="contianer">
+		<div class="pro-1"></div>
+		<div class="pro-2"></div>
+		<div class="pro-3"></div>
+		<div class="pro-4"></div>
+	</div>
+</body>
+</html>
