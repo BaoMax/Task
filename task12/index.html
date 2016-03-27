@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task12</title>
+	<style type="text/css">
+	    *{
+	    	margin: 0px;
+	    	padding: 0px;
+	    }
+		table th{
+			background-color: #000;
+			color: #fff;
+		}
+		table tr:nth-child(2n+1) td{
+			background-color: gray;
+		}
+		table tr:nth-child(2),tr:nth-child(3),tr:nth-child(4){
+			color: red;
+		}
+		input[type="text"]{
+			transition:all ease 1s;
+			-webkit-transition:all ease 1s;
+			margin: 10px 0;
+		}
+		input[type="text"]:focus{
+			width: 400px;
+		}
+		span{
+			width: 200px;
+			height: 100px;
+			display: inline-block;
+		}
+		a{
+			text-decoration: none;
+			display: inline-block;
+			width: 15px;
+			height: 15px;
+			line-height: 15px;
+			text-align: center;
+			background-color: gray;
+			color: #000;
+			position: absolute;
+			bottom: 0px;
+			margin-right: 3px;
+		}
+		.title{
+			display: inline-block;
+			width: 15px;
+			height: 15px;
+			line-height: 15px;
+			text-align: center;
+			background-color: gray;
+			color: #000;
+			position: absolute;
+			bottom: 0px;
+			margin-right: 3px;
+		}
+		.tab-1{
+			right: 60px;
+		}
+		.tab-2{
+			right: 30px;
+		}
+		.tab-3{
+			right: 0px;
+		}
+		.banner{
+			width: 200px;
+			height: 100px;
+			overflow: hidden;
+			position: relative;
+		}
+		div.block{
+			width: 650px;
+			height: 100px;
+			margin-left: 0px;
+			transition: all ease .5s;
+			-webkit-transition: all ease .5s;
+		}
+		.banner-1{
+			background-color: green;
+		}
+		.banner-2{
+			background-color: yellow;
+		}
+		.banner-3{
+			background-color: blue;
+		}
+		#h-1:target ~ div.block,#radio-1:checked ~ div.block{
+			margin-left: 0px; 
+		}
+		#h-2:target ~ div.block,#radio-2:checked ~ div.block{
+			margin-left: -206px; 
+		}
+		#h-3:target ~ div.block,#radio-3:checked ~ div.block{
+			margin-left: -412px; 
+		}
+		input[type="radio"]{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<table>
+		<tr><th>排名</th><th>网站</th><th>热度</th></tr>
+		<tr><td>1</td><td>百度前端技术学院</td><td>13000</td></tr>
+		<tr><td>2</td><td>百度前端技术学院</td><td>13000</td></tr>
+		<tr><td>3</td><td>百度前端技术学院</td><td>13000</td></tr>
+		<tr><td>4</td><td>百度前端技术学院</td><td>13000</td></tr>
+		<tr><td>5</td><td>百度前端技术学院</td><td>13000</td></tr>
+		<tr><td>6</td><td>百度前端技术学院</td><td>13000</td></tr>
+		<tr><td>7</td><td>百度前端技术学院</td><td>13000</td></tr>
+		<tr><td>8</td><td>百度前端技术学院</td><td>13000</td></tr>
+		<tr><td>9</td><td>百度前端技术学院</td><td>13000</td></tr>
+		<tr><td>10</td><td>百度前端技术学院</td><td>13000</td></tr>
+	</table>
+	<br>
+	<input type="text"/>
+	<br>
+	<p>a标签实现</p>
+	<div class="banner">
+		<h1 id="h-1"></h1>
+		<h1 id="h-2"></h1>
+		<h1 id="h-3"></h1>
+		<div class="block">
+			<span class="banner-1"></span>
+			<span class="banner-2"></span>
+			<span class="banner-3"></span>
+		</div>
+		<a href="#h-1" class="tab-1">1</a>
+		<a href="#h-2" class="tab-2">2</a>
+		<a href="#h-3" class="tab-3">3</a>
+	</div>
+	<br>
+	<p>radio input标签实现</p>
+	<div class="banner">
+		<input type="radio" id="radio-1" name="radio" checked/>
+		<input type="radio" id="radio-2" name="radio"/>
+		<input type="radio" id="radio-3" name="radio"/>
+		<h1 id="h-2"></h1>
+		<h1 id="h-3"></h1>
+		<div class="block">
+			<span class="banner-1"></span>
+			<span class="banner-2"></span>
+			<span class="banner-3"></span>
+		</div>
+		<label for="radio-1" class="tab-1 title">1</label>
+		<label for="radio-2" class="tab-2 title">2</label>
+		<label for="radio-3" class="tab-3 title">3</label>
+	</div>
+</body>
+</html>
