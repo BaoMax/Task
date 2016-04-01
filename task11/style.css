@@ -27,6 +27,10 @@ header .back i{
 	border-top: 0.3rem solid #fefefb;
 	border-left: 0.3rem solid #fefefb;
 	transform:rotate(-45deg);
+	-moz-transform:rotate(-45deg);
+	-webkit-transform:rotate(-45deg);
+	-o-transform:rotate(-45deg);
+	-ms-transform:rotate(-45deg);
 }
 header .back p{
 	display: inline-block;
@@ -53,7 +57,17 @@ nav ul{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
-	flex-flow:row nowrap;
+	-webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -moz-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    -o-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+	/*flex-flow:row nowrap;*/
 	line-height: 4rem;
 }
 nav ul li{
@@ -87,7 +101,17 @@ nav ul li a{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
-	flex-flow:row nowrap;
+	-webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -moz-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    -o-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+	/*flex-flow:row nowrap;*/
 	list-style: none;
 	margin: 0 3%;
 	border-bottom: 2px solid #dedede;
@@ -121,7 +145,17 @@ nav ul li a{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
-	flex-flow:row nowrap;
+	-webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -moz-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    -o-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+	/*flex-flow:row nowrap;*/
 	list-style: none;
 }
 .columns ul li{
@@ -170,6 +204,16 @@ nav ul li a{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
+	-webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -moz-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    -o-flex-wrap: nowrap;
+    /*flex-wrap: nowrap;*/
 	padding: 1rem 0;
 }
 .module section i{
@@ -193,7 +237,17 @@ nav ul li a{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
-	flex-flow:column nowrap;
+	-webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-wrap: nowrap;
+    -moz-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    -o-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+	/*flex-flow:column nowrap;*/
 }
 .module section .text div{
 	-moz-box-flex: 1;
@@ -206,7 +260,17 @@ nav ul li a{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
-	flex-flow:row nowrap;
+	-webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -moz-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    -o-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+	/*flex-flow:row nowrap;*/
 }
 .module section .text div p{
 	-moz-box-flex: 1;
@@ -233,7 +297,17 @@ nav ul li a{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
-	flex-flow:row nowrap;
+	-webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -moz-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    -o-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+	/*flex-flow:row nowrap;*/
 	background-color: #fff;
 	padding: 0.5rem 3%;
 	margin-bottom: 0.2rem;
@@ -276,7 +350,17 @@ nav ul li a{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
-	flex-flow:row nowrap;
+	-webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -moz-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    -o-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+	/*flex-flow:row nowrap;*/
 	height: 8rem;
 }
 .article .type2 ul li{
