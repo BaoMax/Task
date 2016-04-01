@@ -57,11 +57,13 @@ nav ul{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
+
 	-webkit-flex-direction: row;
     -moz-flex-direction: row;
     -ms-flex-direction: row;
     -o-flex-direction: row;
     flex-direction: row;
+
     -webkit-flex-wrap: nowrap;
     -moz-flex-wrap: nowrap;
     -ms-flex-wrap: nowrap;
@@ -145,11 +147,13 @@ nav ul li a{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
+
 	-webkit-flex-direction: row;
     -moz-flex-direction: row;
     -ms-flex-direction: row;
     -o-flex-direction: row;
     flex-direction: row;
+
     -webkit-flex-wrap: nowrap;
     -moz-flex-wrap: nowrap;
     -ms-flex-wrap: nowrap;
@@ -161,7 +165,7 @@ nav ul li a{
 .columns ul li{
 	-moz-box-flex: 1;
  	-webkit-box-flex: 1;
-	 -o-box-flex: 1;
+	-o-box-flex: 1;
 	-ms-flex: 1;
 	flex: 1;
 	text-align: center;
@@ -204,11 +208,13 @@ nav ul li a{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
+
 	-webkit-flex-direction: row;
     -moz-flex-direction: row;
     -ms-flex-direction: row;
     -o-flex-direction: row;
     flex-direction: row;
+
     -webkit-flex-wrap: nowrap;
     -moz-flex-wrap: nowrap;
     -ms-flex-wrap: nowrap;
@@ -269,11 +275,13 @@ nav ul li a{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
+
 	-webkit-flex-direction: row;
     -moz-flex-direction: row;
     -ms-flex-direction: row;
     -o-flex-direction: row;
     flex-direction: row;
+
     -webkit-flex-wrap: nowrap;
     -moz-flex-wrap: nowrap;
     -ms-flex-wrap: nowrap;
@@ -284,7 +292,7 @@ nav ul li a{
 .module section .text div p{
 	-moz-box-flex: 1;
  	-webkit-box-flex: 1;
-	 -o-box-flex: 1;
+	-o-box-flex: 1;
 	-ms-flex: 1;
 	flex: 1;
 	background-color: #f8f8f8;
@@ -301,20 +309,18 @@ nav ul li a{
 	margin-top: 1.5rem;
 }
 .article .type1{
-	display: box;              /* OLD - Android 4.4- */
-
-    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox;      /* TWEENER - IE 10 */
-    display: -webkit-flex;     /* NEW - Chrome */
-    display: flex;   
-
+	display: -webkit-box;
+	display: -moz-box;
+	display: -o-box;
+	display: -ms-flexbox;
+	display: flex;
 
 	-webkit-flex-direction: row;
     -moz-flex-direction: row;
     -ms-flex-direction: row;
     -o-flex-direction: row;
     flex-direction: row;
+    
     -webkit-flex-wrap: nowrap;
     -moz-flex-wrap: nowrap;
     -ms-flex-wrap: nowrap;
@@ -332,11 +338,16 @@ nav ul li a{
 	width: 8rem;
 	height: 6rem;
 	display: inline-block;
+	-moz-box-flex: 1;
+ 	-webkit-box-flex: 1;
+ 	-o-box-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
 }
 .article .type1 section{
 	-moz-box-flex: 2;
  	-webkit-box-flex: 2;
-	 -o-box-flex: 2;
+	-o-box-flex: 2;
 	-ms-flex: 2;
 	flex: 2;
 	margin-left: 1rem;
@@ -359,16 +370,19 @@ nav ul li a{
 }
 .article .type2 ul{
 	list-style: none;
+
 	display: -webkit-box;
 	display: -moz-box;
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
+
 	-webkit-flex-direction: row;
     -moz-flex-direction: row;
     -ms-flex-direction: row;
     -o-flex-direction: row;
     flex-direction: row;
+
     -webkit-flex-wrap: nowrap;
     -moz-flex-wrap: nowrap;
     -ms-flex-wrap: nowrap;
@@ -380,7 +394,7 @@ nav ul li a{
 .article .type2 ul li{
 	-moz-box-flex: 1;
  	-webkit-box-flex: 1;
-	 -o-box-flex: 1;
+	-o-box-flex: 1;
 	-ms-flex: 1;
 	flex: 1;
 }
