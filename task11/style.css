@@ -48,13 +48,20 @@ nav ul{
 	list-style: none;
 	height: 100%;
 	width: 100%;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -o-box;
+	display: -ms-flexbox;
 	display: flex;
-	display: -webkit-flex;
 	flex-flow:row nowrap;
 	line-height: 4rem;
 }
 nav ul li{
-	flex:1;
+	-moz-box-flex: 1;
+ 	-webkit-box-flex: 1;
+ 	-o-box-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
 	text-align: center;
 }
 nav ul li.selected{
@@ -75,15 +82,22 @@ nav ul li a{
 .tips ul{
 	height: 98%;
 	width: 94%;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -o-box;
+	display: -ms-flexbox;
 	display: flex;
-	display: -webkit-flex;
 	flex-flow:row nowrap;
 	list-style: none;
 	margin: 0 3%;
 	border-bottom: 2px solid #dedede;
 }
 .tips ul li{
-	flex:1;
+	-moz-box-flex: 1;
+ 	-webkit-box-flex: 1;
+ 	-o-box-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
 	text-align: center;
 }
 .tips ul li i{
@@ -102,13 +116,20 @@ nav ul li a{
 	width: 94%;
 	margin: 0 3%;
 	height: 100%;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -o-box;
+	display: -ms-flexbox;
 	display: flex;
-	display: -webkit-flex;
 	flex-flow:row nowrap;
 	list-style: none;
 }
 .columns ul li{
-	flex:1;
+	-moz-box-flex: 1;
+ 	-webkit-box-flex: 1;
+	 -o-box-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
 	text-align: center;
 	border-right: 2px solid #dedede; 
 }
@@ -144,8 +165,11 @@ nav ul li a{
 	border-bottom: 2px solid #dedede; 
 }
 .module > section{
+	display: -webkit-box;
+	display: -moz-box;
+	display: -o-box;
+	display: -ms-flexbox;
 	display: flex;
-	display: -webkit-flex;
 	padding: 1rem 0;
 }
 .module section i{
@@ -158,20 +182,38 @@ nav ul li a{
 }
 .module section .text{
 	height: 6rem;
-	flex:2;
+	-moz-box-flex: 2;
+ 	-webkit-box-flex: 2;
+ 	-o-box-flex: 2;
+	-ms-flex: 2;
+	flex: 2;
 	margin: 0 0 0 1rem;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -o-box;
+	display: -ms-flexbox;
 	display: flex;
-	display: -webkit-flex;
 	flex-flow:column nowrap;
 }
 .module section .text div{
-	flex:1;
+	-moz-box-flex: 1;
+ 	-webkit-box-flex: 1;
+	 -o-box-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -o-box;
+	display: -ms-flexbox;
 	display: flex;
-	display: -webkit-flex;
 	flex-flow:row nowrap;
 }
 .module section .text div p{
-	flex:1;
+	-moz-box-flex: 1;
+ 	-webkit-box-flex: 1;
+	 -o-box-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
 	background-color: #f8f8f8;
 	line-height: 2.8rem;
 	text-align: center;
@@ -186,8 +228,11 @@ nav ul li a{
 	margin-top: 1.5rem;
 }
 .article .type1{
+	display: -webkit-box;
+	display: -moz-box;
+	display: -o-box;
+	display: -ms-flexbox;
 	display: flex;
-	display: -webkit-flex;
 	flex-flow:row nowrap;
 	background-color: #fff;
 	padding: 0.5rem 3%;
@@ -201,7 +246,11 @@ nav ul li a{
 	height: 6rem;
 }
 .article .type1 section{
-	flex:2;
+	-moz-box-flex: 2;
+ 	-webkit-box-flex: 2;
+	 -o-box-flex: 2;
+	-ms-flex: 2;
+	flex: 2;
 	margin-left: 1rem;
 	position: relative;
 }
@@ -222,13 +271,20 @@ nav ul li a{
 }
 .article .type2 ul{
 	list-style: none;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -o-box;
+	display: -ms-flexbox;
 	display: flex;
-	display: -webkit-flex;
 	flex-flow:row nowrap;
 	height: 8rem;
 }
 .article .type2 ul li{
-	flex:1;
+	-moz-box-flex: 1;
+ 	-webkit-box-flex: 1;
+	 -o-box-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
 }
 .article .type2 ul li i{
 	background: url(img/image2.jpg) no-repeat center center;
