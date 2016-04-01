@@ -338,11 +338,6 @@ nav ul li a{
 	width: 8rem;
 	height: 6rem;
 	display: inline-block;
-	-moz-box-flex: 1;
- 	-webkit-box-flex: 1;
- 	-o-box-flex: 1;
-	-ms-flex: 1;
-	flex: 1;
 }
 .article .type1 section{
 	-moz-box-flex: 2;
