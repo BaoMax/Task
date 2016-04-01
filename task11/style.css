@@ -9,20 +9,20 @@ body{
 }
 header{
 	color: #fefefb;
-	height: 3.5rem;
+	height: 2rem;
 	width: 100%;
 	background-color: #91d6d9;
-	padding: 0.8rem 0;
+	padding: 0.5rem 0;
 	position: relative;
 }
 header .back{
-	height: 3.5rem;
+	height: 100%;
 	padding: 0 1rem;
 	position: absolute;
 }
 header .back i{
-	height: 1.2rem;
-	width: 1.2rem;
+	height: 0.8rem;
+	width: 0.8rem;
 	display: inline-block;
 	border-top: 0.3rem solid #fefefb;
 	border-left: 0.3rem solid #fefefb;
@@ -30,12 +30,13 @@ header .back i{
 }
 header .back p{
 	display: inline-block;
-	font-size: 2em;
-	line-height: 3.5rem;
+	font-size: 1.4em;
+	line-height: 2rem;
 }
 header h1{
-	line-height: 200%;
+	line-height: 2rem;
 	width: 100%;
+	font-size: 1.4rem;
 	display: inline-block;
 	text-align: center;
 }
@@ -62,11 +63,11 @@ nav ul li.selected{
 nav ul li a{
 	text-decoration: none;
 	color: #000;
-	font-size: 2rem;
+	font-size: 1.2rem;
 }
 .tips{
-	height: 10rem;
-	font-size: 1.8rem;
+	height: 8rem;
+	font-size: 1.2rem;
 	color: #313131;
 	background-color: #fff;
 	font-weight: bold;
@@ -88,12 +89,12 @@ nav ul li a{
 .tips ul li i{
 	background: url(img/icon.png) no-repeat center center;
 	display: inline-block;
-	background-size: 4.5rem 4.5rem;
+	background-size: 4rem 4rem;
 	width: 100%;
-	height: 7rem;
+	height: 5rem;
 }
 .columns{
-	height: 10rem;
+	height: 8rem;
 	background-color: #fff;
 	padding: 1rem 0;
 }
@@ -118,17 +119,17 @@ nav ul li a{
 	background: url(img/aside-1.jpg) no-repeat center center;
 	display: inline-block;
 	background-size: 60% 80%;
-	height: 6rem;
-	width: 6rem;
+	height: 5rem;
+	width: 5rem;
 }
 .columns ul li h2{
-	font-size: 2rem;
+	font-size: 1.2rem;
 	line-height: 150%;
 }
 .columns ul li h3{
 	color:#585858;
 	font-weight: normal;
-	font-size: 1.2rem;
+	font-size: 0.8rem;
 	line-height: 120%
 }
 .module{
@@ -137,9 +138,9 @@ nav ul li a{
 	padding: 0 3%;
 }
 .module p.title{
-	font-size: 2rem;
-	height: 3.5rem;
-	line-height: 3.5rem;
+	font-size: 1.4rem;
+	height: 2.5rem;
+	line-height: 2.5rem;
 	border-bottom: 2px solid #dedede; 
 }
 .module > section{
@@ -152,10 +153,11 @@ nav ul li a{
 	border: 1px solid #ffdeb0;
 	display: inline-block;
 	background-size: 100% 100%;
-	height: 8rem;
-	width: 8rem;
+	height: 6rem;
+	width: 6rem;
 }
 .module section .text{
+	height: 6rem;
 	flex:2;
 	margin: 0 0 0 1rem;
 	display: flex;
@@ -171,7 +173,7 @@ nav ul li a{
 .module section .text div p{
 	flex:1;
 	background-color: #f8f8f8;
-	line-height: 4rem;
+	line-height: 2.8rem;
 	text-align: center;
 }
 .module section .text div:first-child{
@@ -190,12 +192,13 @@ nav ul li a{
 	background-color: #fff;
 	padding: 0.5rem 3%;
 	margin-bottom: 0.2rem;
+	height: 6rem;
 }
 .article .type1 i{
 	background: url(img/image2.jpg) no-repeat center center;
 	background-size: 100% 100%;
-	width: 10rem;
-	height: 8rem;
+	width: 8rem;
+	height: 6rem;
 }
 .article .type1 section{
 	flex:2;
@@ -231,7 +234,7 @@ nav ul li a{
 	background: url(img/image2.jpg) no-repeat center center;
 	background-size: 100% 100%;
 	width: 98%;
-	height: 6rem;
+	height: 5rem;
 	margin: 1rem 0;
 	display: inline-block;
 }
