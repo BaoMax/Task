@@ -237,6 +237,7 @@ nav ul li a{
 	display: -o-box;
 	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-orient: vertical;
 	-webkit-flex-direction: column;
     -moz-flex-direction: column;
     -ms-flex-direction: column;
@@ -326,7 +327,7 @@ nav ul li a{
 	-ms-flex: 2;
 	flex: 2;
 	margin-left: 1rem;
-	position: relative;
+	/*position: relative;*/
 }
 .article .type1 section h2,.article .type2 h2{
 	font-size: 22px;
@@ -334,8 +335,8 @@ nav ul li a{
 }
 .article .type1 section p,.article .type2 p{
 	color: #c4c4c4;	
-	position: absolute;
-	bottom: 2px;
+	/*position: absolute;
+	bottom: 2px;*/
 }
 .article .type2{
 	background-color: #fff;
