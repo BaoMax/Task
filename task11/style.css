@@ -1,0 +1,237 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+body{
+	font-family: "Microsoft YaHei","Helvetica".Helvetica,STHeiTi,sans-serif;
+	margin:0 auto;
+	background-color: #f5f5f5;
+}
+header{
+	color: #fefefb;
+	height: 3.5rem;
+	width: 100%;
+	background-color: #91d6d9;
+	padding: 0.8rem 0;
+	position: relative;
+}
+header .back{
+	height: 3.5rem;
+	padding: 0 1rem;
+	position: absolute;
+}
+header .back i{
+	height: 1.2rem;
+	width: 1.2rem;
+	display: inline-block;
+	border-top: 0.3rem solid #fefefb;
+	border-left: 0.3rem solid #fefefb;
+	transform:rotate(-45deg);
+}
+header .back p{
+	display: inline-block;
+	font-size: 2em;
+	line-height: 3.5rem;
+}
+header h1{
+	line-height: 200%;
+	width: 100%;
+	display: inline-block;
+	text-align: center;
+}
+nav{
+	height: 4rem;
+	background-color: #fff;
+}
+nav ul{
+	list-style: none;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	display: -webkit-flex;
+	flex-flow:row nowrap;
+	line-height: 4rem;
+}
+nav ul li{
+	flex:1;
+	text-align: center;
+}
+nav ul li.selected{
+	border-bottom: 3px solid #94d3dc;
+}
+nav ul li a{
+	text-decoration: none;
+	color: #000;
+	font-size: 2rem;
+}
+.tips{
+	height: 10rem;
+	font-size: 1.8rem;
+	color: #313131;
+	background-color: #fff;
+	font-weight: bold;
+}
+.tips ul{
+	height: 98%;
+	width: 94%;
+	display: flex;
+	display: -webkit-flex;
+	flex-flow:row nowrap;
+	list-style: none;
+	margin: 0 3%;
+	border-bottom: 2px solid #dedede;
+}
+.tips ul li{
+	flex:1;
+	text-align: center;
+}
+.tips ul li i{
+	background: url(img/icon.png) no-repeat center center;
+	display: inline-block;
+	background-size: 4.5rem 4.5rem;
+	width: 100%;
+	height: 7rem;
+}
+.columns{
+	height: 10rem;
+	background-color: #fff;
+	padding: 1rem 0;
+}
+.columns ul{
+	width: 94%;
+	margin: 0 3%;
+	height: 100%;
+	display: flex;
+	display: -webkit-flex;
+	flex-flow:row nowrap;
+	list-style: none;
+}
+.columns ul li{
+	flex:1;
+	text-align: center;
+	border-right: 2px solid #dedede; 
+}
+.columns ul li:last-child{
+	border: none;
+}
+.columns ul li i{
+	background: url(img/aside-1.jpg) no-repeat center center;
+	display: inline-block;
+	background-size: 60% 80%;
+	height: 6rem;
+	width: 6rem;
+}
+.columns ul li h2{
+	font-size: 2rem;
+	line-height: 150%;
+}
+.columns ul li h3{
+	color:#585858;
+	font-weight: normal;
+	font-size: 1.2rem;
+	line-height: 120%
+}
+.module{
+	margin-top: 1.2rem; 
+	background-color: #fff;
+	padding: 0 3%;
+}
+.module p.title{
+	font-size: 2rem;
+	height: 3.5rem;
+	line-height: 3.5rem;
+	border-bottom: 2px solid #dedede; 
+}
+.module > section{
+	display: flex;
+	display: -webkit-flex;
+	padding: 1rem 0;
+}
+.module section i{
+	background: url(img/image1.jpg) no-repeat center center;
+	border: 1px solid #ffdeb0;
+	display: inline-block;
+	background-size: 100% 100%;
+	height: 8rem;
+	width: 8rem;
+}
+.module section .text{
+	flex:2;
+	margin: 0 0 0 1rem;
+	display: flex;
+	display: -webkit-flex;
+	flex-flow:column nowrap;
+}
+.module section .text div{
+	flex:1;
+	display: flex;
+	display: -webkit-flex;
+	flex-flow:row nowrap;
+}
+.module section .text div p{
+	flex:1;
+	background-color: #f8f8f8;
+	line-height: 4rem;
+	text-align: center;
+}
+.module section .text div:first-child{
+	margin-bottom: 1rem;
+}
+.module section .text div p:first-child{
+	margin-right: 1rem;
+}
+.article{
+	margin-top: 1.5rem;
+}
+.article .type1{
+	display: flex;
+	display: -webkit-flex;
+	flex-flow:row nowrap;
+	background-color: #fff;
+	padding: 0.5rem 3%;
+	margin-bottom: 0.2rem;
+}
+.article .type1 i{
+	background: url(img/image2.jpg) no-repeat center center;
+	background-size: 100% 100%;
+	width: 10rem;
+	height: 8rem;
+}
+.article .type1 section{
+	flex:2;
+	margin-left: 1rem;
+	position: relative;
+}
+.article .type1 section h2,.article .type2 h2{
+	font-size: 22px;
+	line-height: 120%;
+}
+.article .type1 section p,.article .type2 p{
+	color: #c4c4c4;	
+	position: absolute;
+	bottom: 2px;
+}
+.article .type2{
+	background-color: #fff;
+	padding: 0.5rem 3%;
+	position: relative;
+	height: 13rem;
+}
+.article .type2 ul{
+	list-style: none;
+	display: flex;
+	display: -webkit-flex;
+	flex-flow:row nowrap;
+	height: 8rem;
+}
+.article .type2 ul li{
+	flex:1;
+}
+.article .type2 ul li i{
+	background: url(img/image2.jpg) no-repeat center center;
+	background-size: 100% 100%;
+	width: 98%;
+	height: 6rem;
+	margin: 1rem 0;
+	display: inline-block;
+}
