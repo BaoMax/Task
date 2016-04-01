@@ -232,12 +232,24 @@ nav ul li a{
 	-ms-flex: 2;
 	flex: 2;
 	margin: 0 0 0 1rem;
-	display: -webkit-box;
-	display: -moz-box;
-	display: -o-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: vertical;
+	display: box;              /* OLD - Android 4.4- */
+
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+
+	display: -moz-box; /*Firefox*/
+    display: -webkit-box; /*Safari,Opera,Chrome*/
+    display: box;
+
+
+	-moz-box-orient: vertical ; /*Firefox*/
+    -webkit-box-orient: vertical ; /*Safari,Opera,Chrome*/
+    box-orient: vertical ;
+
+
 	-webkit-flex-direction: column;
     -moz-flex-direction: column;
     -ms-flex-direction: column;
