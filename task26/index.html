@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task26</title>
+	<style type="text/css">
+		#myCanvas{
+			background-color: #000;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="600" height="600"></canvas>
+	<section id="command">
+		<div id="lineOne">对1号轨道：<button class="create">创建</button><button>飞行</button><button>停止</button><button>自爆</button></div>
+		<div id="lineTwo">对2号轨道：<button class="create">创建</button><button>飞行</button><button>停止</button><button>自爆</button></div>
+		<div id="lineThree">对3号轨道：<button class="create">创建</button><button>飞行</button><button>停止</button><button>自爆</button></div>
+		<div id="lineFour">对4号轨道：<button class="create">创建</button><button>飞行</button><button>停止</button><button>自爆</button></div>
+	</section>
+</body>
+<script type="text/javascript" src="index.js"></script>
+<script type="text/javascript">
+	/**坐标点类**/
+	function Point(x,y){
+		this.x = x || 0;
+		this.y = y || 0;
+	}
+	/**轨道类**/
+	function Line(r,p,style){
+		this.radius = r || 0;
+		this.style = style || 'white';
+		this.start = new Point(p.x,p.y);
+	}
+	/**轨道工厂**/
+	function LineFactory(){
+		this.create = function(r,p){
+			return new Line(r,p);
+		}
+	}
+	/**
+	飞船类
+	@state:飞船的状态
+	@destroy:自爆函数
+	**/
+	function Ship (line,degree,percent,width,height,powerStyle,tiredStyle) {
+		// body...
+		this.state = "stop";
+		this.width = width || 60;
+		this.height = height || 30;
+		this.powerStyle = powerStyle || 'green';
+		this.tiredStyle = tiredStyle || 'yellow';
+		this.line = line || 0;
+		this.degree = degree || 0;
+		this.percent = percent || 100;
+	}
+	Ship.prototype = {
+		create:function(line,degree,percent,width,height,powerStyle,tiredStyle){
+			return new Ship(line,degree,percent,width,height,powerStyle,tiredStyle);
+		},
+		run: function(){
+			this.state = "run";
+		},
+		destroy: function(){
+			this.state = "destroy";
+		},
+		stop: function(){
+			this.state = "stop";
+		}
+	}
+
+	var canvasWidth = 600;//画布宽度
+	var canvasHeight = 600;//画布高度
+	var center = new Point(300,300);//画布中心点
+	var text = new Point(-10,5);
+	var starRadius = 120;//星球半径
+	var starStyle = 'blue';//星球颜色
+	var setp = 30;
+
+	var lineStyle = 'white';//轨道颜色
+	var lines = [];//轨道数组
+	/**生成轨道**/
+	var lineFactory = new LineFactory();
+	for(var i = 1;i <= 4;i++){
+		var r = starRadius+i*setp;
+		var p = new Point(center.x,center.y-r);
+		lines.push(lineFactory.create(r,p));
+	}
+	var textStyle = 'black';//字体颜色
+	var ships = [];//飞船集合
+
+
+	function init(){
+		drawBackground();
+		drawShip();
+	}
+	function drawBackground(){
+		var canvas = document.getElementById("myCanvas");
+		var context = canvas.getContext("2d");
+
+		context.clearRect(0,0,canvasWidth,canvasHeight); // clear canvas
+		context.translate(0,0);
+		//darw star
+		context.fillStyle = starStyle;
+		context.beginPath();
+		context.arc(center.x,center.y,starRadius,0,2*Math.PI,true);
+		context.closePath();
+		context.fill();
+
+		//draw line
+		for (var i = 0; i < lines.length; i++) {
+			context.strokeStyle = lines[i].style;
+			context.beginPath();
+			context.arc(center.x,center.y,lines[i].radius,0,2*Math.PI,true);
+			context.closePath();
+			context.stroke();
+		};
+	}
+	function drawRoundRect (context,ship) {
+		// body...
+		var powerWidth = ship.width*ship.percent/100;
+		var tiredWidth = ship.width-powerWidth;
+
+		var x = -ship.width/2;
+		var y = -ship.height/2;
+		context.fillStyle = ship.powerStyle;
+		context.fillRect(x,y,powerWidth,ship.height);
+
+		x = x + powerWidth;
+		y = y;
+		context.fillStyle = ship.tiredStyle;
+		context.fillRect(x,y,tiredWidth,ship.height);
+
+		context.fillStyle = textStyle;
+		context.fillText(ship.percent+"%",text.x,text.y);
+	}
+	function drawShip(){
+		var canvas = document.getElementById("myCanvas");
+		var context = canvas.getContext("2d");
+
+		for (var i = 0; i < lines.length && i < ships.length; i++) {
+			context.save();
+			var ship = ships[i];
+			if(ship.state == "run"){
+				ship.degree = ship.degree + 20*Math.PI/180;
+				ship.percent = ship.percent - 5;
+				if(ship.percent <= 0){
+					ship.stop();
+				}
+			}
+			if(ship.state == "run" || ship.state == "stop"){
+				line = lines[ship.line-1];
+				var x = line.start.x - line.radius*Math.sin(ship.degree);
+				var y = line.start.y + line.radius - line.radius*Math.cos(ship.degree);
+				context.save();
+				context.translate(x,y);
+				drawRoundRect(context,ship);
+				context.restore();
+			}
+		};
+	}
+
+	init();
+
+	setInterval(function(){
+		init();
+	},1000);
+	document.getElementById("command").onclick = function(e){
+		var target = e.target;
+		var ship = new Ship(1);
+		ship.state = "run";
+		ships.push(ship);
+	};
+</script>
+</html>

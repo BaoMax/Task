@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task25</title>
+	<script type="text/javascript" src="index.js" defer="defer"></script>
+	<style>
+		body{
+			font-family: "Microsoft YaHei";
+			font-size: 16px;
+		}
+		fieldset{
+			width: 500px;
+			margin: 20px auto;
+			min-height: 300px;
+		}
+		legend{
+			text-align: center;
+			font-size: 20px;
+			padding: 0 10px;
+		}
+		#menus{
+			display: none;
+			position: absolute;
+			border: 1px solid black;
+			width: 100px;
+			height: 60px;
+			background-color: #535251;
+			color: #d4d2d0;
+		}
+		#menus p{
+			padding: 0 5px;
+			margin: 0px;
+			line-height: 150%;
+		}
+		#menus p:hover{
+			background-color: #fff;
+		}
+		section{
+			margin: 0 auto;
+			text-align: center;
+		}
+		i{
+			width: 0px;
+			height: 0px;
+			border-top: 10px solid transparent;
+			border-left: 10px solid blue;
+			border-bottom: 10px solid transparent;
+			display: inline-block;
+			transition:all .5s ease;
+		}
+		i.down{
+			transform:rotate(90deg);
+		}
+		i.hide{
+			border-left: 10px solid transparent;
+		}
+		i.show{
+			border-left: 10px solid blue;
+		}
+		span{
+			padding: 0 5px;
+		}
+		#root div{
+			margin-left: 20px;
+		}
+	</style>
+</head>
+<body>
+	<fieldset>
+		<legend>树型组件</legend>
+		<section>
+			<input type="text" id="searchInput"/>
+			<button id="search">搜素</button>
+		</section>
+		<div id="root">
+			<div class="node">
+				<i class="show down"></i><span>我的电脑</span>
+				<div>
+					<!-- <div class="node"><i></i><span></span><div></div></div>
+					<div class="node"><i></i><span></span><div></div></div> -->
+				</div>
+			</div>
+		</div>
+		<div id="menus" tabindex="-1">
+			<p id="add">新建文件夹</p>
+			<p id="del">删除</p>
+		</div>
+	</fieldset>
+</body>
+</html>

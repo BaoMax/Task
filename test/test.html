@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>tab-test</title>
+	<style type="text/css">
+	/**target实现一**/
+		/*#target-tab{
+			height: 500px;
+			width: 400px;
+		}*/
+	/*	#target-tab .tab-title{
+			height: 20px;
+			width: 100%;
+		}
+		#target-tab .tab-title ul li{
+			display: inline-block;
+			width: 40px;
+			margin-right:10px;
+			line-height: 200%;
+			background-color: #aaa; 
+			border: 1px solid #000;
+		}
+		#target-tab .box{
+			height: 12px;
+			width: 100%;
+			overflow: hidden;
+		}
+		#target-tab .box div{
+			z-index: -2;
+		}
+		#target-tab .box div:target{
+			z-index: -1;
+		}
+		#target-tab .box div:target {
+
+		}*/
+
+
+
+		/**target实现二**/
+		/*#target-tab .title{
+			height: 20px;
+			float: left;
+			position: relative;
+		}
+		#target-tab{
+			height: 35px;
+			width: 200px;
+			overflow: hidden;
+		}
+		#target-tab .content{
+			z-index: -2;
+			position: absolute;
+			top: 20px;
+			left: 0px;
+			background-color: #fff;
+		}
+		#target-tab > div:target .content{
+			z-index: 10;
+		}
+		#target-tab > div:target .title{
+			color: red;
+		}*/
+
+
+
+
+		/**checked实现**/
+		#target-tab{
+			width: 200px;
+			height: 100px;
+			position: relative;
+			overflow: hidden;
+		}
+		#target-tab input{
+			/*float: left;*/
+			/*width: 20px;*/
+			/*display: none;*/
+		}	
+ 		#target-tab .tab-title{
+ 			height: 20px;
+ 		}
+ 		#target-tab .content{
+			position: absolute;
+			background-color: #fff;
+			z-index: -2;
+			top: 30px;
+			left: 0px;
+			width: 200px;
+			word-wrap: break-word;
+ 		}
+ 		#target-tab .tab-radio:checked + label{
+			color: red;
+ 		}
+ 		#target-tab .tab-radio:checked + label + .content{
+ 			z-index: -1;
+ 		}
+	</style>
+</head>
+<body>
+	<div id="target-tab">
+
+		<!--target实现1-->
+		<!-- <div id="box-1">
+			<a class="title" href="#box-1">Tab1</a>
+			<div class="content">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+		</div>
+		<div id="box-2">
+			<a class="title" href="#box-2">Tab2</a>
+			<div class="content">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</div>
+		</div>
+		<div id="box-3">
+			<a class="title" href="#box-3">Tab3</a>
+			<div class="content">ccccccccccccccccccccccccccccccccccccccccc</div>
+		</div> -->
+
+
+		<!--target实现2-->
+		<!-- <div class="tab-title">
+			<ul>
+				<li><a href="#box-1">Tab1</a></li>
+				<li><a href="#box-2">Tab2</a></li>
+				<li><a href="#box-3">Tab3</a></li>
+			</ul>
+		</div>
+		<div class="box">
+			<div id="box-1">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+			<div id="box-2">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</div>
+			<div id="box-3">ccccccccccccccccccccccccccccccccccccccccc</div>
+		</div>
+	</div> -->
+
+
+
+
+	<!--checked实现1-->
+	<input type="radio" class="tab-radio" name="tab" id="tab-radio1" checked/>
+	<label class="tab-title" id="tab1" for="tab-radio1">Tab1</label>
+	<div class="content">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+
+	<input type="radio" class="tab-radio" name="tab" id="tab-radio2"/>
+	<label class="tab-title" id="tab2" for="tab-radio2">Tab2</label>
+	<div class="content">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</div>
+
+
+	<input type="radio" class="tab-radio" name="tab" id="tab-radio3"/>
+	<label class="tab-title" id="tab3" for="tab-radio3">Tab3</label>
+	<div class="content">cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task22</title>
+	<script type="text/javascript" src="index.js"></script>
+	<style type="text/css">
+		#container{
+			width: 800px;
+			height: 200px;
+			border: 1px solid black;
+		}
+		.child-1{
+			width: 360px;
+			height: 180px;
+			float: left;
+			margin: 10px 18px; 
+			border: 1px solid black;
+		}
+		.child-2{
+			width: 140px;
+			height: 140px;
+			float: left;
+			margin: 20px 18px; 
+			border: 1px solid black;
+		}
+		.child-3{
+			width: 50px;
+			height: 60px;
+			float: left;
+			margin: 40px 8px; 
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div class="child-1">
+			<div class="child-2">
+				<div class="child-3"></div>
+				<div class="child-3"></div>
+			</div>
+			<div class="child-2">
+				<div class="child-3"></div>
+				<div class="child-3"></div>
+			</div>
+		</div>
+		<div class="child-1">
+			<div class="child-2">
+				<div class="child-3"></div>
+				<div class="child-3"></div>
+			</div>
+			<div class="child-2">
+				<div class="child-3"></div>
+				<div class="child-3"></div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<button id="preOrder">前序</button>
+	<button id="midOrder">中序</button>
+	<button id="lastOrder">后序</button>
+	<input id="second" type="number" min="1000" max="10000" value="1000" step="100"/>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo01</title>
+</head>
+<body>
+	<!--video标签练习-->
+	<video height="240" width="320" src="movie.ogg" controls="controls" autoplay="true" loop="true">
+		浏览器不支持video标签
+	</video>
+
+	<div style="text-align:'center'">
+		<button onclick="playPaused()">播放/暂停</button>
+		<button onclick="big()">大</button>
+		<button onclick="normal()">中</button>
+		<button onclick="small()">小</button>
+		<br>
+		<video id="video" src="mov_bbb.mp4" width="420" height="300" style="margin-top:30px;"></video>
+	</div>
+	<audio src="song.ogg" controls="controls" autoplay="true"></audio>
+	<script type="text/javascript">
+		var myVideo = document.getElementById("video");
+		function playPaused(){
+			if(myVideo.paused)
+				myVideo.play();
+			else
+				myVideo.pause();
+		}
+		function big(){
+			myVideo.width = 540;
+		}
+		function normal(){
+			myVideo.width = 420;
+		}
+		function small(){
+			myVideo.width = 320;
+		}
+	</script>
+</body>
+</html>

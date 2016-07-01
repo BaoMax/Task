@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task23</title>
+	<script type="text/javascript" src="index.js"></script>
+	<style type="text/css">
+		div{
+			border: 1px solid black;
+			float: left;
+		}
+		span{
+			display: block;
+			font-size: 12px;
+			font-weight: bold;
+		}
+		#Super{
+			width: 1000px;
+			height: auto;
+		}
+		#Cat,#Note{
+			width: 400px;
+			height: 160px;
+			margin: 15px 5px;
+			margin-top: 0px;
+		}
+		#Fish{
+			width: 150px;
+			height: 160px;
+			margin: 15px 5px;
+			margin-top: 0px;
+		}
+		#Apple{
+			width: 200px;
+			height: 120px;
+			margin: 20px 5px;
+			margin-top: 0px;
+		}
+		#Phone{
+			width: 60px;
+			height: 120px;
+			margin: 20px 5px;
+			margin-top: 0px;
+		}
+		#Pear,#Pig,#Cola,#Soccer{
+			width: 40px;
+			height: 40px;
+			margin: 30px 3px;
+			/*margin-top: 0px;*/
+		}
+		#B-S{
+			width: 100px;
+			height: 120px;
+			margin: 20px 5px;
+			margin-top: 0px;
+		}
+		#Book,#School{
+			width: 36px;
+			height: 30px;
+			margin: 20px 5px;
+		}
+		#Human,#Program{
+			width: 185px;
+			height: 120px;
+			margin: 20px 5px;
+			margin-top: 0px;
+		}
+		#Code,#Operate,#Man{
+			width: 45px;
+			height: 50px;
+			margin: 20px 5px;
+		}
+		#Bement{
+			width: 90px;
+			height: 60px;
+			margin: 20px 5px;
+			margin-top: 0px;
+		}
+		#Glass{
+			width: 50px;
+			height: 60px;
+			margin: 20px 5px;
+			margin-top: 0px;
+		}
+		#Cat1{
+			width: 40px;
+			height: 30px;
+			margin: 20px 5px;
+			margin-top: 0px;
+		}
+		section{
+			clear: both;
+			padding: 20px 20%;
+		}
+	</style>
+</head>
+<body>
+	<div id="Super"> 
+		<span>Super</span>
+		<div id="Cat">
+			<span>Cat</span>
+			<div id="Apple">
+				<span>Apple</span>
+				<div id="Pear"><span>Pear</span></div>
+				<div id="Pig"><span>Pig</span></div>
+				<div id="Cola"><span>Cola</span></div>
+				<div id="Soccer"><span>Soccer</span></div>
+			</div>
+			<div id="Phone"><span>Phone</span></div>
+			<div id="B-S">
+				<div id="Book"><span>Book</span></div>
+				<div id="School"><span>School</span></div>
+			</div>
+		</div>
+		<div id="Note">
+			<span>Note</span>
+			<div id="Human">
+				<span>Human</span>
+				<div id="Code"><span>Code</span></div>
+				<div id="Operate"><span>Operate</span></div>
+				<div id="Man"><span>Man</span></div>
+			</div>
+			<div id="Program">
+				<span>Program</span>
+				<div id="Bement">
+					<span>Bement</span>
+					<div id="Cat1"><span>Cat</span></div>
+				</div>
+				<div id="Glass"><span>Glass</span></div>
+			</div>
+		</div>
+		<div id="Fish"><span>Fish</span></div>
+	</div>
+	<section id="select">
+		<button id="deepth-find">深度优先搜索</button>
+		<input id="textValue" type="text" placeholder="请输入要查询的内容"/>
+		<button id="breadth-find">广度优先搜索</button>
+	</section>
+</body>
+</html>

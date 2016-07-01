@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>头尾固定高度中间自适应高度</title>
+	<style type="text/css">
+		html,body{
+			height: 100%;
+			margin: 0px;
+			padding: 0px;
+		}		
+		header{
+			width: 100%;
+			height: 100px;
+			background-color: #000;
+			position: absolute;
+			top: 0px;
+		}
+		div.parent{
+			width: 100%;
+			overflow: auto;
+			position: absolute;
+			top: 100px;
+			bottom: 100px;
+		}
+		div.parent p{
+			font-size: 60px;
+		}
+		footer{
+			width: 100%;
+			height: 100px;
+			background-color: #000;
+			position: absolute;
+			bottom: 0px;
+			left: 0px;
+		}
+	</style>
+</head>
+<body>
+	<header></header>
+	<div class="parent">
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+		<p>中间层</p>
+	</div>
+	<footer></footer>
+</body>
+</html>

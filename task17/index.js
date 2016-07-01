@@ -104,56 +104,6 @@ function renderChart() {
     outer.appendChild(inner);
   }
 }
-function changeData(){
-  var radio = document.getElementsByName("gra-time");
-  var select = document.getElementById("city-select");
-  var index = Number(pageState["nowSelectCity"]);
-  var city = select.options[index].innerHTML;
-  var data = aqiSourceData[city];
-  chartData = {};
-  // 设置对应数据
-  if(pageState["nowGraTime"] == "day"){
-     chartData = data;
-  }else if(pageState["nowGraTime"] == "week"){
-    var sum = 0;
-    var count = 0;
-    var j = 0;
-    var start = "2016-01-01";
-    var end = "2016-01-01";
-    for(var i in data){
-      if(j == 0){start = i;}
-      var date = new Date(i);
-      sum = sum + data[i];
-      j++;
-      count++;
-      var t = date.getDay();
-     if(count ==31 || count == 60 || count == 91 || date.getDay()==0){
-        end = i;
-        chartData[start+"~"+end] = Math.ceil(sum/j);
-        j = 0;
-        sum = 0;
-      }
-    }
-  }else{
-    var sum = 0;
-    var count = 1;
-    for(var i in data){
-      sum = sum + data[i];
-      if(count == 31){
-        chartData["2016-01月"] = Math.ceil(sum/31);
-        sum = 0;
-      }else if(count == 60){
-        chartData["2016-02月"] = Math.ceil(sum/29);
-        sum = 0;
-      }else if(count == 91){
-        chartData["2016-03月"] = Math.ceil(sum/31);
-      }
-      count++;
-    }
-  }
-  // 调用图表渲染函数
-  renderChart();
-}
 /**
  * 日、周、月的radio事件点击时的处理函数
  */
@@ -169,7 +119,7 @@ function graTimeChange() {
       pageState["nowGraTime"] = time[i];
     }
   } 
-  changeData();
+  initAqiChartData();
 }
 
 /**
@@ -184,7 +134,7 @@ function citySelectChange() {
     return ;
   }
   pageState["nowSelectCity"] = index;
-  changeData();
+  initAqiChartData();
 }
 
 /**
@@ -219,12 +169,49 @@ function initCitySelector() {
  */
 function initAqiChartData() {
   // 将原始的源数据处理成图表需要的数据格式
+  var radio = document.getElementsByName("gra-time");
   var select = document.getElementById("city-select");
   var index = Number(pageState["nowSelectCity"]);
   var city = select.options[index].innerHTML;
   var data = aqiSourceData[city];
-  // 处理好的数据存到 chartData 中
-  changeData();
+  chartData = {};
+  // 设置对应数据
+  if(pageState["nowGraTime"] == "day"){
+     chartData = data;
+  }else if(pageState["nowGraTime"] == "week"){
+    var sum = 0,count = 0,j = 0,start = "2016-01-01",end = "2016-01-01";
+    for(var i in data){
+      if(j == 0){start = i;}
+      var date = new Date(i);
+      sum = sum + data[i];
+      j++;
+      count++;
+      var t = date.getDay();
+     if(count ==31 || count == 60 || count == 91 || date.getDay()==0){
+        end = i;
+        chartData[start+"~"+end] = Math.ceil(sum/j);
+        j = 0;
+        sum = 0;
+      }
+    }
+  }else{
+    var sum = 0,count = 1;
+    for(var i in data){
+      sum = sum + data[i];
+      if(count == 31){
+        chartData["2016-01月"] = Math.ceil(sum/31);
+        sum = 0;
+      }else if(count == 60){
+        chartData["2016-02月"] = Math.ceil(sum/29);
+        sum = 0;
+      }else if(count == 91){
+        chartData["2016-03月"] = Math.ceil(sum/31);
+      }
+      count++;
+    }
+  }
+  // 调用图表渲染函数
+  renderChart();
 }
 
 /**

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拖动实现</title>
+	<style type="text/css">
+		div{
+			width: 100px;
+			height: 50px;
+			float: left;
+			margin-right: 20px;
+			border: 1px solid #000;
+			text-align: center;
+			line-height: 50px;
+		}
+	</style>
+</head>
+<body>
+	<div ondragover="allowDrag(event)" ondrop="drop(event)">
+		<img draggable="true" id="drag1" ondragstart="drag(event)" src="http://www.w3school.com.cn/i/w3school_logo_black.gif">
+	</div>
+	<div ondragover="allowDrag(event)" ondrop="drop(event)"></div>
+
+	<div>
+		<button>获取位置</button>
+	</div>
+	<script type="text/javascript">
+		function drag (event) {
+			event.dataTransfer.setData("Text",event.target.id);
+			// body...
+		}
+		function allowDrag(event){
+			event.preventDefault();
+		}
+		function drop(event){
+			event.preventDefault();
+			var data = event.dataTransfer.getData("Text");
+			event.target.appendChild(document.getElementById(data));
+		}
+	</script>
+</body>
+</html>

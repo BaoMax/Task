@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task24</title>
+	<script type="text/javascript" src="index.js"></script>
+	<style type="text/css">
+		div{
+			border: 1px solid black;
+			float: left;
+			font-size: 20px;
+			font-weight: bold;
+			/*padding: 5px;*/
+		}
+		.background-color{
+			background-color: #fff;
+		}
+		.come{
+			background-color: blue;
+		}
+		.find{
+			background-color: green;
+		}
+		.selected{
+			background-color: red;
+		}
+		#Super{
+			width: auto;
+			height: auto;
+			line-height: 200px;
+		}
+		#Cat,#Note{
+			width: auto;
+			height: 160px;
+			line-height: 160px;
+			margin: 15px 5px;
+		}
+		#Fish{
+			width: auto;
+			height: 160px;
+			line-height: 160px;
+			margin: 15px 5px;
+		}
+		#Apple{
+			width: auto;
+			height: 120px;
+			line-height: 120px;
+			margin: 20px 5px;
+		}
+		#Phone{
+			width: auto;
+			height: 120px;
+			line-height: 120px;
+			margin: 20px 5px;
+		}
+		#Pear,#Pig,#Cola,#Soccer{
+			width: auto;
+			height: 40px;
+			line-height: 40px;
+			margin: 30px 3px;
+		}
+		#B-S{
+			width: auto;
+			height: 120px;
+			line-height: 120px;
+			margin: 20px 5px;
+		}
+		#Book,#School{
+			width: auto;
+			height: 30px;
+			line-height: 30px;
+			margin: 20px 5px;
+		}
+		#Human,#Program{
+			width: auto;
+			height: 120px;
+			line-height: 120px;
+			margin: 20px 5px;
+		}
+		#Code,#Operate,#Man{
+			width: auto;
+			height: 50px;
+			line-height: 50px;
+			margin: 20px 5px;
+		}
+		#Bement{
+			width: auto;
+			height: 60px;
+			line-height: 60px;
+			margin: 20px 5px;
+		}
+		#Glass{
+			width: auto;
+			height: 60px;
+			line-height: 60px;
+			margin: 20px 5px;
+		}
+		#Cat1{
+			width: auto;
+			height: 30px;
+			line-height: 30px;
+			margin: 20px 5px;
+		}
+		section{
+			clear: both;
+			padding: 20px 20%;
+		}
+	</style>
+</head>
+<body>
+	<div id="Super"> 
+		Super
+		<div id="Cat">
+			Cat
+			<div id="Apple">
+				Apple
+				<div id="Pear">Pear</div>
+				<div id="Pig">Pig</div>
+				<div id="Cola">Cola</div>
+				<div id="Soccer">Soccer</div>
+			</div>
+			<div id="Phone">Phone</div>
+			<div id="B-S">
+				<div id="Book">Book</div>
+				<div id="School">School</div>
+			</div>
+		</div>
+		<div id="Note">
+			Note
+			<div id="Human">
+				Human
+				<div id="Code">Code</div>
+				<div id="Operate">Operate</div>
+				<div id="Man">Man</div>
+			</div>
+			<div id="Program">
+				Program
+				<div id="Bement">
+					Bement
+					<div id="Cat1">Cat</div>
+				</div>
+				<div id="Glass">Glass</div>
+			</div>
+		</div>
+		<div id="Fish">Fish</div>
+	</div>
+	<section id="insert-del">
+		<button id="delete">删除选中元素</button>
+		<input id="nodeValue" type="text" placeholder="请输入要节点的内容"/>
+		<button id="insert">插入节点</button>
+	</section>
+	<section id="findSelect">
+		<button id="deepth-find">深度优先搜索</button>
+		<input id="textValue" type="text" placeholder="请输入要查询的内容"/>
+		<button id="breadth-find">广度优先搜索</button>
+	</section>
+</body>
+</html>

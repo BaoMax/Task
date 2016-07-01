@@ -1,0 +1,11 @@
+body{
+	width:980px;
+	height: 1386px;
+}
+#borderimg1 { 
+    border: 10px solid transparent;
+    padding: 15px;
+    -webkit-border-image: url(border.jpg) 25% 25% 25% 25% /25px round round; /* Safari 3.1-5 */
+    /*-o-border-image: url(border.jpg) 25% 25% 25% 25% /25px round round; /* Opera 11-12.1 */*/
+    /*border-image: url(border.jpg) 25% 25% 25% 25% /25px round round;*/
+}
