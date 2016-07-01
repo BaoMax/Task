@@ -12,14 +12,39 @@
 <body>
 	<canvas id="myCanvas" width="600" height="600"></canvas>
 	<section id="command">
-		<div id="lineOne">对1号轨道：<button class="create">创建</button><button>飞行</button><button>停止</button><button>自爆</button></div>
-		<div id="lineTwo">对2号轨道：<button class="create">创建</button><button>飞行</button><button>停止</button><button>自爆</button></div>
-		<div id="lineThree">对3号轨道：<button class="create">创建</button><button>飞行</button><button>停止</button><button>自爆</button></div>
-		<div id="lineFour">对4号轨道：<button class="create">创建</button><button>飞行</button><button>停止</button><button>自爆</button></div>
+		<div id="lineOne">对1号轨道：<button data-type="create">创建</button><button data-type="run">飞行</button><button data-type="stop">停止</button><button data-type="destroy">自爆</button></div>
+		<div id="lineTwo">对2号轨道：<button data-type="create">创建</button><button data-type="run">飞行</button><button data-type="stop">停止</button><button data-type="destroy">自爆</button></div>
+		<div id="lineThree">对3号轨道：<button data-type="create">创建</button><button data-type="run">飞行</button><button data-type="stop">停止</button><button data-type="destroy">自爆</button></div>
+		<div id="lineFour">对4号轨道：<button data-type="create">创建</button><button data-type="run">飞行</button><button data-type="stop">停止</button><button data-type="destroy">自爆</button></div>
 	</section>
 </body>
 <script type="text/javascript" src="index.js"></script>
 <script type="text/javascript">
+	var canvasWidth = 600;//画布宽度
+	var canvasHeight = 600;//画布高度
+	var center = new Point(300,300);//画布中心点
+	var text = new Point(-10,5);
+	var starRadius = 120;//星球半径
+	var starStyle = 'blue';//星球颜色
+	var setp = 30;
+
+
+	var lineStyle = 'white';//轨道颜色
+	var lines = [];//轨道数组
+	/**生成轨道**/
+	var lineFactory = new LineFactory();
+	for(var i = 1;i <= 4;i++){
+		var r = starRadius+i*setp;
+		var p = new Point(center.x,center.y-r);
+		lines.push(lineFactory.create(r,p));
+	}
+	var textStyle = 'black';//字体颜色
+
+	var DEFAULT_CHARGRING = 2;
+	var DEFAULT_DIS = 5;
+	var DEFAULT_DEGREE = 20;
+
+
 	/**坐标点类**/
 	function Point(x,y){
 		this.x = x || 0;
@@ -40,7 +65,17 @@
 	/**
 	飞船类
 	@state:飞船的状态
+	@width：飞船宽度
+	@height：飞船高度
+	@powerStyle：飞船颜色
+	@tiredStyle：飞船耗能颜色
+	@line：轨道路线
+	@degree：角度
+	@percent：能量百分比
+	@create：创建函数
+	@run:运行函数
 	@destroy:自爆函数
+	@stop：停止函数
 	**/
 	function Ship (line,degree,percent,width,height,powerStyle,tiredStyle) {
 		// body...
@@ -52,123 +87,279 @@
 		this.line = line || 0;
 		this.degree = degree || 0;
 		this.percent = percent || 100;
+		this.mediator = null;
+		this.timer = null;
 	}
-	Ship.prototype = {
-		create:function(line,degree,percent,width,height,powerStyle,tiredStyle){
-			return new Ship(line,degree,percent,width,height,powerStyle,tiredStyle);
-		},
-		run: function(){
-			this.state = "run";
-		},
-		destroy: function(){
-			this.state = "destroy";
-		},
-		stop: function(){
-			this.state = "stop";
+	/**能源系统**/
+	Ship.prototype.energySystem = function(){
+		/**充电**/
+		var self = this;
+		var charging = function(){
+			self.timer = setInterval(function(){
+				if(self.state == "run" || self.state == "destroy"){
+					clearInterval(self.timer);
+					return false;
+				}
+				if(self.percent == 100){
+					clearInterval(self.timer);
+					return false;
+				}
+				self.percent = self.percent + DEFAULT_CHARGRING;
+			},1000);
+		};
+		var disCharging = function(){
+			self.timer = setInterval(function(){
+				if(self.state == "stop" || self.state == "destroy"){
+					clearInterval(self.timer);
+					return false;
+				}
+				if(self.percent <= 0){
+					clearInterval(self.timer);
+					self.percent = 0;
+					self.stateManager().changeState("stop");
+					return false;	
+				};
+				self.percent = self.percent - DEFAULT_DIS;
+			},1000);
+		}
+		return {
+			charging:charging,
+			disCharging:disCharging
+		};
+	}
+	/**动力系统**/
+	Ship.prototype.powerSystem = function(){
+		var self = this;
+		var run = function(){
+			self.timer = setInterval(function(){
+				if(self.degree >= 360)self.degree -= 360;
+				self.degree = self.degree + DEFAULT_DEGREE;
+			},1000);
+		}
+		var stop = function(){
+			clearInterval(self.timer);
+		}
+		return {
+			run:run,
+			stop:stop
+		};	
+	}
+	/**状态管理**/
+	Ship.prototype.stateManager = function(){
+		var self = this;
+		var states = {
+			run : function(){
+				self.state = "run";
+				self.energySystem().disCharging();
+				self.powerSystem().run();
+			},
+			stop : function(){
+				self.state = "stop";
+				self.energySystem().charging();
+				self.powerSystem().stop();
+			},
+			destroy : function(){
+				self.state = "destroy";
+				self.mediator.remove(self);
+			}
+		}
+		var changeState = function(state){
+			if(states[state]){
+				states[state]();
+			}
+		}
+		return {
+			changeState:changeState
 		}
 	}
-
-	var canvasWidth = 600;//画布宽度
-	var canvasHeight = 600;//画布高度
-	var center = new Point(300,300);//画布中心点
-	var text = new Point(-10,5);
-	var starRadius = 120;//星球半径
-	var starStyle = 'blue';//星球颜色
-	var setp = 30;
-
-	var lineStyle = 'white';//轨道颜色
-	var lines = [];//轨道数组
-	/**生成轨道**/
-	var lineFactory = new LineFactory();
-	for(var i = 1;i <= 4;i++){
-		var r = starRadius+i*setp;
-		var p = new Point(center.x,center.y-r);
-		lines.push(lineFactory.create(r,p));
+	/**接受信号**/
+	Ship.prototype.signalManage = function(){
+		var self = this;
+		var receive = function(msg,from){
+			if(self.line == msg.id && self.state != msg.command){
+				self.stateManager().changeState(msg.command);
+			}
+		}
+		return {
+			receive:receive
+		}
 	}
-	var textStyle = 'black';//字体颜色
-	var ships = [];//飞船集合
-
-
-	function init(){
-		drawBackground();
-		drawShip();
+	/**
+	指挥官类
+	@create:创建飞船函数
+	@run:飞船运行函数
+	@stop：飞船停止飞行函数
+	@destroy：飞船自毁函数
+	**/
+	function Command(){
+		this.name = "command";
+		this.mediator = null;
+	}	
+	Command.prototype = {
+		send:function(msg,to){
+			this.mediator.send(msg,this,to);
+		}
 	}
-	function drawBackground(){
-		var canvas = document.getElementById("myCanvas");
-		var context = canvas.getContext("2d");
-
-		context.clearRect(0,0,canvasWidth,canvasHeight); // clear canvas
-		context.translate(0,0);
-		//darw star
-		context.fillStyle = starStyle;
-		context.beginPath();
-		context.arc(center.x,center.y,starRadius,0,2*Math.PI,true);
-		context.closePath();
-		context.fill();
-
-		//draw line
-		for (var i = 0; i < lines.length; i++) {
-			context.strokeStyle = lines[i].style;
-			context.beginPath();
-			context.arc(center.x,center.y,lines[i].radius,0,2*Math.PI,true);
-			context.closePath();
-			context.stroke();
+	function buttonHandler(Command){
+		var targets = document.getElementById("command").getElementsByTagName("div");
+		for (var i = 0;i < targets.length; i++) {
+			(function(i){
+				targets[i].onclick = function(e){
+					var id = i;
+					var command = e.target.getAttribute("data-type");
+					Command.send({
+						'id':id,
+						'command':command
+					});
+				};
+			})(i);
 		};
 	}
-	function drawRoundRect (context,ship) {
-		// body...
-		var powerWidth = ship.width*ship.percent/100;
-		var tiredWidth = ship.width-powerWidth;
-
-		var x = -ship.width/2;
-		var y = -ship.height/2;
-		context.fillStyle = ship.powerStyle;
-		context.fillRect(x,y,powerWidth,ship.height);
-
-		x = x + powerWidth;
-		y = y;
-		context.fillStyle = ship.tiredStyle;
-		context.fillRect(x,y,tiredWidth,ship.height);
-
-		context.fillStyle = textStyle;
-		context.fillText(ship.percent+"%",text.x,text.y);
-	}
-	function drawShip(){
-		var canvas = document.getElementById("myCanvas");
-		var context = canvas.getContext("2d");
-
-		for (var i = 0; i < lines.length && i < ships.length; i++) {
-			context.save();
-			var ship = ships[i];
-			if(ship.state == "run"){
-				ship.degree = ship.degree + 20*Math.PI/180;
-				ship.percent = ship.percent - 5;
-				if(ship.percent <= 0){
-					ship.stop();
+	/**
+	信息传输类
+	@send：发送函数
+	**/
+	function Mediator(){
+		var ships = [];
+		var commander = null;
+		return {
+			register:function(obj){
+				if(obj instanceof Command){
+					commander = obj;
+					obj.mediator = this;
+				}else if(obj instanceof Ship){
+					ships[obj.line] = obj;
+					obj.mediator = this;
 				}
-			}
-			if(ship.state == "run" || ship.state == "stop"){
-				line = lines[ship.line-1];
-				var x = line.start.x - line.radius*Math.sin(ship.degree);
-				var y = line.start.y + line.radius - line.radius*Math.cos(ship.degree);
-				context.save();
-				context.translate(x,y);
-				drawRoundRect(context,ship);
-				context.restore();
+			},
+			send:function(msg,from,to){
+				var flg = Math.floor(Math.random()*10) > 4 ?true:false;
+				if (flg){
+					if(to){
+						to.receive(msg,from);
+					}else{
+						if(msg.command == "create"){
+							this.create(msg);
+						}
+						for(key in ships){
+							if(ships[key] !== from){
+								ships[key].signalManage().receive(msg,from);
+							}
+						}
+					}
+				};
+			},
+			create:function(msg){
+				if(ships[msg.id] == undefined){
+					var ship = new Ship(msg.id);
+					this.register(ship);
+					return true;
+				}
+				return false;
+			},
+			remove:function(obj){
+				if(obj instanceof Ship){
+					return delete ships[obj.line];
+				}
+				return false;
+			},
+			getShips:function(){
+				return ships;
 			}
 		};
 	}
 
-	init();
+	function AnimUtil(){
+		this.mediator = null;
+		/**画背景**/
+		function drawBackground(){
+			var canvas = document.getElementById("myCanvas");
+			var context = canvas.getContext("2d");
 
-	setInterval(function(){
-		init();
-	},1000);
-	document.getElementById("command").onclick = function(e){
-		var target = e.target;
-		var ship = new Ship(1);
-		ship.state = "run";
-		ships.push(ship);
-	};
+			context.clearRect(0,0,canvasWidth,canvasHeight); // clear canvas
+			context.translate(0,0);
+			//darw star
+			context.fillStyle = starStyle;
+			context.beginPath();
+			context.arc(center.x,center.y,starRadius,0,2*Math.PI,true);
+			context.closePath();
+			context.fill();
+
+			//draw line
+			for (var i = 0; i < lines.length; i++) {
+				context.strokeStyle = lines[i].style;
+				context.beginPath();
+				context.arc(center.x,center.y,lines[i].radius,0,2*Math.PI,true);
+				context.closePath();
+				context.stroke();
+			};
+		}
+		/**画船矩形**/
+		function drawRoundRect (context,ship) {
+			// body...
+			var powerWidth = ship.width*ship.percent/100;
+			var tiredWidth = ship.width-powerWidth;
+
+			var x = -ship.width/2;
+			var y = -ship.height/2;
+			context.fillStyle = ship.powerStyle;
+			context.fillRect(x,y,powerWidth,ship.height);
+
+			x = x + powerWidth;
+			y = y;
+			context.fillStyle = ship.tiredStyle;
+			context.fillRect(x,y,tiredWidth,ship.height);
+
+			context.fillStyle = textStyle;
+			context.fillText(ship.percent+"%",text.x,text.y);
+		}
+		/**画飞船**/
+		function drawShip(ships){
+			console.log(ships.length);
+			var canvas = document.getElementById("myCanvas");
+			var context = canvas.getContext("2d");
+
+			for (var i = 0; i < lines.length && i < ships.length; i++) {
+				context.save();
+				var ship = ships[i];
+				if(ship.state == "run" || ship.state == "stop"){
+					line = lines[ship.line];
+					var x = line.start.x - line.radius*Math.sin(ship.degree);
+					var y = line.start.y + line.radius - line.radius*Math.cos(ship.degree);
+					context.save();
+					context.translate(x,y);
+					drawRoundRect(context,ship);
+					context.restore();
+				}
+			};
+		}
+
+		var setMediator = function(_mediator){
+			this.mediator = _mediator;
+		}
+		var onDraw = function(){
+			console.log("aaa");
+			drawBackground();
+			drawShip(this.mediator.getShips());
+		}
+		return {
+			onDraw:onDraw,
+			setMediator:setMediator
+		};
+	}
+
+	// function init(){
+		var commander = new Command();
+		var mediator = new Mediator();
+		var animUtil = new AnimUtil();
+		buttonHandler(commander);
+		mediator.register(commander);
+		animUtil.setMediator(mediator);
+		// setInterval(animUtil.onDraw(),100);
+		setInterval(function(){
+			animUtil.onDraw();
+		},1000);
+	// }
+	// init();
 </script>
 </html>
