@@ -4,19 +4,46 @@
 	<meta charset="UTF-8">
 	<title>Task26</title>
 	<style type="text/css">
+		body{
+			background-color: #000;
+			color: #fff;
+		}
 		#myCanvas{
 			background-color: #000;
+			float: left;
+		}
+		#command{
+			
+		}
+		#consoleTab{
+			width: 600px;
+			height: 400px;
+			border: 1px solid green;
+			margin: 20px 0px;
+			color: red;
+			overflow: auto;
+		}
+		.line{
+			padding: 5px 0px;
+		}
+		.line button{
+			padding: 5px 15px;
+			margin: 5px;
+			line-height: 100%;
 		}
 	</style>
 </head>
 <body>
 	<canvas id="myCanvas" width="600" height="600"></canvas>
-	<section id="command">
-		<div id="lineOne">对1号轨道：<button data-type="create">创建</button><button data-type="run">飞行</button><button data-type="stop">停止</button><button data-type="destroy">自爆</button></div>
-		<div id="lineTwo">对2号轨道：<button data-type="create">创建</button><button data-type="run">飞行</button><button data-type="stop">停止</button><button data-type="destroy">自爆</button></div>
-		<div id="lineThree">对3号轨道：<button data-type="create">创建</button><button data-type="run">飞行</button><button data-type="stop">停止</button><button data-type="destroy">自爆</button></div>
-		<div id="lineFour">对4号轨道：<button data-type="create">创建</button><button data-type="run">飞行</button><button data-type="stop">停止</button><button data-type="destroy">自爆</button></div>
-	</section>
+	<div style="float:right">
+		<section id="consoleTab"></section>
+		<section id="command">
+			<div class="line">对1号轨道：<button data-type="create">创建</button><button data-type="run">飞行</button><button data-type="stop">停止</button><button data-type="destroy">自爆</button></div>
+			<div class="line">对2号轨道：<button data-type="create">创建</button><button data-type="run">飞行</button><button data-type="stop">停止</button><button data-type="destroy">自爆</button></div>
+			<div class="line">对3号轨道：<button data-type="create">创建</button><button data-type="run">飞行</button><button data-type="stop">停止</button><button data-type="destroy">自爆</button></div>
+			<div class="line">对4号轨道：<button data-type="create">创建</button><button data-type="run">飞行</button><button data-type="stop">停止</button><button data-type="destroy">自爆</button></div>
+		</section>
+	</div>
 </body>
 <script type="text/javascript" src="index.js"></script>
 <script type="text/javascript">
@@ -26,7 +53,7 @@
 	var text = new Point(-10,5);
 	var starRadius = 120;//星球半径
 	var starStyle = 'blue';//星球颜色
-	var setp = 30;
+	var setp = 40;
 
 
 	var lineStyle = 'white';//轨道颜色
@@ -40,10 +67,11 @@
 	}
 	var textStyle = 'black';//字体颜色
 
-	var DEFAULT_CHARGRING = 2;
+	var DEFAULT_CHARGRING = 5;
 	var DEFAULT_DIS = 5;
 	var DEFAULT_DEGREE = 20;
 
+	var consoleTab = new ConsoleTab();
 
 	/**坐标点类**/
 	function Point(x,y){
@@ -60,6 +88,20 @@
 	function LineFactory(){
 		this.create = function(r,p){
 			return new Line(r,p);
+		}
+	}
+
+	/**
+	控制台显示
+	**/
+	function ConsoleTab(){
+		this.show = function(flg,msg){
+			var node = document.createElement("p");
+			if(flg){
+				node.style.color = "#fff";
+			}
+			node.innerHTML = msg;
+			document.getElementById("consoleTab").appendChild(node);
 		}
 	}
 	/**
@@ -95,28 +137,30 @@
 		/**充电**/
 		var self = this;
 		var charging = function(){
-			self.timer = setInterval(function(){
+			var timer = setInterval(function(){
 				if(self.state == "run" || self.state == "destroy"){
-					clearInterval(self.timer);
+					clearInterval(timer);
 					return false;
 				}
-				if(self.percent == 100){
-					clearInterval(self.timer);
+				if(self.percent + DEFAULT_CHARGRING >= 100){
+					self.percent = 100;
+					clearInterval(timer);
 					return false;
 				}
 				self.percent = self.percent + DEFAULT_CHARGRING;
+				return true;
 			},1000);
 		};
 		var disCharging = function(){
-			self.timer = setInterval(function(){
+			var timer = setInterval(function(){
 				if(self.state == "stop" || self.state == "destroy"){
-					clearInterval(self.timer);
+					clearInterval(timer);
 					return false;
 				}
-				if(self.percent <= 0){
-					clearInterval(self.timer);
+				if(self.percent - DEFAULT_DIS<= 0){
 					self.percent = 0;
 					self.stateManager().changeState("stop");
+					clearInterval(timer);
 					return false;	
 				};
 				self.percent = self.percent - DEFAULT_DIS;
@@ -150,17 +194,20 @@
 		var states = {
 			run : function(){
 				self.state = "run";
-				self.energySystem().disCharging();
 				self.powerSystem().run();
+				self.energySystem().disCharging();
+				consoleTab.show(true,"轨道"+(self.line+1)+"飞船开始飞行.....");
 			},
 			stop : function(){
 				self.state = "stop";
-				self.energySystem().charging();
 				self.powerSystem().stop();
+				self.energySystem().charging();
+				consoleTab.show(true,"轨道"+(self.line+1)+"飞船停止飞行.....");
 			},
 			destroy : function(){
 				self.state = "destroy";
 				self.mediator.remove(self);
+				consoleTab.show(true,"轨道"+(self.line+1)+"飞船自毁.....");
 			}
 		}
 		var changeState = function(state){
@@ -240,6 +287,7 @@
 					}else{
 						if(msg.command == "create"){
 							this.create(msg);
+							consoleTab.show(flg,"轨道"+(msg.id+1)+"创建飞船成功.....");
 						}
 						for(key in ships){
 							if(ships[key] !== from){
@@ -247,7 +295,9 @@
 							}
 						}
 					}
-				};
+				}else{
+					consoleTab.show(flg,"丢包！命令发送失败！");
+				}
 			},
 			create:function(msg){
 				if(ships[msg.id] == undefined){
@@ -268,6 +318,7 @@
 			}
 		};
 	}
+
 
 	function AnimUtil(){
 		this.mediator = null;
@@ -297,16 +348,16 @@
 		/**画船矩形**/
 		function drawRoundRect (context,ship) {
 			// body...
-			var powerWidth = ship.width*ship.percent/100;
-			var tiredWidth = ship.width-powerWidth;
+			var powerWidth = Number(ship.width*ship.percent/100).toFixed(2);
+			var tiredWidth = Number(ship.width-powerWidth).toFixed(2);
 
-			var x = -ship.width/2;
-			var y = -ship.height/2;
+			var x = Number(-ship.width/2).toFixed(2);
+			var y = Number(-ship.height/2).toFixed(2);
 			context.fillStyle = ship.powerStyle;
 			context.fillRect(x,y,powerWidth,ship.height);
 
-			x = x + powerWidth;
-			y = y;
+			x = Number(Number(x) + Number(powerWidth)).toFixed(2);
+			y = Number(y).toFixed(2);
 			context.fillStyle = ship.tiredStyle;
 			context.fillRect(x,y,tiredWidth,ship.height);
 
@@ -315,19 +366,20 @@
 		}
 		/**画飞船**/
 		function drawShip(ships){
-			console.log(ships.length);
 			var canvas = document.getElementById("myCanvas");
 			var context = canvas.getContext("2d");
 
 			for (var i = 0; i < lines.length && i < ships.length; i++) {
 				context.save();
 				var ship = ships[i];
-				if(ship.state == "run" || ship.state == "stop"){
+				if(ship && (ship.state == "run" || ship.state == "stop")){
 					line = lines[ship.line];
-					var x = line.start.x - line.radius*Math.sin(ship.degree);
-					var y = line.start.y + line.radius - line.radius*Math.cos(ship.degree);
+					var degree = ship.degree*Math.PI/180;
+					var x = line.start.x - line.radius*Math.sin(degree);
+					var y = line.start.y + line.radius - line.radius*Math.cos(degree);
 					context.save();
 					context.translate(x,y);
+					context.rotate(-1*degree);
 					drawRoundRect(context,ship);
 					context.restore();
 				}
@@ -338,7 +390,7 @@
 			this.mediator = _mediator;
 		}
 		var onDraw = function(){
-			console.log("aaa");
+			// console.log("aaa");
 			drawBackground();
 			drawShip(this.mediator.getShips());
 		}
@@ -356,7 +408,7 @@
 		mediator.register(commander);
 		animUtil.setMediator(mediator);
 		// setInterval(animUtil.onDraw(),100);
-		setInterval(function(){
+		var timer = setInterval(function(){
 			animUtil.onDraw();
 		},1000);
 	// }
