@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task26</title>
+	<style type="text/css">
+		body{
+			background-color: #000;
+			color: #fff;
+		}
+		#myCanvas{
+			background-color: #000;
+			float: left;
+		}
+		#command{
+			
+		}
+		#consoleTab{
+			width: 600px;
+			height: 400px;
+			border: 1px solid green;
+			margin: 20px 0px;
+			color: red;
+			overflow: auto;
+		}
+		.line{
+			padding: 5px 0px;
+		}
+		.line button{
+			padding: 5px 15px;
+			margin: 5px;
+			line-height: 100%;
+		}
+		#background,#screen{
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="background" width="600" height="600"></canvas>
+	<canvas id="screen" width="600" height="600"></canvas>
+	<div style="float:right">
+		<section id="consoleTab"></section>
+		<section id="command">
+			<div class="line">对1号轨道：
+				<select class="energy">
+					<option value="0">前进号：3deg/s,5%/s</option>
+					<option value="1">奔腾号：5deg/s,7%/s</option>
+					<option value="2">超越号：8deg/s,9%/s</option>
+				</select>
+				<select class="power">
+					<option value="0">劲能型：2%/s</option>
+					<option value="1">光能型：3%/s</option>
+					<option value="2">永久型：7%/s</option>
+				</select>
+				<button data-type="create">创建</button>
+				<button data-type="run">飞行</button>
+			</div>
+			<div class="line">对2号轨道：
+				<select class="energy">
+					<option value="0">前进号：3deg/s,5%/s</option>
+					<option value="1">奔腾号：5deg/s,7%/s</option>
+					<option value="2">超越号：8deg/s,9%/s</option>
+				</select>
+				<select class="power">
+					<option value="0">劲能型：2%/s</option>
+					<option value="1">光能型：3%/s</option>
+					<option value="2">永久型：7%/s</option>
+				</select>
+				<button data-type="create">创建</button>
+				<button data-type="run">飞行</button>
+			</div>
+			<div class="line">对3号轨道：
+				<select class="energy">
+					<option value="0">前进号：3deg/s,5%/s</option>
+					<option value="1">奔腾号：5deg/s,7%/s</option>
+					<option value="2">超越号：8deg/s,9%/s</option>
+				</select>
+				<select class="power">
+					<option value="0">劲能型：2%/s</option>
+					<option value="1">光能型：3%/s</option>
+					<option value="2">永久型：7%/s</option>
+				</select>
+				<button data-type="create">创建</button>
+				<button data-type="run">飞行</button>
+			</div>
+			<div class="line">对4号轨道：
+				<select class="energy">
+					<option value="0">前进号：3deg/s,5%/s</option>
+					<option value="1">奔腾号：5deg/s,7%/s</option>
+					<option value="2">超越号：8deg/s,9%/s</option>
+				</select>
+				<select class="power">
+					<option value="0">劲能型：2%/s</option>
+					<option value="1">光能型：3%/s</option>
+					<option value="2">永久型：7%/s</option>
+				</select>
+				<button data-type="create">创建</button>
+				<button data-type="run">飞行</button>
+				<!-- <button data-type="stop">停止</button>
+				<button data-type="destroy">自爆</button> -->
+			</div>
+		</section>
+	</div>
+</body>
+<script type="text/javascript" src="index.js"></script>
+</html>

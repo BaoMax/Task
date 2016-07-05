@@ -1,4 +1,3 @@
-
 var canvasWidth = 600;//画布宽度
 var canvasHeight = 600;//画布高度
 var center = new Point(300,300);//画布中心点
@@ -10,18 +9,30 @@ var setp = 40;//轨道距离
 
 var lineStyle = 'white';//轨道颜色
 var lines = [];//轨道数组
-
+s
 var textStyle = 'black';//字体颜色
 
-var DEFAULT_CHARGRING = 3;
-var DEFAULT_DIS = 2;
-var DEFAULT_DEGREE = 20;
-var framTime = 100;
-var sendTime = 1000;
+// var DEFAULT_CHARGRING = 3;
+// var DEFAULT_DIS = 2;
+// var DEFAULT_DEGREE = 20;
+var framTime = 1000;
+var sendTime = 300;
 
 var requestAnimaton = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame;
 var timer = null;
 var consoleTab = new ConsoleTab();
+var energyModel = [
+	{"model":"前进号","speed":3,"disCharge":5},
+	{"model":"奔腾号","speed":5,"disCharge":7},
+	{"model":"超越号","speed":8,"disCharge":9}
+];
+var powerModel = [
+	{"model":"劲能型","charge":2},
+	{"model":"光能型","charge":3},
+	{"model":"永久型","charge":7}
+];
+
+
 
 /**坐标点类**/
 function Point(x,y){
@@ -77,7 +88,7 @@ function ConsoleTab(){
 @destroy:自爆函数
 @stop：停止函数
 **/
-function Ship (line,degree,percent,width,height,powerStyle,tiredStyle) {
+function Ship (line,charge,disCharge,speed,degree,percent,width,height,powerStyle,tiredStyle) {
 	// body...
 	this.state = "stop";
 	this.width = width || 60;
@@ -87,6 +98,9 @@ function Ship (line,degree,percent,width,height,powerStyle,tiredStyle) {
 	this.line = line || 0;
 	this.degree = degree || 0;
 	this.percent = percent || 100;
+	this.charge = charge || 2;
+	this.disCharge = disCharge || 5;
+	this.speed = speed || 3;
 	this.mediator = null;
 	this.timer = null;
 }
@@ -100,12 +114,12 @@ Ship.prototype.energySystem = function(){
 				clearInterval(timer);
 				return false;
 			}
-			if(self.percent + DEFAULT_CHARGRING >= 100){
+			if(self.percent + self.charge >= 100){
 				self.percent = 100;
 				clearInterval(timer);
 				return false;
 			}
-			self.percent = self.percent + DEFAULT_CHARGRING;
+			self.percent = self.percent + self.charge;
 			return true;
 		},framTime);
 	};
@@ -115,13 +129,13 @@ Ship.prototype.energySystem = function(){
 				clearInterval(timer);
 				return false;
 			}
-			if(self.percent - DEFAULT_DIS<= 0){
+			if(self.percent - self.disCharge<= 0){
 				self.percent = 0;
 				self.stateManager().changeState("stop");
 				clearInterval(timer);
 				return false;	
 			};
-			self.percent = self.percent - DEFAULT_DIS;
+			self.percent = self.percent - self.disCharge;
 		},framTime);
 	}
 	return {
@@ -135,7 +149,7 @@ Ship.prototype.powerSystem = function(){
 	var run = function(){
 		self.timer = setInterval(function(){
 			if(self.degree >= 360)self.degree -= 360;
-			self.degree = self.degree + DEFAULT_DEGREE;
+			self.degree = self.degree + self.speed;
 		},framTime);
 	}
 	var stop = function(){
@@ -201,8 +215,8 @@ function Command(){
 	this.mediator = null;
 }	
 Command.prototype = {
-	send:function(msg,to){
-		this.mediator.send(msg,this,to);
+	send:function(msg,energy,power,to){
+		this.mediator.send(this.mediator.adapter.encode(msg),this,energy,power,to);
 	}
 }
 /**
@@ -214,11 +228,41 @@ function buttonHandler(Command){
 		(function(i){
 			targets[i].onclick = function(e){
 				var id = i;
-				var command = e.target.getAttribute("data-type");
-				Command.send({
-					'id':id,
-					'command':command
-				});
+				if(e.target.tagName == "BUTTON"){
+					var command = e.target.getAttribute("data-type");
+					switch(command){
+						case "create":
+						var parentNode = e.target.parentElement;
+						var selects = parentNode.getElementsByTagName("select");
+						var energy = selects[0].options[selects[0].selectedIndex].value;
+						var power = selects[1].options[selects[0].selectedIndex].value;
+						selects[0].setAttribute("disabled","true");
+						selects[1].setAttribute("disabled","true");
+						e.target.innerHTML = "自毁";
+						e.target.setAttribute("data-type","destroy");
+						break;
+						case "run":
+						e.target.innerHTML = "停止";
+						e.target.setAttribute("data-type","stop");
+						break;
+						case "stop":
+						e.target.innerHTML = "飞行";
+						e.target.setAttribute("data-type","run");
+						break;
+						case "destroy":
+						var parentNode = e.target.parentElement;
+						var selects = parentNode.getElementsByTagName("select");
+						selects[0].removeAttribute("disabled");
+						selects[1].removeAttribute("disabled");
+						e.target.innerHTML = "创建";
+						e.target.setAttribute("data-type","create");
+						break;
+					}
+					Command.send({
+						'id':id,
+						'command':command
+					},energy,power);
+				}
 			};
 		})(i);
 	};
@@ -305,7 +349,96 @@ function Mediator(){
 	};
 }
 
+/**
+BUS新的传输介质
+**/
+function BUS(){
+	var mediator = Mediator.call(this);
 
+	var adapter = {
+		//解密
+		decode:function(msg){
+			var id = parseInt(msg.substring(0,4), 2);
+			var command = msg.substring(4);
+			switch(command){
+				case "0000":command = "create";break;
+				case "0001":command = "run";break;
+				case "0010":command = "stop";break;
+				case "0011":command = "destroy";break;
+			}
+			return {
+				"id":id,
+				"command":command
+			};
+		},
+		//加密
+		encode:function(msg){
+			var id = (Number(msg.id)).toString(2);
+			switch(id.length){
+				case 1:id = "000" + id;break;
+				case 2:id = "00" + id;break;
+				case 3:id = "0" + id;break;
+				case 4:break;
+			}
+			var command = msg.command;
+			switch(command){
+				case "create":command = "0000";break;
+				case "run":command = "0001";break;
+				case "stop":command = "0010";break;
+				case "destroy":command = "0011";break;
+			}
+			return id + command;
+		}
+	}; 
+	var create = function(id,energy,power){
+		var ships = mediator.getShips();
+		if(ships[id] == undefined){
+			var charge = powerModel[power].charge;
+			var disCharge = energyModel[energy].disCharge;
+			var speed = energyModel[energy].speed;
+			var ship = new Ship(id,charge,disCharge,speed);
+			this.register(ship);
+			return true;
+		}
+		return false;
+	}
+	var send = function(msg,from,energy,power,to){
+		var self = this;
+		var ships = mediator.getShips();
+		var msg = adapter.decode(msg);
+		var timer = setInterval(function(){
+			var flg = Math.floor(Math.random()*10) > 2 ?true:false;
+			if (flg){
+				clearInterval(timer);
+				if(to){
+					to.receive(msg,from);
+				}else{
+					// var text = adapter.decode(msg);
+					if(msg.command == "create"){
+						self.create(msg.id,energy,power);
+						consoleTab.show(flg,"轨道"+(msg.id+1)+"创建飞船成功.....");
+					}
+					for(key in ships){
+						if(ships[key] !== from){
+							ships[key].signalManage().receive(msg,from);
+						}
+					}
+				}
+			}else{
+				consoleTab.show(flg,"丢包！命令发送失败！");
+			}
+		},sendTime);
+	};
+	return {
+		"create":create,
+		"adapter":adapter,
+		"send":send,
+		"register":mediator.register,
+		"remove":mediator.remove,
+		"getShips":mediator.getShips
+
+	}
+}
 
 function AnimUtil(){
 	this.mediator = null;
@@ -372,6 +505,7 @@ function AnimUtil(){
 				context.rotate(-1*degree);
 				drawRoundRect(context,ship);
 				context.restore();
+				console.log(ship.degree);
 			}
 		};
 	}
@@ -392,7 +526,7 @@ function AnimUtil(){
 
 function init(){
 	var commander = new Command();
-	var mediator = new Mediator();
+	var mediator = new BUS();
 	var animUtil = new AnimUtil();
 	buttonHandler(commander);
 	mediator.register(commander);

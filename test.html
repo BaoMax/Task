@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		canvas{
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="background" width="600" height="600"></canvas>
+	<canvas id="screen" width="600" height="600"></canvas>
+	<script type="text/javascript">
+		var canvas = document.getElementById("background");
+		var context = canvas.getContext("2d");
+		context.fillStyle = "#000";
+		context.fillRect(0,0,600,600);
+
+
+		canvas = document.getElementById("screen");
+		context = canvas.getContext("2d");
+		context.fillStyle = "red";
+		context.fillRect(150,150,300,300);
+		var count = 0;	
+		var timer = setInterval(function () {
+			// body...
+			if(count%3 == 0){
+				context.fillStyle = "yellow";
+				count++;
+			}else if(count%3 == 1){
+				context.fillStyle = "red";
+				count++;
+			}else if(count%3 == 2){
+				context.fillStyle = "green";
+				count++;
+			}
+			context.fillRect(150,150,300,300);
+		},1000);
+	</script>
+</body>
+</html>
