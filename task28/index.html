@@ -8,23 +8,32 @@
 			background-color: #000;
 			color: #fff;
 		}
-		#myCanvas{
-			background-color: #000;
-			float: left;
-		}
 		#command{
-			
+			border: 1px solid #ddd;
 		}
 		#consoleTab{
 			width: 600px;
-			height: 400px;
-			border: 1px solid green;
-			margin: 20px 0px;
+			height: 200px;
+			border: 1px solid #ddd;
+			padding: 20px;
 			color: red;
 			overflow: auto;
 		}
+		#table{
+			border:1px solid #ddd;
+			width: 600px;
+			height: 200px;
+			padding: 20px;
+		}
+		#table table{
+			border-collapse:collapse;
+		}
+		#table table td{
+			border: 1px solid #fff;
+			padding: 10px;
+		}
 		.line{
-			padding: 5px 0px;
+			
 		}
 		.line button{
 			padding: 5px 15px;
@@ -33,7 +42,7 @@
 		}
 		#background,#screen{
 			position: absolute;
-			top: 0px;
+			top: 40px;
 			left: 0px;
 		}
 	</style>
@@ -43,6 +52,11 @@
 	<canvas id="screen" width="600" height="600"></canvas>
 	<div style="float:right">
 		<section id="consoleTab"></section>
+		<section id="table">
+			<table>
+				<th><td>飞船</td><td>动力系统</td><td>能源系统</td><td>当前飞行状态</td><td>剩余能耗</td></th>
+			</table>
+		</section>
 		<section id="command">
 			<div class="line">对1号轨道：
 				<select class="energy">

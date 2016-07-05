@@ -8,8 +8,7 @@ var setp = 40;//轨道距离
 
 
 var lineStyle = 'white';//轨道颜色
-var lines = [];//轨道数组
-s
+var lines = [];//轨道数组s
 var textStyle = 'black';//字体颜色
 
 // var DEFAULT_CHARGRING = 3;
@@ -17,6 +16,7 @@ var textStyle = 'black';//字体颜色
 // var DEFAULT_DEGREE = 20;
 var framTime = 1000;
 var sendTime = 300;
+var shipBoradcast = 1000;
 
 var requestAnimaton = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame;
 var timer = null;
@@ -63,11 +63,13 @@ for(var i = 1;i <= 4;i++){
 **/
 function ConsoleTab(){
 	this.show = function(flg,msg){
-		var node = document.createElement("p");
+		var node = document.createElement("span");
 		if(flg){
 			node.style.color = "#fff";
 		}
 		node.innerHTML = msg;
+		document.getElementById("consoleTab").appendChild(node);
+		node = document.createElement("br")
 		document.getElementById("consoleTab").appendChild(node);
 	}
 }
@@ -199,8 +201,48 @@ Ship.prototype.signalManage = function(){
 			self.stateManager().changeState(msg.command);
 		}
 	}
+	var send = function(msg,to){
+		var self = this;
+		var timer = setInterval(function(){
+			self.mediator.send(self.mediator.adapter.encode(msg),self,to);
+		},shipBoradcast);
+	}
+	var adapter = {
+		//解密
+		decode:function(msg){
+			var id = parseInt(msg.substring(0,3), 2);
+			var command = msg.substring(3,5);
+			switch(command){
+				case "00":
+					command = "create";
+					var energy = parseInt(msg.substring(5,7),2);
+					var power = parseInt(msg.substring(7,9),2);
+					return {
+						"id":id,
+						"command":command,
+						"energy":energy,
+						"power":power
+					};
+					break;
+				case "01":
+					command = "run";
+					break;
+				case "10":
+					command = "stop";
+					break;
+				case "11":
+					command = "destroy";
+					break;
+			}
+			return {
+				"id":id,
+				"command":command
+			};
+		}
+	}
 	return {
-		receive:receive
+		receive:receive,
+		send:send
 	}
 }
 /**
@@ -213,10 +255,45 @@ Ship.prototype.signalManage = function(){
 function Command(){
 	this.name = "command";
 	this.mediator = null;
+	this.DC = [];
 }	
 Command.prototype = {
-	send:function(msg,energy,power,to){
-		this.mediator.send(this.mediator.adapter.encode(msg),this,energy,power,to);
+	adapter:{
+		//加密
+		encode:function(msg){
+			var id = (Number(msg.id)).toString(2);
+			switch(id.length){
+				case 1:id = "00" + id;break;
+				case 2:id = "0" + id;break;
+				case 3:break;
+			}
+			var command = msg.command;
+			switch(command){
+				case "create":
+					command = "00";
+					if(msg.energy == 0)command += "00";
+					else if(msg.energy == 1)command += "01";
+					else if(msg.energy == 2)command += "10";
+
+					if(msg.power == 0)command += "00";
+					else if(msg.power == 1)command += "01";
+					else if(msg.power == 2)command += "10";
+					break;
+				case "run":
+					command = "01";
+					break;
+				case "stop":
+					command = "10";
+					break;
+				case "destroy":
+					command = "11";
+					break;
+			}
+			return id + command;
+		}
+	},
+	send:function(msg,to){
+		this.mediator.send(this.adapter.encode(msg),this,to);
 	}
 }
 /**
@@ -240,14 +317,28 @@ function buttonHandler(Command){
 						selects[1].setAttribute("disabled","true");
 						e.target.innerHTML = "自毁";
 						e.target.setAttribute("data-type","destroy");
+						Command.send({
+							'id':id,
+							'command':command,
+							'energy':energy,
+							'power':power
+						});
 						break;
 						case "run":
 						e.target.innerHTML = "停止";
 						e.target.setAttribute("data-type","stop");
+						Command.send({
+							'id':id,
+							'command':command
+						});
 						break;
 						case "stop":
 						e.target.innerHTML = "飞行";
 						e.target.setAttribute("data-type","run");
+						Command.send({
+							'id':id,
+							'command':command
+						});
 						break;
 						case "destroy":
 						var parentNode = e.target.parentElement;
@@ -256,12 +347,12 @@ function buttonHandler(Command){
 						selects[1].removeAttribute("disabled");
 						e.target.innerHTML = "创建";
 						e.target.setAttribute("data-type","create");
+						Command.send({
+							'id':id,
+							'command':command
+						});
 						break;
 					}
-					Command.send({
-						'id':id,
-						'command':command
-					},energy,power);
 				}
 			};
 		})(i);
@@ -355,57 +446,21 @@ BUS新的传输介质
 function BUS(){
 	var mediator = Mediator.call(this);
 
-	var adapter = {
-		//解密
-		decode:function(msg){
-			var id = parseInt(msg.substring(0,4), 2);
-			var command = msg.substring(4);
-			switch(command){
-				case "0000":command = "create";break;
-				case "0001":command = "run";break;
-				case "0010":command = "stop";break;
-				case "0011":command = "destroy";break;
-			}
-			return {
-				"id":id,
-				"command":command
-			};
-		},
-		//加密
-		encode:function(msg){
-			var id = (Number(msg.id)).toString(2);
-			switch(id.length){
-				case 1:id = "000" + id;break;
-				case 2:id = "00" + id;break;
-				case 3:id = "0" + id;break;
-				case 4:break;
-			}
-			var command = msg.command;
-			switch(command){
-				case "create":command = "0000";break;
-				case "run":command = "0001";break;
-				case "stop":command = "0010";break;
-				case "destroy":command = "0011";break;
-			}
-			return id + command;
-		}
-	}; 
-	var create = function(id,energy,power){
+	var create = function(msg){
 		var ships = mediator.getShips();
-		if(ships[id] == undefined){
-			var charge = powerModel[power].charge;
-			var disCharge = energyModel[energy].disCharge;
-			var speed = energyModel[energy].speed;
-			var ship = new Ship(id,charge,disCharge,speed);
+		if(ships[msg.id] == undefined){
+			var charge = powerModel[msg.power].charge;
+			var disCharge = energyModel[msg.energy].disCharge;
+			var speed = energyModel[msg.energy].speed;
+			var ship = new Ship(msg.id,charge,disCharge,speed);
 			this.register(ship);
 			return true;
 		}
 		return false;
 	}
-	var send = function(msg,from,energy,power,to){
+	var send = function(msg,from,to){
 		var self = this;
 		var ships = mediator.getShips();
-		var msg = adapter.decode(msg);
 		var timer = setInterval(function(){
 			var flg = Math.floor(Math.random()*10) > 2 ?true:false;
 			if (flg){
@@ -413,9 +468,8 @@ function BUS(){
 				if(to){
 					to.receive(msg,from);
 				}else{
-					// var text = adapter.decode(msg);
-					if(msg.command == "create"){
-						self.create(msg.id,energy,power);
+					if(msg.substring(3,5) == "00"){
+						self.create(msg);
 						consoleTab.show(flg,"轨道"+(msg.id+1)+"创建飞船成功.....");
 					}
 					for(key in ships){
@@ -431,7 +485,6 @@ function BUS(){
 	};
 	return {
 		"create":create,
-		"adapter":adapter,
 		"send":send,
 		"register":mediator.register,
 		"remove":mediator.remove,
