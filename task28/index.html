@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Task26</title>
+	<title>Task28</title>
 	<style type="text/css">
 		body{
 			background-color: #000;
@@ -28,7 +28,7 @@
 		#table table{
 			border-collapse:collapse;
 		}
-		#table table td{
+		#table table td,th{
 			border: 1px solid #fff;
 			padding: 10px;
 		}
@@ -54,7 +54,7 @@
 		<section id="consoleTab"></section>
 		<section id="table">
 			<table>
-				<th><td>飞船</td><td>动力系统</td><td>能源系统</td><td>当前飞行状态</td><td>剩余能耗</td></th>
+				<tr><th>飞船</th><th>动力系统</th><th>能源系统</th><th>当前飞行状态</th><th>剩余能耗</th></tr>
 			</table>
 		</section>
 		<section id="command">
@@ -113,8 +113,6 @@
 				</select>
 				<button data-type="create">创建</button>
 				<button data-type="run">飞行</button>
-				<!-- <button data-type="stop">停止</button>
-				<button data-type="destroy">自爆</button> -->
 			</div>
 		</section>
 	</div>

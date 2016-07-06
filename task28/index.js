@@ -21,6 +21,7 @@ var shipBoradcast = 1000;
 var requestAnimaton = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame;
 var timer = null;
 var consoleTab = new ConsoleTab();
+var shipTable = new ShipTable(); 
 var energyModel = [
 	{"model":"前进号","speed":3,"disCharge":5},
 	{"model":"奔腾号","speed":5,"disCharge":7},
@@ -74,7 +75,30 @@ function ConsoleTab(){
 	}
 }
 
-
+/**
+**/
+function ShipTable(){
+	var table = document.getElementById("table").getElementsByTagName("table")[0];
+	var add = function(msg){
+		if(table.getElementsByTagName("tr").length <= (msg.id+1)){
+			var tr = document.createElement("tr");
+			tr.innerHTML = "<tr><td>"+(msg.id+1)+"号</td><td>" + energyModel[msg.energy].model + "</td><td>" + powerModel[msg.power].model + "</td><td>stop</td><td>100%</td></tr>";
+			table.appendChild(tr);
+		}else{
+			var tr = table.getElementsByTagName("tr")[msg.id+1];
+			tr.innerHTML = "<tr><td>"+(msg.id+1)+"号</td><td>" + energyModel[msg.energy].model + "</td><td>" + powerModel[msg.power].model + "</td><td>stop</td><td>100%</td></tr>";
+		}
+	}
+	var update = function(msg){
+		var tr = table.getElementsByTagName("tr")[msg.id+1];
+		tr.getElementsByTagName("td")[3].innerHTML = msg.state;
+		tr.getElementsByTagName("td")[4].innerHTML = msg.percent+"%";
+	}
+	return {
+		add:add,
+		update:update
+	}
+}
 /**
 飞船类
 @state:飞船的状态
@@ -90,7 +114,7 @@ function ConsoleTab(){
 @destroy:自爆函数
 @stop：停止函数
 **/
-function Ship (line,charge,disCharge,speed,degree,percent,width,height,powerStyle,tiredStyle) {
+function Ship (line,energy,power,degree,percent,width,height,powerStyle,tiredStyle) {
 	// body...
 	this.state = "stop";
 	this.width = width || 60;
@@ -100,9 +124,11 @@ function Ship (line,charge,disCharge,speed,degree,percent,width,height,powerStyl
 	this.line = line || 0;
 	this.degree = degree || 0;
 	this.percent = percent || 100;
-	this.charge = charge || 2;
-	this.disCharge = disCharge || 5;
-	this.speed = speed || 3;
+	this.power = power || 0;
+	this.energy = energy || 0;
+	this.charge = powerModel[this.power].charge;
+	this.disCharge = energyModel[this.energy].disCharge;
+	this.speed = energyModel[this.energy].speed;
 	this.mediator = null;
 	this.timer = null;
 }
@@ -201,10 +227,20 @@ Ship.prototype.signalManage = function(){
 			self.stateManager().changeState(msg.command);
 		}
 	}
-	var send = function(msg,to){
-		var self = this;
+	var send = function(){
 		var timer = setInterval(function(){
-			self.mediator.send(self.mediator.adapter.encode(msg),self,to);
+			if(self.state == "destroy"){
+				clearInterval(timer);
+				return ;
+			}
+			var msg = {
+				"id":self.line,
+				"energy":self.energy,
+				"power":self.power,
+				"state":self.state,
+				"percent":self.percent
+			};
+			self.mediator.send(self.signalManage().adapter.encode(msg),self,self.mediator.getCommander());
 		},shipBoradcast);
 	}
 	var adapter = {
@@ -238,11 +274,45 @@ Ship.prototype.signalManage = function(){
 				"id":id,
 				"command":command
 			};
+		},
+		//加密
+		encode:function(msg){
+			var id = (Number(msg.id)).toString(2);
+			if(id.length == 1){
+				id = "0" + id;
+			}
+			var energy = (Number(msg.energy)).toString(2);
+			if(energy.length == 1){
+				energy = "0" + energy;
+			}
+			var power = (Number(msg.power)).toString(2);
+			if(power.length == 1){
+				power = "0" + power;
+			}
+			var state;
+			switch(msg.state){
+				case "run":state = "01";break;
+				case "stop":state = "10";break;
+				case "destroy":state = "11";break;
+			}
+			var percent = (Number(msg.percent)).toString(2);
+			switch(percent.length){
+				case 1:percent = "0000000" + percent;break;
+				case 2:percent = "000000" + percent;break;
+				case 3:percent = "00000" + percent;break;
+				case 4:percent = "0000" + percent;break;
+				case 5:percent = "000" + percent;break;
+				case 6:percent = "00" + percent;break;
+				case 7:percent = "0" + percent;break;
+			}
+			return id + energy + power + state + percent;
+
 		}
 	}
 	return {
 		receive:receive,
-		send:send
+		send:send,
+		adapter:adapter
 	}
 }
 /**
@@ -290,11 +360,40 @@ Command.prototype = {
 					break;
 			}
 			return id + command;
+		},
+		//解密
+		decode:function(msg){
+			var id = parseInt(msg.substring(0,2),2);
+			var energy = parseInt(msg.substring(2,4),2);
+			var power = parseInt(msg.substring(4,6),2);
+			var state = msg.substring(6,8);
+			switch(state){
+				case "01":state = "run";break;
+				case "10":state = "stop";break;
+				case "11":state = "destroy";break;
+			}
+			var percent = parseInt(msg.substring(8),2);
+			return {
+				"id":id,
+				"energy":energy,
+				"power":power,
+				"state":state,
+				"percent":percent
+			}
 		}
 	},
 	send:function(msg,to){
-		this.mediator.send(this.adapter.encode(msg),this,to);
-	}
+		this.mediator.send(this.mediator.adapter.encode(msg),this,to);
+	},
+	receive:function(msg,from){
+		msg = this.adapter.decode(msg);
+		var ships = this.mediator.getShips();
+		
+		shipTable.update(msg);
+
+		this.DC.push(msg);
+		consoleTab.show(true,"飞船"+(msg.id+1)+"号广播消息:"+JSON.stringify(msg));
+	},
 }
 /**
 按钮点击事件处理
@@ -312,7 +411,7 @@ function buttonHandler(Command){
 						var parentNode = e.target.parentElement;
 						var selects = parentNode.getElementsByTagName("select");
 						var energy = selects[0].options[selects[0].selectedIndex].value;
-						var power = selects[1].options[selects[0].selectedIndex].value;
+						var power = selects[1].options[selects[1].selectedIndex].value;
 						selects[0].setAttribute("disabled","true");
 						selects[1].setAttribute("disabled","true");
 						e.target.innerHTML = "自毁";
@@ -436,6 +535,9 @@ function Mediator(){
 		},
 		getShips:function(){
 			return ships;
+		},
+		getCommander:function(){
+			return commander;
 		}
 	};
 }
@@ -449,11 +551,13 @@ function BUS(){
 	var create = function(msg){
 		var ships = mediator.getShips();
 		if(ships[msg.id] == undefined){
-			var charge = powerModel[msg.power].charge;
-			var disCharge = energyModel[msg.energy].disCharge;
-			var speed = energyModel[msg.energy].speed;
-			var ship = new Ship(msg.id,charge,disCharge,speed);
+			var ship = new Ship(msg.id,msg.energy,msg.power);
 			this.register(ship);
+			console.log(msg);
+
+			shipTable.add(msg);
+
+			ship.signalManage().send();
 			return true;
 		}
 		return false;
@@ -468,7 +572,8 @@ function BUS(){
 				if(to){
 					to.receive(msg,from);
 				}else{
-					if(msg.substring(3,5) == "00"){
+					msg = adapter.decode(msg);
+					if(msg.command == "create"){
 						self.create(msg);
 						consoleTab.show(flg,"轨道"+(msg.id+1)+"创建飞船成功.....");
 					}
@@ -483,12 +588,79 @@ function BUS(){
 			}
 		},sendTime);
 	};
+	var adapter = {
+		//解密
+		decode:function(msg){
+			var id = parseInt(msg.substring(0,3), 2);
+			var command = msg.substring(3,5);
+			switch(command){
+				case "00":
+					command = "create";
+					var energy = parseInt(msg.substring(5,7),2);
+					var power = parseInt(msg.substring(7,9),2);
+					return {
+						"id":id,
+						"command":command,
+						"energy":energy,
+						"power":power
+					};
+					break;
+				case "01":
+					command = "run";
+					break;
+				case "10":
+					command = "stop";
+					break;
+				case "11":
+					command = "destroy";
+					break;
+			}
+			return {
+				"id":id,
+				"command":command
+			};
+		},
+		//加密
+		encode:function(msg){
+			var id = (Number(msg.id)).toString(2);
+			switch(id.length){
+				case 1:id = "00" + id;break;
+				case 2:id = "0" + id;break;
+				case 3:break;
+			}
+			var command = msg.command;
+			switch(command){
+				case "create":
+					command = "00";
+					if(msg.energy == 0)command += "00";
+					else if(msg.energy == 1)command += "01";
+					else if(msg.energy == 2)command += "10";
+
+					if(msg.power == 0)command += "00";
+					else if(msg.power == 1)command += "01";
+					else if(msg.power == 2)command += "10";
+					break;
+				case "run":
+					command = "01";
+					break;
+				case "stop":
+					command = "10";
+					break;
+				case "destroy":
+					command = "11";
+					break;
+			}
+			return id + command;
+		}
+	};
 	return {
 		"create":create,
 		"send":send,
+		"adapter":adapter,
 		"register":mediator.register,
 		"remove":mediator.remove,
-		"getShips":mediator.getShips
+		"getShips":mediator.getShips,
+		"getCommander":mediator.getCommander
 
 	}
 }
@@ -558,13 +730,11 @@ function AnimUtil(){
 				context.rotate(-1*degree);
 				drawRoundRect(context,ship);
 				context.restore();
-				console.log(ship.degree);
 			}
 		};
 	}
 
 	var setMediator = function(_mediator){
-		console.log(this);
 		mediator = _mediator;
 	}
 	var onDraw = function(){
@@ -585,7 +755,6 @@ function init(){
 	mediator.register(commander);
 	animUtil.setMediator(mediator);
 	animUtil.onDraw();
-	
 }
 
 init();
