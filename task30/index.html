@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task29</title>
+	<style type="text/css">
+		body{
+			font-family: "SimHei";
+			font-size: 20px;
+		}
+		#from{
+			padding: 80px;
+		}
+		#from button{
+			background-color: #2f79ba;
+			width: 150px;
+			height: 44px;
+			border: none;
+			margin-left: 25%;
+			border-radius: 10px;
+			color: #fff;
+			font-size: 16px;
+    		font-weight: bold;
+		}
+		#from label{
+			width: 20%;
+		    height: 44px;
+		    text-align: right;
+		    padding: 0px 20px;
+		    display: inline-block;
+		    line-height: 44px;
+		}
+		#from input{
+			width: 400px;
+		    height: 40px;
+		    border: 1px solid #ddd;
+		    border-radius: 5px;
+		}
+		.tip{
+			margin-left: 24.5%;
+    		font-size: 18px;
+    		margin-top: 8px;
+		}
+		#from section.normal{
+			color: #acacac;
+		}
+		#from section.danger {
+			color: #de000f;
+		}
+		#from section.success {
+			color: #5fbd45;
+		}
+		#from input.danger{
+			border: 1px solid #de000f;
+		}
+		#from input.success{
+			border: 1px solid #5fbd45;
+		}
+	</style>
+</head>
+<body>
+	<form id="from">
+		<section class="input_group">
+			<label>名称</label>
+			<input type="text" name="name" id="name" data-check="checkName"/>
+			<section class="tip" data-msg="必填,请输入4-16个字符"></section>
+		</section>
+		<section class="input_group">
+			<label>密码</label>
+			<input type="password" name="password" id="password" data-check="checkPassword"/>
+			<section class="tip" data-msg="必填,请输入4-16个字符"></section>
+		</section>
+		<section class="input_group">
+			<label>密码确认</label>
+			<input type="password" name="confirm" id="confirm" data-check="checkConfirm"/>
+			<section class="tip" data-msg="请输入相同密码"></section>
+		</section>
+		<section class="input_group">
+			<label>邮箱</label>
+			<input type="email" name="email" id="email" data-check="checkEmail"/>
+			<section class="tip" data-msg="请输入正确的邮箱"></section>
+		</section>
+		<section class="input_group">
+			<label>手机</label>
+			<input type="text" name="phone" id="phone" data-check="checkPhone"/>
+			<section class="tip" data-msg="请输入正确的手机"></section>
+		</section>
+		<button type="submit">验证</button>
+	</form>
+	<script type="text/javascript">
+		var inputs = document.getElementsByTagName("input");
+		var from = document.getElementById("from");
+		var check = new Check;
+		for (var i = 0; i < inputs.length; i++) {
+			inputs[i].onfocus = function(e){
+				var target = e.target;
+				if(target.value == ""){
+					var tip = target.nextElementSibling;
+					var text = tip.getAttribute("data-msg");
+					tip.innerHTML = text;
+					tip.className = "tip normal";
+				}
+			}
+			inputs[i].onblur = function(e){
+				var target = e.target;
+				var name = target.getAttribute("data-check");
+				var tip = target.nextElementSibling;
+				var text = target.value;
+				var str = check[name](text);
+	
+				tip.innerHTML = str.msg;
+				tip.className = "tip "+str.typeName;
+				target.className = str.typeName;
+			}
+		};
+		from.onsubmit = function(e){
+			var result = true;
+			e.preventDefault();
+			e.stopPropagation();
+			for (var i = 0; i < inputs.length; i++) {
+				var text = inputs[i].value;
+				var name = inputs[i].getAttribute("data-check");
+				result = result && check[name](text).result;
+			}
+			if(result){
+				alert("验证通过！");
+			}else{
+				alert("验证不通过！");
+			}
+		}
+		function Check(){
+			var checkName = function(str){
+				var msg = "",typeName,result;
+
+				if(str == ""){
+					msg = "名称不能为空";
+					typeName = "danger";
+					result = false;
+					return {
+						"msg":msg,
+						"typeName":typeName,
+						"result":result
+					}
+				}
+				var size = str.replace(/[^\x00-\xff]/g,"01").length;
+				if(size >=4 && size <= 16){
+					msg = "名称格式正确";
+					typeName = "success";
+					result = true;
+				}else{
+					msg = "名称格式不正确";
+					typeName = "danger";
+					result = false;
+				}
+				return {
+					"msg":msg,
+					"typeName":typeName,
+					"result":result
+				}
+			};
+			var checkPassword = function(str){
+				var msg = "",typeName,result;
+
+				if(str == ""){
+					msg = "密码不能为空";
+					typeName = "danger";
+					result = false;
+					return {
+						"msg":msg,
+						"typeName":typeName,
+						"result":result
+					}
+				}
+				var size = str.length;
+				if(size >=4 && size <= 16){
+					msg = "密码格式正确";
+					typeName = "success";
+					result = true;
+				}else{
+					msg = "密码格式不正确";
+					typeName = "danger";
+					result = false;
+				}
+				return {
+					"msg":msg,
+					"typeName":typeName,
+					"result":result
+				}
+			};
+			var checkConfirm = function(str){
+				var msg = "",typeName,result,text = document.getElementById("password").value;
+
+				if(str == ""){
+					msg = "密码不能为空";
+					typeName = "danger";
+					result = false;
+					return {
+						"msg":msg,
+						"typeName":typeName,
+						"result":result
+					}
+				}
+				if(str === text){
+					msg = "密码相同";
+					typeName = "success";
+					result = true;
+				}else{
+					msg = "两次输入密码不同";
+					typeName = "danger";
+					result = false;
+				}
+				return {
+					"msg":msg,
+					"typeName":typeName,
+					"result":result
+				}
+			};
+			var checkEmail = function(str){
+				var msg = "",typeName,result;
+				var reg = /^(\w)+((\.|\_|\-)\w+)*@(\w)+((\.\w{2,3}){1,3})$/;
+
+				if(str == ""){
+					msg = "邮箱不能为空";
+					typeName = "danger";
+					result = false;
+					return {
+						"msg":msg,
+						"typeName":typeName,
+						"result":result
+					}
+				}
+				if(reg.test(str)){
+					msg = "邮箱格式正确";
+					typeName = "success";
+					result = true;
+				}else{
+					msg = "邮箱格式不正确";
+					typeName = "danger";
+					result = false;
+				}
+				return {
+					"msg":msg,
+					"typeName":typeName,
+					"result":result
+				}
+			};
+			var checkPhone = function(str){
+				var msg = "",typeName,result;
+				var reg = /^1[3-9]\d{9}$/;
+
+				if(str == ""){
+					msg = "手机号不能为空";
+					typeName = "danger";
+					result = false;
+					return {
+						"msg":msg,
+						"typeName":typeName,
+						"result":result
+					}
+				}
+				if(reg.test(str)){
+					msg = "手机号格式正确";
+					typeName = "success";
+					result = true;
+				}else{
+					msg = "手机号格式不正确";
+					typeName = "danger";
+					result = false;
+				}
+				return {
+					"msg":msg,
+					"typeName":typeName,
+					"result":result
+				}
+			}
+			return {
+				"checkName":checkName,
+				"checkPassword":checkPassword,
+				"checkConfirm":checkConfirm,
+				"checkEmail":checkEmail,
+				"checkPhone":checkPhone
+			};
+		}
+	</script>
+</body>
+</html>

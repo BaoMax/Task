@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task29</title>
+	<style type="text/css">
+		body{
+			font-family: "SimHei";
+			font-size: 20px;
+		}
+		#from{
+			padding: 100px;
+		}
+		#from label{
+			width: 20%;
+		    height: 44px;
+		    text-align: right;
+		    padding: 0px 20px;
+		    display: inline-block;
+		    /* margin-top: 5px; */
+		    line-height: 44px;
+		}
+		#from input{
+			width: 400px;
+		    height: 40px;
+		    border: 1px solid #ddd;
+		    border-radius: 5px;
+		}
+		#from button{
+			background-color: #2f79ba;
+			width: 70px;
+			height: 44px;
+			border: none;
+			margin-left: 20px;
+			border-radius: 10px;
+			color: #fff;
+			font-size: 16px;
+    		font-weight: bold;
+		}
+		.tip{
+			margin-left: 24.5%;
+    		font-size: 18px;
+    		margin-top: 8px;
+    		color: #acacac;
+		}
+		#from section.danger {
+			color: red;
+		}
+		#from section.success {
+			color: green;
+		}
+		#from input.danger{
+			border: 1px solid red;
+		}
+		#from input.success{
+			border: 1px solid green;
+		}
+	</style>
+</head>
+<body>
+	<form id="from">
+		<section class="input_group">
+			<label>名称</label>
+			<input type="text" name="text" max="16" min="4" id="msg"/>
+			<button type="submit">验证</button>
+			<section class="tip">必填,请输入4~16个字符</section>
+		</section>
+	</form>
+	<script type="text/javascript">
+		var from = document.getElementById("from");
+		from.onsubmit = function (e) {
+
+			e.preventDefault();
+			e.stopPropagation();
+			var target = e.target;
+			var input = document.getElementById("msg");
+			var text = document.getElementById("msg").value;
+			var tip = target.getElementsByClassName("tip")[0];
+
+			if(text == ""){
+				tip.innerHTML = "名称不能为空";
+				tip.className = "tip danger";
+				input.className = "danger";
+				return false;
+			}
+			var size = getLength(text);
+			if(size >=4 && size <= 16){
+				tip.innerHTML = "名称格式正确";
+				tip.className = "tip success";
+				input.className = "success";
+				return true;
+			}else{
+				tip.innerHTML = "名称格式不正确";
+				tip.className = "tip danger";
+				input.className = "danger";
+				return false;
+			}
+		}
+		function getLength(str){
+			return size = str.replace(/[^\x00-\xff]/g,"01").length;
+		}
+	</script>
+</body>
+</html>
