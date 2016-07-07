@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task31</title>
+	<style type="text/css">
+		body{
+			font-family: "SimHei";
+			font-size: 18px;
+		}
+		#student:checked ~ #school{
+			display: block;
+		}
+		#student:checked ~ #employer{
+			display: none;
+		}
+		#nostudent:checked ~ #school{
+			display: none;
+		}
+		#nostudent:checked ~ #employer{
+			display: block;
+		}
+		select{
+			width: 200px;
+			height: 20px;
+		}
+	</style>
+</head>
+<body>
+	<input type="radio" name="select" id="student" checked/>在校生
+	<input type="radio" name="select" id="nostudent"/>非在校生
+	<section class="from-group" id="school">
+		<label>学校</label>
+		<select name="province" id="province"></select>
+		<select name="city" id="city"></select>
+	</section>
+	<section class="from-group" id="employer">
+		<label>就业单位</label>
+		<input type="text"/>
+	</section>
+	<script type="text/javascript">
+		var cityArray = [
+			{"name":"北京","schoolList":["北京大学","清华大学","政法大学"]},
+			{"name":"上海","schoolList":["同济大学","上海交通大学","华东师范大学"]},
+			{"name":"大连","schoolList":["大连理工大学","大连大学","大连交通大学"]},
+			{"name":"北京1","schoolList":["北京大学1","清华大学1","政法大学1"]},
+			{"name":"上海1","schoolList":["同济大学1","上海交通大学1","华东师范大学1"]},
+			{"name":"大连1","schoolList":["大连理工大学1","大连大学1","大连交通大学1"]}
+		];
+		var province = document.getElementById("province");
+		var city = document.getElementById("city");
+		var DEFAULT = 0;
+
+		init(province,city,DEFAULT);
+		function init(province,city,DEFAULT){
+			province.length = 0;
+			city.length = 0;
+			for(var i = 0;i < cityArray.length;i++){
+				var item = cityArray[i];
+				addOption(province,item.name);
+				if(i == DEFAULT){
+					var schools = item.schoolList;
+					for(var j = 0; j < schools.length;j++){
+						addOption(city,schools[j]);
+					}
+				}
+			}
+			province.onchange = changeProvince;
+			function changeProvince(){
+				var index = province.selectedIndex;
+				var item = cityArray[index];
+				var schools = item.schoolList;
+				city.length = 0;
+				for(var j = 0; j < schools.length;j++){
+					addOption(city,schools[j]);
+				}	
+			}
+			function addOption (node,text) {
+				var element = document.createElement("option");
+				element.innerHTML = text;
+				node.appendChild(element);
+			}
+		}
+	</script>
+</body>
+</html>

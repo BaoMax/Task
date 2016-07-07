@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Task29</title>
+	<title>Task30</title>
 	<style type="text/css">
 		body{
 			font-family: "SimHei";
@@ -120,7 +120,16 @@
 			for (var i = 0; i < inputs.length; i++) {
 				var text = inputs[i].value;
 				var name = inputs[i].getAttribute("data-check");
-				result = result && check[name](text).result;
+				var tip = inputs[i].nextElementSibling;
+				var str = check[name](text);
+
+				tip.innerHTML = str.msg;
+				tip.className = "tip "+str.typeName;
+				inputs[i].className = str.typeName;
+
+				if(result){
+					result = result && str.result;
+				}
 			}
 			if(result){
 				alert("验证通过！");
