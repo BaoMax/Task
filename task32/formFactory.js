@@ -1,12 +1,13 @@
 function FormFactory(){
-	this.createItem = function(obj){
+	this.createItem = function(id,obj){
+		// obj.id = id + "_" + obj.id;
 		if(obj.type == "button"){
-			return createButton(obj);
+			return createButton(id,obj);
 		}else{
-			return createInput(obj);
+			return createInput(id,obj);
 		}
 	}
-	function createInput(obj){
+	function createInput(id,obj){
 		var node = document.createElement("section");
 		node.className = "input_group";
 		var label = document.createElement("label");
@@ -14,6 +15,10 @@ function FormFactory(){
 		node.appendChild(label);
 		var input = document.createElement("input");
 		input.type = obj.type;
+		input.id = id + "_" + obj.id;
+		if(obj.compare){
+			input.dataset.compare = id + "_" +obj.compare;
+		}
 		input.dataset.rules = obj.rules;
 		input.dataset.success = obj.success;
 		input.dataset.fail = obj.fail;
@@ -27,9 +32,10 @@ function FormFactory(){
 		val.validator = obj.validator;
 		return node;
 	}
-	function createButton(obj){
+	function createButton(id,obj){
 		var node = document.createElement("input");
 		node.type = "submit";
+		node.id = id + "_" + obj.id;
 		node.innerHTML = obj.name;
 		return node;
 	}
