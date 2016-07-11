@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task33</title>
+	<style type="text/css">
+		.num{
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			font-size: 24px;
+			line-height: 50px;
+			text-align: center;
+		}
+		#sideways .num{
+			width: 42px;
+		}
+		#sideways{
+			/*display: inline;*/
+			margin-left: 50px;
+		}
+		#vertically{
+			float: left;
+			display: inline;
+			width: 50px;
+		}
+		#board{
+			/*background-color: black;*/
+		}
+		#box{
+			position: absolute;
+			top: 58px;
+			left: 58px;
+			/*background-color: red;*/
+		}
+		/*#board{
+			width: 500px;
+			height: 500px;
+			border:1px solid #000;
+			margin-left: 50px;
+		}
+		.common{
+			width: 50px;
+			height: 50px;
+			display: inline-block;
+			border-bottom: 1px solid #dedede;
+			border-right: 1px solid #dedede;
+		}*/
+	</style>
+</head>
+<body>
+	<div id="sideways">
+		<span class="num">1</span>
+		<span class="num">2</span>
+		<span class="num">3</span>
+		<span class="num">4</span>
+		<span class="num">5</span>
+		<span class="num">6</span>
+		<span class="num">7</span>
+		<span class="num">8</span>
+		<span class="num">9</span>
+		<span class="num">10</span>
+	</div>
+	<div id="vertically">
+		<span class="num">1</span>
+		<span class="num">2</span>
+		<span class="num">3</span>
+		<span class="num">4</span>
+		<span class="num">5</span>
+		<span class="num">6</span>
+		<span class="num">7</span>
+		<span class="num">8</span>
+		<span class="num">9</span>
+		<span class="num">10</span>
+	</div>
+	<!-- <div id="board">
+		<span class="common"></span>
+		<span class="common"></span>
+		<span class="common"></span>
+		<span class="common"></span>
+		<span class="common"></span>
+		<span class="common"></span>
+		<span class="common"></span>
+		<span class="common"></span>
+		<span class="common"></span>
+		<span class="common"></span>
+	</div> -->
+	<canvas id="board" width="500" height="500"></canvas>
+	<canvas id="box" width="500" height="500"></canvas>
+	<div>
+		<br>
+		<label>请输入：</label>
+		<input type="text" name="command" id="command"/>
+		<button id="exe">执行</button>
+	</div>
+	<script type="text/javascript">
+		var DEFAULT_SETP = 50;
+		var DEFAULT_WIDTH = 500;
+		var DEFAULT_HEIGHT = 500;
+		var DEFAULT_LENGTH = 500;
+		var DEFAULT_POINT = {"x":0,"y":0};
+		var DEFAULT_NUM = 10;
+		var DEFAULT_DIRECTION = {"axis":"y","symbol":"-"};
+		var DEFAULT_DEGREE = 0;
+
+		function drawBoard(context,width,height){
+			context.strokeStyle = "#000";
+			context.strokeRect(0,0,width,height);
+		}
+		function drawline(cont,x1,y1,x2,y2){
+			cont.beginPath();
+			cont.moveTo(x1,y1);
+			cont.lineTo(x2,y2);
+			cont.closePath();
+			cont.stroke();
+		}
+		function drawVerGrid(context,x,y,length,setp,num){
+			var startX = x || DEFAULT_POINT.x;
+			var startY = y || DEFAULT_POINT.y;
+			var length = length || DEFAULT_LENGTH;
+			var setp = setp || DEFAULT_SETP;
+			var num = num || DEFAULT_NUM;
+			for(var i = 1;i < num;i++){
+				var nextX = startX + i*setp;
+				drawline(context,nextX,startY,nextX,length);
+			}
+		}
+		function drawHorzGrid(context,x,y,length,setp,num){
+			var startX = x || DEFAULT_POINT.x;
+			var startY = y || DEFAULT_POINT.y;
+			var length = length || DEFAULT_LENGTH;
+			var setp = setp || DEFAULT_SETP;
+			var num = num || DEFAULT_NUM;
+			for(var i = 1;i < num;i++){
+				var nextY = startY + i*setp;
+				drawline(context,startX,nextY,length,nextY);
+			}
+		}
+		function roateBox(context,degree){
+			var setp = DEFAULT_SETP;
+			var offset = DEFAULT_SETP/2;
+			var deg = degree || 0;
+			context.save();
+			context.translate(DEFAULT_POINT.x*setp+offset,DEFAULT_POINT.y*setp+offset);
+
+			context.rotate(deg*Math.PI/180);
+
+			drawBox(context,offset);
+			context.restore();
+			DEFAULT_DEGREE = deg;
+		}
+		function goBox(context,point){
+			var setp = DEFAULT_SETP;
+			var offset = DEFAULT_SETP/2;
+
+			context.save();
+			context.translate(point.x*setp+offset,point.y*setp+offset);
+
+			context.rotate(DEFAULT_DEGREE*Math.PI/180);
+
+			drawBox(context,offset);
+			context.restore();
+			DEFAULT_POINT.x = point.x;
+			DEFAULT_POINT.y = point.y;
+		}
+		function drawBox(context,offset){
+			context.fillStyle = "red";
+			context.fillRect(-offset,-offset,50,10);
+			context.fillStyle = "blue";
+			context.fillRect(-offset,-offset+10,50,40);
+		}
+		function goHandler(context){
+			var axis = DEFAULT_DIRECTION.axis;
+			var symbol = DEFAULT_DIRECTION.symbol;
+			var point = {};
+			if(axis == "x" && symbol == "+"){
+				point.x = DEFAULT_POINT.x + 1;
+				point.y = DEFAULT_POINT.y;
+			}else if(axis == "x" && symbol == "-"){
+				point.x = DEFAULT_POINT.x - 1;
+				point.y = DEFAULT_POINT.y;
+			}else if(axis == "y" && symbol == "+"){
+				point.y = DEFAULT_POINT.y + 1;
+				point.x = DEFAULT_POINT.x;
+			}else if(axis == "y" && symbol == "-"){
+				point.y = DEFAULT_POINT.y - 1;
+				point.x = DEFAULT_POINT.x;
+			}
+			if(point.x < 0 || point.x > 9 || point.y < 0 || point.y > 9){
+				alert("超出运动范围！");
+				return ;
+			}
+			context.clearRect(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+			goBox(context,point);
+		}
+		function roateHandler(context,degree){
+			var axis = DEFAULT_DIRECTION.axis;
+			var symbol = DEFAULT_DIRECTION.symbol;
+			var direction = {};
+			var deg = DEFAULT_DEGREE + degree;
+			if(deg%360 == 0){deg = 0;}
+
+			switch(degree){
+				case -90:
+				if(axis == "y"){
+					direction.axis = "x";
+					direction.symbol = DEFAULT_DIRECTION.symbol;
+				}
+				if(axis == "x" && symbol == "+"){
+					direction.axis = "y";
+					direction.symbol = "-";
+				}else if(axis == "x" && symbol == "-"){
+					direction.symbol = "+";
+					direction.axis = "y";
+				}
+				DEFAULT_DIRECTION.axis = direction.axis;
+				DEFAULT_DIRECTION.symbol = direction.symbol;
+				break;
+				case 90:
+				if(axis == "x"){
+					direction.axis = "y";
+					direction.symbol = DEFAULT_DIRECTION.symbol;
+				}
+				if(axis == "y" && symbol == "+"){
+					direction.symbol = "-";
+					direction.axis = "x";
+				}else if(axis == "y" && symbol == "-"){
+					direction.symbol = "+";
+					direction.axis = "x";
+				}
+				DEFAULT_DIRECTION.axis = direction.axis;
+				DEFAULT_DIRECTION.symbol = direction.symbol;
+				break;
+				case 180:if(symbol == "+"){
+					direction.symbol = "-";
+				}else if(symbol == "-"){
+					direction.symbol = "+";
+				}
+				DEFAULT_DIRECTION.symbol = direction.symbol;
+				break;
+			}
+			context.clearRect(0,0,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+			roateBox(context,deg);
+		}
+		function init(){
+			var canvas = document.getElementById("board");
+			var context = canvas.getContext("2d");
+			drawBoard(context,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+
+			context.strokeStyle = "#dedede";
+			drawVerGrid(context);
+			drawHorzGrid(context);
+
+
+			var box = document.getElementById("box");
+			var cont = box.getContext("2d");
+			roateHandler(cont,0);
+
+			document.getElementById("exe").onclick = function(){
+				var command = document.getElementById("command").value;
+				switch(command){
+					case "GO":goHandler(cont);break;
+					case "TUN LEF":roateHandler(cont,-90);break;
+					case "TUN RIG":roateHandler(cont,90);break;
+					case "TUN BAC":roateHandler(cont,180);break;
+					default:alert("输入错误！");
+				}
+			}
+		}
+		init();
+	</script>
+</body>
+</html>

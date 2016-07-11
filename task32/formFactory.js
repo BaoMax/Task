@@ -1,13 +1,14 @@
-function FormFactory(){
+function FormFactory(id){
+	this.wapper = document.getElementById(id);
 	this.createItem = function(id,obj){
 		// obj.id = id + "_" + obj.id;
 		if(obj.type == "button"){
-			return createButton(id,obj);
+			return this.createButton(id,obj);
 		}else{
-			return createInput(id,obj);
+			return this.createInput(id,obj);
 		}
 	}
-	function createInput(id,obj){
+	this.createInput = function (id,obj){
 		var node = document.createElement("section");
 		node.className = "input_group";
 		var label = document.createElement("label");
@@ -28,15 +29,22 @@ function FormFactory(){
 		tip.className = "tip";
 		node.appendChild(tip);
 
+		this.wapper.appendChild(node);
+
 		var val = new valControl(node);
 		val.validator = obj.validator;
-		return node;
+		return val;
 	}
-	function createButton(id,obj){
+	this.createButton = function(id,obj){
 		var node = document.createElement("input");
 		node.type = "submit";
 		node.id = id + "_" + obj.id;
 		node.innerHTML = obj.name;
+		
+		node.dataset.success = obj.success;
+		node.dataset.fail = obj.fail;
+
+		this.wapper.appendChild(node);
 		return node;
 	}
 }
