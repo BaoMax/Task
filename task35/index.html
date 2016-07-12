@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task35</title>
+	<style type="text/css">
+		span{
+			display: inline-block;
+			width: 40px;
+			font-size: 24px;
+			text-align: center;
+			height: 40px;
+			line-height: 40px;
+			box-sizing:border-box;
+		}
+		#horz{
+			margin-left: 40px;
+			width: 400px;
+		}
+		#ver{
+			display: inline-block;
+			width: 40px;
+			float: left;
+		}
+		#borad{
+			border:1px solid #000;
+			width: 400px;
+			height: 400px;
+			display: inline-block;
+		}
+		#borad span{
+			border:1px solid #dedede;
+			float: left;
+			box
+		}
+		#box{
+			width: 40px;
+			height: 40px;
+			transform:rotate(0deg);
+			box-sizing:border-box; 
+			background-color: blue;
+			border-top: 6px solid red;
+			position: absolute;
+			transition:all 1s ease-in 0s;
+		}
+		#body{
+			margin: 10px auto;
+			position: relative;
+		}
+		#input{
+			clear: both;
+			margin:5px 40px; 
+		}
+		#textarea{
+			display: block;
+			margin-top: 5px;
+		}
+		#command{
+			background-color: #000;
+			color: green;
+			height: 100px;
+			box-sizing:border-box;
+			font-size: 20px;
+			line-height: 18px;
+			resize:none;
+		}
+		#line{
+			display: inline-block;
+			background-color: #dedede;
+			width: 20px;
+			height: 100px;
+			overflow-x: hidden;
+			overflow-y: scroll;
+		}
+		#line::-webkit-scrollbar{
+			display: none;
+		}
+		#line span{
+			width: 20px;
+    		font-size: 12px;
+    		height: 10px;
+    		line-height: 10px;
+    		border-radius: 5px;
+		}
+	</style>
+</head>
+<body>
+	<div id="body">
+		<div id="horz">
+			<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+		</div>
+		<div id="ver">
+			<span>1</span>
+			<span>2</span>
+			<span>3</span>
+			<span>4</span>
+			<span>5</span>
+			<span>6</span>
+			<span>7</span>
+			<span>8</span>
+			<span>9</span>
+			<span>10</span>
+		</div>
+		<div id="borad">
+			<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+			<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+			<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+			<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+			<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+			<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+			<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+			<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+			<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+			<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+		</div>
+		<div id="box" style="transform:rotate(0deg);top:120px;left:40px;"></div>
+		<div id="input">
+			<button id="exe">执行</button><button id="refresh">清除</button>
+			<div id="textarea">
+				<div id="line"></div><textarea id="command"></textarea>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var button = document.getElementById("exe");
+		var box = document.getElementById("box");
+		var line = document.getElementById("line");
+		var command = document.getElementById("command");
+		var lineNum = 1;
+		var degree = 0;
+		var setp = 40;
+		var commandEXE = {
+			goHandler : function(){
+				switch(degree%360){
+					case 0:case -0:
+						var top = parseInt(box.style.top);
+						if(top == 40)return;
+						box.style.top = (top - setp) + "px";
+					break;
+					case 90:case -270:
+						var left = parseInt(box.style.left);
+						if(left == 400)return;
+						box.style.left = (left + setp) + "px";
+					break;
+					case 180:case -180:
+						var top = parseInt(box.style.top);
+						if(top == 400)return;
+						box.style.top = (top + setp) + "px";
+					break;
+					case 270:case -90:
+						var left = parseInt(box.style.left);
+						if(left == 40)return;
+						box.style.left = (left - setp) + "px";
+					break;
+				}
+			},
+			rotateHandler : function(deg){
+				degree = (degree + deg)%360;
+				console.log("rotate(" + degree + "deg)");
+				box.style.transform = "rotate(" + degree + "deg)";
+			},
+			tarHandler : function(type){
+				/**
+				type:0-上;1-右;2-下;3-左	
+				**/
+				switch(type){
+					case "top":
+						var top = parseInt(box.style.top);
+						if(top == 40)return;
+						box.style.top = (top - setp) + "px";
+					break;
+					case "right":
+						var left = parseInt(box.style.left);
+						if(left == 400)return;
+						box.style.left = (left + setp) + "px";
+					break;
+					case "bottom":
+						var top = parseInt(box.style.top);
+						if(top == 400)return;
+						box.style.top = (top + setp) + "px";
+					break;
+					case "left":
+						var left = parseInt(box.style.left);
+						if(left == 40)return;
+						box.style.left = (left - setp) + "px";
+					break;
+				}
+			},
+			movHandler : function(type){
+				switch(type){
+					case "top":
+						var top = parseInt(box.style.top);
+						if(top == 40)return;
+						box.style.top = (top - setp) + "px";
+						box.style.transform = "rotate(0deg)";
+						degree = 0;
+					break;
+					case "right":
+						var left = parseInt(box.style.left);
+						if(left == 400)return;
+						box.style.left = (left + setp) + "px";
+						box.style.transform = "rotate(90deg)";
+						degree = 90;
+					break;
+					case "bottom":
+						var top = parseInt(box.style.top);
+						if(top == 400)return;
+						box.style.top = (top + setp) + "px";
+						box.style.transform = "rotate(180deg)";
+						degree = 180;
+					break;
+					case "left":
+						var left = parseInt(box.style.left);
+						if(left == 40)return;
+						box.style.left = (left - setp) + "px";
+						box.style.transform = "rotate(270deg)";
+						degree = 270;
+					break;
+				}
+			},
+			test : function(text){
+				switch(text){
+					case "GO":commandEXE.goHandler();return true;
+					case "TUN LEF":commandEXE.rotateHandler(-90);return true;
+					case "TUN RIG":commandEXE.rotateHandler(90);return true;
+					case "TUN BAC":commandEXE.rotateHandler(180);return true;
+					case "TAR LEF":commandEXE.tarHandler("left");return true;
+					case "TAR TOP":commandEXE.tarHandler("top");return true;
+					case "TAR RIG":commandEXE.tarHandler("right");return true;
+					case "TAR BOT":commandEXE.tarHandler("bottom");return true;
+					case "MOV LEF":commandEXE.movHandler("left");return true;
+					case "MOV TOP":commandEXE.movHandler("top");return true;
+					case "MOV RIG":commandEXE.movHandler("right");return true;
+					case "MOV BOT":commandEXE.movHandler("bottom");return true;
+				}
+				return false;
+			}
+		};
+
+		command.onfocus = function(){
+			var spanList = line.getElementsByTagName("span");
+			if(spanList.length == 0){
+				createLineNode();
+			}
+		}
+		command.onkeyup = function(e){
+			if(e.keyCode == 13){
+				createLineNode();
+			}
+		}
+		command.onscroll = function(){
+			line.scrollTop = this.scrollTop;
+		}
+		function createLineNode(type){
+			var type = type || "span";
+
+			var span = document.createElement(type);
+			span.innerHTML = lineNum;
+			lineNum = lineNum + 1;
+			line.appendChild(span);
+		}
+		/**
+		GO:前进一格
+		TUN LEF:逆时针旋转90度
+		TUN RIG:顺时针旋转90度
+		TUN BAC:顺时针旋转180度
+		TAR LEF:左移一格
+		TAR TOP:上移一格
+		TAR RIG:右移一格
+		TAR BOT:下移一格
+		MOV LEF:转向屏幕左侧，并向屏幕左侧移动一格
+		MOV TOP:转向屏幕上面，并向屏幕上面移动一格
+		MOV RIG:转向屏幕右侧，并向屏幕右侧移动一格
+		MOV BOT:转向屏幕下面，并向屏幕下面移动一格
+		**/
+		button.onclick = function(){
+			var text = document.getElementById("command").value;
+			var commandList = text.split("\n");
+			var lineList = document.getElementById("line").getElementsByTagName("span");
+			for(var i = 0; i < lineList.length;i++){
+				if(commandList[i]){
+					var tempList = commandList[i].split(" ");
+					if(tempList[0]){
+						switch(tempList[0]){
+							case "GO":
+								if(tempList.length == 1)command.test(tempList[0]);
+								else if(tempList.length == 2){
+									
+								}else{
+									lineList[i].style.backgroundColor = "red";
+								}
+							break;
+							case "TUN":
+							break;
+							case "TAR":
+							break;
+							case "MOV":
+							break;
+							default:lineList[i].style.backgroundColor = "red";
+						}
+					}else{
+						lineList[i].style.backgroundColor = "red";
+					}
+				}else{
+					lineList[i].style.backgroundColor = "red";
+				}
+			}
+		}
+		document.onkeyup = function(e){
+			var keyCode = e.keyCode;
+			if( e.ctrlKey && keyCode == 38 ){
+				commandEXE.movHandler("top");
+				return ;
+			}
+			if( e.ctrlKey && keyCode == 40 ){
+				commandEXE.movHandler("bottom");
+				return ;
+			}
+			if( e.ctrlKey && keyCode == 39 ){
+				commandEXE.movHandler("right");
+				return ;
+			}
+			if( e.ctrlKey && keyCode == 37 ){
+				commandEXE.movHandler("left");
+				return ;
+			}
+			if( e.shiftKey && keyCode == 38 ){
+				commandEXE.goHandler();
+				return ;
+			}
+			if( e.shiftKey && keyCode == 40 ){
+				commandEXE.rotateHandler(180);
+				return ;
+			}
+			if( e.shiftKey && keyCode == 39 ){
+				commandEXE.rotateHandler(90);
+				return ;
+			}
+			if( e.shiftKey && keyCode == 37 ){
+				commandEXE.rotateHandler(-90);
+				return ;
+			}
+			switch(keyCode){
+				case 38:commandEXE.tarHandler("top");return ;
+				case 40:commandEXE.tarHandler("bottom");return ;
+				case 39:commandEXE.tarHandler("right");return ;
+				case 37:commandEXE.tarHandler("left");return ;
+			}
+		}
+	</script>
+</body>
+</html>

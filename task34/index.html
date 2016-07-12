@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Task33</title>
+	<title>Task34</title>
 	<style type="text/css">
 		span{
 			display: inline-block;
 			width: 50px;
 			font-size: 24px;
 			text-align: center;
-			/*float: left;*/
 			height: 50px;
 			line-height: 50px;
 			box-sizing:border-box;
@@ -17,9 +16,6 @@
 		#horz{
 			margin-left: 50px;
 			width: 500px;
-		}
-		#horz span{
-			/*float: left;*/
 		}
 		#ver{
 			display: inline-block;
@@ -45,7 +41,7 @@
 			background-color: blue;
 			border-top: 10px solid red;
 			position: absolute;
-			transition:all .5s ease-in .1s;
+			transition:all 1s ease-in 0s;
 		}
 		#body{
 			margin: 10px auto;
@@ -127,8 +123,81 @@
 				degree = (degree + deg)%360;
 				console.log("rotate(" + degree + "deg)");
 				box.style.transform = "rotate(" + degree + "deg)";
+			},
+			tarHandler : function(type){
+				/**
+				type:0-上;1-右;2-下;3-左	
+				**/
+				switch(type){
+					case "top":
+						var top = parseInt(box.style.top);
+						if(top == 50)return;
+						box.style.top = (top - setp) + "px";
+					break;
+					case "right":
+						var left = parseInt(box.style.left);
+						if(left == 500)return;
+						box.style.left = (left + setp) + "px";
+					break;
+					case "bottom":
+						var top = parseInt(box.style.top);
+						if(top == 500)return;
+						box.style.top = (top + setp) + "px";
+					break;
+					case "left":
+						var left = parseInt(box.style.left);
+						if(left == 50)return;
+						box.style.left = (left - setp) + "px";
+					break;
+				}
+			},
+			movHandler : function(type){
+				switch(type){
+					case "top":
+						var top = parseInt(box.style.top);
+						if(top == 50)return;
+						box.style.top = (top - setp) + "px";
+						box.style.transform = "rotate(0deg)";
+						degree = 0;
+					break;
+					case "right":
+						var left = parseInt(box.style.left);
+						if(left == 500)return;
+						box.style.left = (left + setp) + "px";
+						box.style.transform = "rotate(90deg)";
+						degree = 90;
+					break;
+					case "bottom":
+						var top = parseInt(box.style.top);
+						if(top == 500)return;
+						box.style.top = (top + setp) + "px";
+						box.style.transform = "rotate(180deg)";
+						degree = 180;
+					break;
+					case "left":
+						var left = parseInt(box.style.left);
+						if(left == 50)return;
+						box.style.left = (left - setp) + "px";
+						box.style.transform = "rotate(270deg)";
+						degree = 270;
+					break;
+				}
 			}
 		};
+		/**
+		GO:前进一格
+		TUN LEF:逆时针旋转90度
+		TUN RIG:顺时针旋转90度
+		TUN BAC:顺时针旋转180度
+		TAR LEF:左移一格
+		TAR TOP:上移一格
+		TAR RIG:右移一格
+		TAR BOT:下移一格
+		MOV LEF:转向屏幕左侧，并向屏幕左侧移动一格
+		MOV TOP:转向屏幕上面，并向屏幕上面移动一格
+		MOV RIG:转向屏幕右侧，并向屏幕右侧移动一格
+		MOV BOT:转向屏幕下面，并向屏幕下面移动一格
+		**/
 		button.onclick = function(){
 			var text = document.getElementById("command").value;
 			switch(text){
@@ -136,15 +205,55 @@
 				case "TUN LEF":commandEXE.rotateHandler(-90);break;
 				case "TUN RIG":commandEXE.rotateHandler(90);break;
 				case "TUN BAC":commandEXE.rotateHandler(180);break;
+				case "TAR LEF":commandEXE.tarHandler("left");break;
+				case "TAR TOP":commandEXE.tarHandler("top");break;
+				case "TAR RIG":commandEXE.tarHandler("right");break;
+				case "TAR BOT":commandEXE.tarHandler("bottom");break;
+				case "MOV LEF":commandEXE.movHandler("left");break;
+				case "MOV TOP":commandEXE.movHandler("top");break;
+				case "MOV RIG":commandEXE.movHandler("right");break;
+				case "MOV BOT":commandEXE.movHandler("bottom");break;
 			}
 		}
 		document.onkeyup = function(e){
-			var keyCode = String.fromCharCode(e.which);
+			var keyCode = e.keyCode;
+			if( e.ctrlKey && keyCode == 38 ){
+				commandEXE.movHandler("top");
+				return ;
+			}
+			if( e.ctrlKey && keyCode == 40 ){
+				commandEXE.movHandler("bottom");
+				return ;
+			}
+			if( e.ctrlKey && keyCode == 39 ){
+				commandEXE.movHandler("right");
+				return ;
+			}
+			if( e.ctrlKey && keyCode == 37 ){
+				commandEXE.movHandler("left");
+				return ;
+			}
+			if( e.shiftKey && keyCode == 38 ){
+				commandEXE.goHandler();
+				return ;
+			}
+			if( e.shiftKey && keyCode == 40 ){
+				commandEXE.rotateHandler(180);
+				return ;
+			}
+			if( e.shiftKey && keyCode == 39 ){
+				commandEXE.rotateHandler(90);
+				return ;
+			}
+			if( e.shiftKey && keyCode == 37 ){
+				commandEXE.rotateHandler(-90);
+				return ;
+			}
 			switch(keyCode){
-				case "&":commandEXE.goHandler();break;
-				case "(":commandEXE.rotateHandler(180);break;
-				case "'":commandEXE.rotateHandler(90);break;
-				case "%":commandEXE.rotateHandler(-90);break;	
+				case 38:commandEXE.tarHandler("top");return ;
+				case 40:commandEXE.tarHandler("bottom");return ;
+				case 39:commandEXE.tarHandler("right");return ;
+				case 37:commandEXE.tarHandler("left");return ;
 			}
 		}
 	</script>
