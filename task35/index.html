@@ -55,14 +55,24 @@
 			display: block;
 			margin-top: 5px;
 		}
-		#command{
+		#command,#value{
 			background-color: #000;
 			color: green;
-			height: 100px;
+			/*height: 100px;*/
 			box-sizing:border-box;
 			font-size: 20px;
 			line-height: 18px;
 			resize:none;
+			width: 200px;
+			padding: 0;
+  			border: none;
+		}
+		#command{
+			height: 100px;
+		}
+		#value{
+			height: 0px;
+			overflow: hidden;
 		}
 		#line{
 			display: inline-block;
@@ -118,14 +128,19 @@
 			<button id="exe">执行</button><button id="refresh">清除</button>
 			<div id="textarea">
 				<div id="line"></div><textarea id="command"></textarea>
+				<textarea id="value"></textarea>
+				<div id="output"></div>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
 		var button = document.getElementById("exe");
+		var clearBtn = document.getElementById("refresh");
 		var box = document.getElementById("box");
 		var line = document.getElementById("line");
 		var command = document.getElementById("command");
+		var listener = document.getElementById("value");
+		var lineHeight = getComputedStyle(command).lineHeight;
 		var lineNum = 1;
 		var degree = 0;
 		var setp = 40;
@@ -236,28 +251,52 @@
 				return false;
 			}
 		};
-
 		command.onfocus = function(){
 			var spanList = line.getElementsByTagName("span");
 			if(spanList.length == 0){
 				createLineNode();
 			}
 		}
-		command.onkeyup = function(e){
-			if(e.keyCode == 13){
-				createLineNode();
-			}
-		}
+		command.oninput = setline;
 		command.onscroll = function(){
 			line.scrollTop = this.scrollTop;
+		}
+		line.onscroll = function(e){
+			e.preventDefault();
+			e.stopPropagation();
 		}
 		function createLineNode(type){
 			var type = type || "span";
 
 			var span = document.createElement(type);
 			span.innerHTML = lineNum;
-			lineNum = lineNum + 1;
 			line.appendChild(span);
+		}
+		function removeLineNode(){
+			line.removeChild(line.lastElementChild);
+		}
+		function setRed(node){
+			node.style.backgroundColor = "red";
+		}
+		function setline(){
+			listener.value = command.value;
+			var scrollHeight = listener.scrollHeight;
+			var count = Math.round( parseInt(scrollHeight)/parseInt(lineHeight) );
+			var items = line.getElementsByTagName("span").length;
+			if(count < items){
+				while(count < line.getElementsByTagName("span").length){
+					lineNum = line.getElementsByTagName("span").length - 1;
+					removeLineNode();
+				}
+				lineNum = count;
+			}else if(count > items){
+				while(count > line.getElementsByTagName("span").length){
+					lineNum = line.getElementsByTagName("span").length + 1;
+					createLineNode();
+				}
+				lineNum = count;
+			}
+			document.getElementById("output").innerHTML = "当前行数：" + count;
 		}
 		/**
 		GO:前进一格
@@ -277,34 +316,45 @@
 			var text = document.getElementById("command").value;
 			var commandList = text.split("\n");
 			var lineList = document.getElementById("line").getElementsByTagName("span");
+			var commandSet = [];
+			var flg = true;
+			var reg = /(^((GO)|(TAR LEF)|(TAR RIG)|(TAR BOT)|(TAR TOP)|(MOV LEF)|(MOV RIG)|(MOV BOT)|(MOV TOP))((\s+)\d+)?$)|(^(TUN LEF|TUN RIG|TUN BAC)$)/;
 			for(var i = 0; i < lineList.length;i++){
-				if(commandList[i]){
-					var tempList = commandList[i].split(" ");
-					if(tempList[0]){
-						switch(tempList[0]){
-							case "GO":
-								if(tempList.length == 1)command.test(tempList[0]);
-								else if(tempList.length == 2){
-									
-								}else{
-									lineList[i].style.backgroundColor = "red";
-								}
-							break;
-							case "TUN":
-							break;
-							case "TAR":
-							break;
-							case "MOV":
-							break;
-							default:lineList[i].style.backgroundColor = "red";
-						}
-					}else{
-						lineList[i].style.backgroundColor = "red";
-					}
+				if(!reg.test(commandList[i])){
+					setRed(lineList[i]);
+					flg = false;
 				}else{
-					lineList[i].style.backgroundColor = "red";
+					commandSet.push(commandList[i]);
 				}
 			}
+			if(flg){
+				var regx = /GO|TAR LEF|TAR RIG|TAR BOT|TAR TOP|MOV LEF|MOV RIG|MOV BOT|MOV TOP|TUN LEF|TUN RIG|TUN BAC/;
+				var finallyCommands = [];
+				for(var i = 0; i < commandSet.length;i++){
+					var commandMsg = commandSet[i].match(regx)[0];
+					var num = parseInt(commandSet[i].match(/\d+/)) || 1;
+					for(var j = 0;j < num;j++){
+						finallyCommands.push(commandMsg);
+					}
+				}
+				var i = 0;
+				var timer = setInterval(function(){
+					if(i >= finallyCommands.length){
+						clearInterval(timer);
+						return ;
+					}
+					var commandMsg = finallyCommands[i];
+					commandEXE.test(commandMsg);
+					i = i + 1;
+				},1000);
+			}
+		}
+
+		clearBtn.onclick = function(){
+			command.value = "";
+			listener.value = "";
+			setline();
+			command.focus();
 		}
 		document.onkeyup = function(e){
 			var keyCode = e.keyCode;
