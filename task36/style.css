@@ -1,0 +1,97 @@
+span{
+	display: inline-block;
+	width: 40px;
+	font-size: 24px;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	box-sizing:border-box;
+}
+#horz{
+	margin-left: 40px;
+	width: 400px;
+}
+#ver{
+	display: inline-block;
+	width: 40px;
+	float: left;
+}
+#borad{
+	border:1px solid #000;
+	width: 400px;
+	height: 400px;
+	display: inline-block;
+}
+#borad span{
+	border:1px solid #dedede;
+	float: left;
+}
+#box{
+	width: 40px;
+	height: 40px;
+	transform:rotate(0deg);
+	box-sizing:border-box; 
+	background-color: blue;
+	border-top: 6px solid red;
+	position: absolute;
+	transition:all 1s ease-in 0s;
+}
+#body{
+	margin: 10px auto;
+	position: relative;
+}
+#input{
+	clear: both;
+	margin:5px 40px; 
+	display: inline-block;
+}
+#textarea{
+	display: block;
+	margin-top: 5px;
+}
+button{
+	width: 80px;
+	height: 50px;
+	font-size: 20px;
+	margin: 10px;
+}
+#command,#value{
+	background-color: #000;
+	color: green;
+	/*height: 100px;*/
+	box-sizing:border-box;
+	font-size: 20px;
+	line-height: 18px;
+	resize:none;
+	width: 380px;
+	padding: 0;
+  	border: none;
+}
+#command{
+	height: 300px;
+}
+#value{
+	height: 0px;
+	overflow: hidden;
+}
+#line{
+	display: inline-block;
+	background-color: #dedede;
+	width: 20px;
+	height: 300px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+#line::-webkit-scrollbar{
+	display: none;
+}
+#line span{
+	width: 20px;
+    font-size: 12px;
+    height: 10px;
+    line-height: 10px;
+    border-radius: 5px;
+}
+#body .wall{
+	background-color: #dedede;
+}

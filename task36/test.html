@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>A*寻路</title>
+	<style type="text/css">
+		#board{
+			border:1px solid #000;
+			width: 400px;
+			height: 400px;
+			display: inline-block;
+		}
+		#board span{
+			display: inline-block;
+			width: 40px;
+			font-size: 24px;
+			text-align: center;
+			height: 40px;
+			line-height: 40px;
+			box-sizing:border-box;
+			border:1px solid #dedede;
+			float: left;
+		}
+		#board .wall{
+			background-color: blue;
+		}
+	</style>
+</head>
+<body>
+	<div id="board"></div>
+	<button id="btn">开始</button>
+	<script type="text/javascript">
+		var board = document.getElementById("board");
+		var boardList = [];
+		var openList = [];
+		var closedList = [];
+		var rows = 10;
+		var colums = 10;
+		var start = new point(2,1);
+		var end = new point(2,5);
+		function point(x,y){
+			this.x = x;
+			this.y = y;
+		}
+		function isStart(p){
+			return p.x == start.x && p.y == start.y;
+		}
+		function isEnd(p){
+			return p.x == end.x && p.y == end.y;
+		}
+		function init () {
+			for(var i = 0;i<rows;i++){
+				boardList[i] = [];
+				for(var j = 0;j<colums;j++){
+					boardList[i][j] = Math.floor(Math.random()*10) > 0 ? 0:1;
+				}
+			}
+		}
+		for(var i = 0;i<rows;i++){
+			boardList[i] = [];
+			for(var j = 0;j<colums;j++){
+				boardList[i][j] = 0;
+			}
+		}
+		boardList[1][3] = 1;
+		boardList[2][3] = 1;
+		boardList[3][3] = 1;
+		for(var i = 0;i < boardList.length;i++){
+			for(var j = 0;j < boardList[i].length;j++){
+				var wall = document.createElement("span");
+				if(isStart(new point(i,j))){
+					wall.style.backgroundColor = "green";
+				}
+				if(isEnd(new point(i,j))){
+					wall.style.backgroundColor = "red";
+				}
+				if(boardList[i][j] == 1){
+					wall.className = "wall";
+				}
+				board.appendChild(wall);
+			}
+		}
+
+		function Node (p,parent,G){
+			this.node = p;
+			this.parentNode = parent || null;
+			this.H = Math.abs(p.x - end.x) + Math.abs(p.y - end.y);
+			this.G = G;
+			this.F = this.G + this.H;
+		}
+		function getMin(array){
+			if(array.length == 1)
+				return 0;
+			var flg = 0;
+			var min = array[flg];
+			for(var i = 1;i<array.length;i++){
+				if(array[i].F < array[flg].F){
+					flg = i;
+				}
+			}
+			return flg;
+		}
+		function isIn(array,node){
+			for(var i = 0;i<array.length;i++){
+				if(array[i].node.x == node.node.x && array[i].node.y == node.node.y){
+					return true;
+				}
+			}
+			return false;
+		}
+		function getNode(array,node){
+			for(var i = 0;i<array.length;i++){
+				if(array[i].node.x == node.node.x && array[i].node.y == node.node.y){
+					return i;
+				}
+			}
+		}
+		btn.onclick = function(){
+			var node = new Node(start,null,0);
+			openList.push(node);
+			while(openList[getMin(openList)].H){
+				var pos = getMin(openList);
+				var node = openList.splice(pos,1)[0]; 
+				closedList.push(node);
+				var G = node.parent ? node.parent.G : 0;
+				if(node.node.x > 0){
+					if(boardList[node.node.x-1][node.node.y]!=1){
+						var topNode = new Node(new point(node.node.x-1,node.node.y),node,G+10);
+						if(!isIn(closedList,topNode)){
+							if(isIn(openList,topNode)){
+								var testPos = getNode(openList,topNode);
+								if(openList[testPos].G > topNode.G){
+									openList[testPos].p = node;
+								}
+							}else{
+								openList.push(topNode);
+							}
+						}
+					}
+				}
+				if(node.node.x < 9){
+					if(boardList[node.node.x+1][node.node.y]!=1){
+						var botNode = new Node(new point(node.node.x+1,node.node.y),node,G+10);
+						if(!isIn(closedList,botNode)){
+							if(isIn(openList,botNode)){
+								var testPos = getNode(openList,botNode);
+								if(openList[testPos].G > botNode.G){
+									openList[testPos].p = node;
+								}
+							}else{
+								openList.push(botNode);
+							}
+						}
+					}
+				}
+				if(node.node.y > 0){
+					if(boardList[node.node.x][node.node.y-1]!=1){
+						var lefNode = new Node(new point(node.node.x,node.node.y-1),node,G+10);
+						if(!isIn(closedList,lefNode)){
+							if(isIn(openList,lefNode)){
+								var testPos = getNode(openList,lefNode);
+								if(openList[testPos].G > lefNode.G){
+									openList[testPos].p = node;
+								}
+							}else{
+								openList.push(lefNode);
+							}
+						}
+					}
+				}
+				if(node.node.y < 9){
+					if(boardList[node.node.x][node.node.y-1]!=1){
+						var rigNode = new Node(new point(node.node.x,node.node.y+1),node,G+10);
+						if(!isIn(closedList,rigNode)){
+							if(isIn(openList,rigNode)){
+								var testPos = getNode(openList,rigNode);
+								if(openList[testPos].G > rigNode.G){
+									openList[testPos].p = node;
+								}
+							}else{
+								openList.push(rigNode);
+							}
+						}
+					}
+				}
+			}
+			var pos = getMin(openList);
+			var node = openList[pos];
+			var result = [];
+			result.push(node);
+			while(node.G){
+				node = node.parentNode;
+				result.push(node);
+			}
+			var nodes = board.getElementsByTagName("span");
+			for(var i = result.length-1;i >= 0;i--){
+				var node = result[i].node;
+				nodes[node.x*colums+node.y].style.backgroundColor = "#000000";
+			}
+		}
+	</script>
+</body>
+</html>
