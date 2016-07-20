@@ -20,6 +20,8 @@ function Calendar (obj) {
 	this.date = obj.date || this.date;
 	this.date.setHours(0,0,0,0);
 
+	this.calendar = document.createElement("div");
+	this.calendar.className = "calendar";
 	this.init();
 }
 Calendar.prototype.setDate = function(date){
@@ -35,20 +37,21 @@ Calendar.prototype.setDate = function(date){
 	}
 };
 Calendar.prototype.getDate = function(){
-	return this.date;
+	var year = this.date.getFullYear();
+	var month = this.date.getMonth() + 1;
+	var day = this.date.getDate();
+	month = month > 9? month:"0" + month;
+	return year + "年" + month + "月" + day + "日";
 };
 Calendar.prototype.render = function(data){
-	var time = document.querySelector("#time");
-	var now = document.querySelector("#calendar .now");
+	var now = this.calendar.querySelector(".now");
 	var year = this.date.getFullYear();
 	var month = this.date.getMonth() + 1;
 	var day = this.date.getDate();
 	month = month > 9? month:"0" + month;
 	now.innerText = year + "年" + month + "月";
 
-	time.innerText = year + "年" + month + "月" + day + "日";
-
-	var date = document.querySelector("#calendar .date");
+	var date = this.calendar.querySelector(".date");
 	var str = '<span class="weekend">日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span class="weekend">六</span>';
 	for(var i = 0;i < data.length;i++){
 		var item = data[i];
