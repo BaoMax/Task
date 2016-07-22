@@ -1,5 +1,4 @@
 function Calendar (obj) {
-	// body...
 	this.startTime = new Date();
 	this.endTime = new Date();
 	this.endTime.setYear(this.endTime.getFullYear() + 1);
@@ -17,12 +16,17 @@ function Calendar (obj) {
 	}catch(err){
 		alert(err);
 	}
+
 	this.date = obj.date || this.date;
 	this.date.setHours(0,0,0,0);
 
-	this.calendar = document.createElement("div");
-	this.calendar.className = "calendar";
+	this.wrap = obj.warp || document.body;
+	this.input = obj.input;
+	this.callback = obj.callback;
+
+	this.createNode();
 	this.init();
+	this.bindEvent();
 }
 Calendar.prototype.setDate = function(date){
 	var time = new Date(date);
@@ -43,6 +47,48 @@ Calendar.prototype.getDate = function(){
 	month = month > 9? month:"0" + month;
 	return year + "年" + month + "月" + day + "日";
 };
+Calendar.prototype.createNode = function(){
+	this.calendar = document.createElement("div");
+	this.calendar.className = "calendar";
+	this.wrap.appendChild(this.calendar);
+
+	var head = document.createElement("div");
+	head.className = "head";
+	head.innerHTML = '<i class="prev"><</i><span class="now"></span><i class="next">></i>';
+	this.calendar.appendChild(head);
+
+	var date = document.createElement("div");
+	date.className = "date";
+	this.calendar.appendChild(date);
+};
+Calendar.prototype.bindEvent = function(){
+	var prev = this.calendar.querySelector(".prev");
+	var next = this.calendar.querySelector(".next");
+	var date = this.calendar.querySelector(".date");
+
+	prev.addEventListener("click",this.prev.bind(this));
+	next.addEventListener("click",this.next.bind(this));
+	date.addEventListener("click",function(e){
+		var target = e.target;
+		if(target.nodeName.toUpperCase() == "SPAN"){
+			this.setDate(target.dataset.time);
+			this.target();
+			this.calendar.style.display = "none";
+		}
+	}.bind(this));
+	this.input.addEventListener("click",function () {
+		var cssStyle = getComputedStyle(this.calendar);
+		if(cssStyle.display == "none"){
+			this.calendar.style.display = "block";
+		}else{
+			this.calendar.style.display = "none";
+		}
+	}.bind(this));
+};
+Calendar.prototype.target = function(){
+	this.input.value = this.getDate();
+	this.callback();
+};
 Calendar.prototype.render = function(data){
 	var now = this.calendar.querySelector(".now");
 	var year = this.date.getFullYear();
@@ -61,7 +107,6 @@ Calendar.prototype.render = function(data){
 		str = str + '<span class= "' + item.style + '" data-time="'+ item.date.toDateString() +'">' + item.date.getDate() + '</span>';
 	}
 	date.innerHTML = str;
-
 };
 Calendar.prototype.init =  function(){
 	var data = [];

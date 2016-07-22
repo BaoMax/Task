@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Task41</title>
+	<title>Task42</title>
 	<style type="text/css">
 		*{
 			box-sizing: border-box;
 		}
 		.calendar{
 			width: 352px;
-			height: 350px;
 			border: 1px solid #000;
-			/*margin: 100px auto;*/
 			display: none;
+			position: relative;
 		}
 		.calendar .head{
 			width: 100%;
@@ -42,31 +41,59 @@
 		.calendar .head .now{
 			font-size: 20px;
 		}
-		.calendar .date span{
+		.calendar .dates span{
 			display: inline-block;
-			width: 40px;
-			height: 30px;
+			width: 50px;
+			height: 40px;
 			line-height: 30px;
 			text-align: center;
 			border: 1px solid transparent;
-			margin: 5px;
+			/*margin: 5px;*/
 		}
-		.calendar .date span:hover{
+		.calendar .dates span:hover{
 			border: 1px solid #f8d564;
 		}
-		.calendar .date .weekend{
+		.calendar .dates .weekend{
 			color: red;
 		}
-		.calendar .date .selected{
+		.calendar .dates .someTime{
+			background-color: rgba(150,150,250,0.4);
+		}
+		.calendar .dates .selected{
 			color: #fff;
 			background-color: red;
 		}
-		.calendar .date .expired{
+		.calendar .dates .expired{
 			background-color: #aaa;
 			color: #fff;
 		}
-		.calendar .date .invalid{
+		.calendar .dates .invalid{
 			color: #aaa;
+		}
+		.calendar .btn_group{
+			padding: 10px;
+			overflow: hidden;
+		}
+		.calendar button{
+			width: 100px;
+			height: 20px;
+			display: inline-block;
+			font-size: 14px;
+			border: none;
+			margin: 5px;
+			padding: 10px;
+			box-sizing:content-box;
+			color: #fff;
+		}
+		.calendar .sure{
+			background-color: green;
+			float: left;
+			margin-left: 20px;
+		}
+		.calendar .cancel{
+			background-color: red;
+			float: right;
+			margin-right: 20px;
 		}
 	</style>
 </head>
@@ -74,7 +101,11 @@
 	<div id="calendar_day">
 		<input type="text" id="day"/>
 	</div>
-	<script type="text/javascript" src="Calendar.js"></script>
-	<script type="text/javascript" src="main.js"></script>
+	<div id="calendar_period">
+		<input type="text" id="period"/>
+	</div>
+	<!--<script type="text/javascript" src="Calendar.js"></script>-->
+	<script type="text/javascript" src="calendar1.js"></script>
+	<!--<script type="text/javascript" src="main.js"></script>-->
 </body>
 </html>
