@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>clip-path</title>
+	<style type="text/css">
+		.clip-img{
+			/*clip-path: polygon(50% 0%,100% 100%,0% 100%);*/
+			-webkit-clip-path: inset(0px 50% 0px 0px);
+			shape-outside: inset(0px 50% 0px 0px);
+			-webkit-shape-outside: inset(0px 50% 0px 0px);
+			float: left;
+		}
+	</style>
+</head>
+<body>
+	<img src="img/tupian01.jpg" class="clip-img">
+	<p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+	<img src="img/tupian02.jpg" class="clip-img">
+	<button id="triangle">三角形</button>
+	<button id="trapezoid">梯形</button>
+	<button id="circle">圆形</button>
+	<button id="rect">长方形</button>
+	<script type="text/javascript">
+		var img = document.querySelector(".clip-img"),
+			triangle = document.getElementById("triangle"),
+			trapezoid = document.getElementById("trapezoid"),
+			circle = document.getElementById("circle"),
+			rect = document.getElementById("rect");
+		triangle.onclick = function  () {
+			img.style.webkitClipPath = "polygon(50% 0%,100% 100%,0% 100%)";
+		}
+		trapezoid.onclick = function(){
+			img.style.webkitClipPath = "polygon(0% 0%,70% 0%,30% 100%,0% 100%)";
+		}
+		circle.onclick = function(){
+			img.style.webkitClipPath = "circle(100px at 200px 130px)";
+		}
+		rect.onclick = function(){
+			img.style.webkitClipPath = "inset(0px 50% 0px 0px)";
+		}
+	</script>
+</body>
+</html>

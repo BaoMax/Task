@@ -12,6 +12,7 @@
 @obj.span.max {Number} 最大跨度
 **/
 var Calendar = function(wrap,target,obj){
+	var that = this;
 	this.startTime = new Date(obj.startTime);
 	this.endTime = new Date(obj.endTime);
 	this.date = new Date();
@@ -38,9 +39,10 @@ var Calendar = function(wrap,target,obj){
 	this.init();
 	
 	return {
-		setDate : this.setDate,
-		getDate : this.getDate,
-		setSpan : this.setSpan
+		// that : that,
+		setDate : that.setDate.bind(that),
+		getDate : that.getDate.bind(that),
+		setSpan : that.setSpan.bind(that)
 	};
 };
 Calendar.prototype = {
@@ -218,11 +220,11 @@ Calendar.prototype = {
 		this.cancelBtn.addEventListener("click",this.close.bind(this));
 		this.days.addEventListener("click",function(e){
 			var target = e.target,
-				temp = target.dataset.time,
-				flgStart = this.isRange( this.spanStart,new Date( temp ) ),
-				flgEnd = this.isRange( this.spanEnd,new Date( temp ) );
+				temp = target.dataset.time;
 			if(target.nodeName.toUpperCase() === "SPAN"){
 				if(this.span){
+					var flgStart = this.isRange( this.spanStart,new Date( temp ) ),
+					flgEnd = this.isRange( this.spanEnd,new Date( temp ) );
 					if(this.spanStart === null){
 						this.spanStart = new Date(target.dataset.time);
 					}else if(this.spanEnd === null){
@@ -239,11 +241,21 @@ Calendar.prototype = {
 						}
 					}else{
 						if(flgStart && !flgEnd){
-							this.spanEnd = new Date(this.spanStart);
-							this.spanStart = new Date(temp);
+							if(this.spanStart > new Date( temp )){
+								this.spanEnd = new Date(this.spanStart);
+								this.spanStart = new Date(temp);
+							}else {
+								this.spanEnd = new Date(temp);
+								this.spanStart = new Date(this.spanStart);
+							}
 						}else if (!flgStart && flgEnd) {
-							this.spanStart = new Date(this.spanEnd);
-							this.spanEnd = new Date(temp);
+							if(this.spanEnd > new Date( temp )){
+								this.spanStart = new Date(temp);
+								this.spanEnd = new Date(this.spanEnd);
+							}else {
+								this.spanStart = new Date(this.spanEnd);
+								this.spanEnd = new Date(temp);
+							}
 						}else if (flgEnd && flgStart){
 							if(new Date(temp) < this.spanStart){
 								this.spanStart = new Date(temp);
@@ -375,3 +387,4 @@ var wrapDay = document.getElementById("calendar_day"),
 			max : 7
 		}
 	});
+	alert(c.getDate());
