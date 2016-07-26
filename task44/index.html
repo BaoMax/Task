@@ -10,10 +10,13 @@
 		.waterfull{
 			width: 100%;
 			position: relative;
+			font-size: 0;
+			letter-spacing: -8px;
 		}
 		.waterfull > div{
 			float: left;
-			position: relative;
+			font-size: 16px;
+			letter-spacing: 0px;
 		}
 		.col{
 			display: inline-block;
@@ -22,85 +25,25 @@
 			width: 100%;
 			object-fit:cover;
 		}
+		.shade{
+			display: none;
+			background-color: rgba(0,0,0,0.8);
+			position: relative;
+		}
+		.dialog{
+			display: none;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform:translate(-50%,-50%);
+			transition:all .5s ease-in .1s;
+		}
 	</style>
 </head>
 <body>
 	<div class="waterfull">
-		<!-- <div class="col">
-			<div>
-				<img src="http://cued.xunlei.com/demos/publ/img/P_000.jpg">
-				<p>图片1</p>
-			</div>
-			<div>
-				<img src="http://cued.xunlei.com/demos/publ/img/P_004.jpg">
-				<p>图片5</p>
-			</div>
-		</div>
-		<div class="col">
-			<div>
-				<img src="http://cued.xunlei.com/demos/publ/img/P_001.jpg">
-				<p>图片2</p>
-			</div>
-			<div>
-				<img src="http://cued.xunlei.com/demos/publ/img/P_004.jpg">
-				<p>图片5</p>
-			</div>
-		</div>
-		<div class="col">
-			<div>
-				<img src="http://cued.xunlei.com/demos/publ/img/P_002.jpg">
-				<p>图片3</p>
-			</div>
-			<div>
-				<img src="http://cued.xunlei.com/demos/publ/img/P_004.jpg">
-				<p>图片5</p>
-			</div>
-		</div>
-		<div class="col">
-			<div>
-				<img src="http://cued.xunlei.com/demos/publ/img/P_003.jpg">
-				<p>图片4</p>
-			</div>
-			<div>
-				<img src="http://cued.xunlei.com/demos/publ/img/P_004.jpg">
-				<p>图片5</p>
-			</div>
-		</div> -->
-
-
-		<!--<div>
-			<img src="http://cued.xunlei.com/demos/publ/img/P_000.jpg">
-			<p>图片1</p>
-		</div>
-		<div>
-			<img src="http://cued.xunlei.com/demos/publ/img/P_001.jpg">
-			<p>图片2</p>
-		</div>
-		<div>
-			<img src="http://cued.xunlei.com/demos/publ/img/P_002.jpg">
-			<p>图片3</p>
-		</div>
-		<div>
-			<img src="http://cued.xunlei.com/demos/publ/img/P_003.jpg">
-			<p>图片4</p>
-		</div>
-		<div>
-			<img src="http://cued.xunlei.com/demos/publ/img/P_004.jpg">
-			<p>图片5</p>
-		</div>
-		<div>
-			<img src="http://cued.xunlei.com/demos/publ/img/P_005.jpg">
-			<p>图片6</p>
-		</div>
-		<div>
-			<img src="http://cued.xunlei.com/demos/publ/img/P_006.jpg">
-			<p>图片7</p>
-		</div>
-		<div>
-			<img src="http://cued.xunlei.com/demos/publ/img/P_007.jpg">
-			<p>图片8</p>
-		</div>-->
 	</div>
+	<script type="text/javascript" src="modal.js"></script>
 	<script type="text/javascript" src="index.js"></script>
 </body>
 </html>
