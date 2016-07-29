@@ -7,8 +7,8 @@ function loadImage(array){
 		img.onload = function(){
 			count = count + 1;
 			if(count == l){
-				gameControll.reset.call(gameControll);
-				gameControll.main.call(gameControll);
+				gameControll.reset();
+				gameControll.main();
 			}
 		}
 	}

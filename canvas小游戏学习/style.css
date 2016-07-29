@@ -4,10 +4,16 @@ body,html{
 #game{
 	height: 568px;
 	width: 320px;
+	/*height: 100%;
+	width: 100%;*/
 	margin: 0 auto;
 	position: relative;
 	overflow: hidden;
 }
+/*#stage{
+	height: 100%;
+	width: 100%;
+}*/
 #shade{
 	background-color: rgba(0,0,0,0.8);
 	width: 100%;
