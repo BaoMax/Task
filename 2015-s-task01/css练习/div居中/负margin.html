@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>负margin实现</title>
+	<style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		body,html{
+			height: 100%;
+			width: 100%;
+		}
+		#wrap{
+			width: 100%;
+			height: 100%;
+			position: relative;
+		}
+		#center{
+			background-color: red;
+			position: absolute;
+			height: 2000px;
+			width: 900px;
+			left: 50%;
+			top: 50%;
+			margin-left: -450px;
+			margin-top: -1000px;
+			/*transform:translate(-50%,-50%);*/
+		}
+		p{
+			white-space: pre;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<div id="center">
+			<p>
+				aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+				aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+				aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+				aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+				aaaaaaaaaaaaaaaaa
+			</p>
+		</div>
+	</div>
+</body>
+</html>

@@ -3,9 +3,9 @@
 @constructor
 **/
 function File(){
-	this.w = 20;
-	this.h = 20;
-	this.x = gameControll.w/2 - this.w/2;
+	this.w = 1;
+	this.h = 1;
+	this.x = gameControll.w/2;
 	this.y = gameControll.h - 2 * this.h;
 
 	this.color = "#f4af29";
@@ -25,11 +25,15 @@ File.prototype.setMap = function(map){
 @param {Context} canvas画笔
 **/
 File.prototype.paint = function(ctx){
+	var x = this.x * gameControll.setp,
+		y = this.y * gameControll.setp,
+		w = this.w * gameControll.setp,
+		h = this.h * gameControll.setp;
 	ctx.fillStyle = this.color;
 	ctx.beginPath();
-	ctx.moveTo(this.x,this.y);
-	ctx.lineTo(this.x + this.w,this.y);
-	ctx.lineTo(this.x + this.w/2,this.y + this.h);
+	ctx.moveTo(x,y);
+	ctx.lineTo(x + w,y);
+	ctx.lineTo(x + w/2,y + h);
 	ctx.closePath();
 	ctx.fill();
 };

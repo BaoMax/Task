@@ -9,8 +9,8 @@
 function Wall(x,y,w,h){
 	this.x = x || 0;
 	this.y = y || 0;
-	this.w = w || 30;
-	this.h = h || 30;
+	this.w = w || 1;
+	this.h = h || 1;
 
 	this.color = "#2e1e1e";
 }
@@ -29,6 +29,10 @@ Wall.prototype.setMap = function(map){
 @param {Context} canvas画笔
 **/
 Wall.prototype.paint = function(ctx){
+	var x = this.x * gameControll.setp,
+		y = this.y * gameControll.setp,
+		w = this.w * gameControll.setp,
+		h = this.h * gameControll.setp;
 	ctx.fillStyle = this.color;
-	ctx.fillRect(this.x,this.y,this.w,this.h);
+	ctx.fillRect(x,y,w,h);
 };

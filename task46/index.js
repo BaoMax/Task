@@ -4,13 +4,17 @@ var agentSign = 0,
 var gameControll = {
 	stage:document.querySelector("#stage"),
 	ctx:stage.getContext("2d"),
-	w:320,
-	h:568,
+	w:320 / 20,
+	h:560 / 20,
+	setp:20,
 	sizeArray:[],
 	wallList:[],
+	level:1,
 	drawBg:function(){
+		var w = this.w * this.setp,
+			h = this.h * this.setp;
 		this.ctx.fillStyle = "#ffe6cd";
-		this.ctx.fillRect(0,0,this.w,this.h);
+		this.ctx.fillRect(0,0,w,h);
 	},
 	generateWall:function(){
 		var num = Math.floor(Math.random()*5),
@@ -44,13 +48,31 @@ var gameControll = {
 			this.wallList[i].paint(this.ctx);
 		}
 	},
+	bindEvent:function(){
+		this.stage.addEventListener("touchend",function(e){
+			var x = Math.round(e.changedTouches[0].clientX / this.setp) - 1,
+				y = Math.round(e.changedTouches[0].clientY / this.setp) - 1;
+			if(this.map.map[y][x] === 2){
+				return ;
+			}
+			var path = this.map.findPath({x:this.agents.x,y:this.agents.y},
+								{x:x,y:y});
+			for(var i = 0,l = path.length; i < l;i += 1){
+				this.agents.x = path[i].node.x;
+				this.agents.y = path[i].node.y;
+				this.main();
+			}
+			if(this.agents.x == this.file.x && this.agents.y == this.file.y){
+				alert("游戏通关！");
+				this.reset();
+				this.main();
+			}
+		}.bind(this));
+	},
 	main:function(){
 		this.drawBg();
 		this.agents.paint(this.ctx);
 		this.file.paint(this.ctx);
-		for(var i = 0;i < 6;i += 1){
-			this.generateWall();
-		}
 		this.drawWall();
 	},
 	reset:function(){
@@ -60,13 +82,17 @@ var gameControll = {
 		this.file = new File();
 		this.file.setMap(this.map.map);
 		this.sizeArray = [
-			{w:30,h:100},
-			{w:80,h:30},
-			{w:30,h:30},
-			{w:30,h:80},
-			{w:50,h:20}
+			{w:2,h:4},
+			{w:2,h:2},
+			{w:4,h:3},
+			{w:4,h:4},
+			{w:3,h:1}
 		];
+		for(var i = 0;i < 5*this.level;i += 1){
+			this.generateWall();
+		}
 	}
 };
 gameControll.reset.call(gameControll);
 gameControll.main.call(gameControll);
+gameControll.bindEvent.call(gameControll);

@@ -3,9 +3,9 @@
 @constructor
 **/
 function Agents(){
-	this.w = 20;
-	this.h = 20;
-	this.x = gameControll.w/2 - this.w/2;
+	this.w = 1;
+	this.h = 1;
+	this.x = gameControll.w/2;
 	this.y = this.h;
 
 	this.color = "#44b811";
@@ -25,15 +25,13 @@ Agents.prototype.setMap = function(map){
 @param {Context} canvas画笔
 **/
 Agents.prototype.paint = function(ctx){
+	var x = this.x * gameControll.setp,
+		y = this.y * gameControll.setp,
+		h = this.h * gameControll.setp,
+		w = this.w * gameControll.setp;
 	ctx.fillStyle = this.color;
 	ctx.beginPath();
-	ctx.arc(this.x + this.w/2,this.y + this.h/2,this.w/2,0,Math.PI*2);
+	ctx.arc(x + w/2,y + h/2,w/2,0,Math.PI*2);
 	ctx.closePath();
 	ctx.fill();
-};
-/**
-@method 特工移动函数
-**/
-Agents.prototype.move = function(){
-
 };
