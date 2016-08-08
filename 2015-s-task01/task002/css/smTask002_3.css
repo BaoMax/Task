@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#banner {
+    width: 259px;
+    height: 194px;
+    position: relative;
+}
+
+img {
+    display: none;
+    position: absolute;
+}
+
+img .selected {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#round {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+}
+
+span.point {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    cursor: pointer;
+    margin: 0 2px;
+    /*margin：2px;*/
+}
+
+span.select {
+    border: 1px solid #000;
+    background-color: #fff;
+}
