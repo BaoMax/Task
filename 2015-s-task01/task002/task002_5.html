@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task002_5</title>
+	<style type="text/css">
+		.wrap{
+			width: 300px;
+			height: 500px;
+			background-color: #dedede;
+			border: 1px solid #000;
+			float: left;
+			margin: 0 100px;
+		}
+		.block{
+			width: 100%;
+			height: 80px;
+			background-color: red;
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap" ondrop="drop(event)" ondragover="dragover(event)">
+		<div class="block" id="block1" draggable="true" ondragstart="drag(event)">1</div>
+		<div class="block" id="block2" draggable="true" ondragstart="drag(event)">2</div>
+		<div class="block" id="block3" draggable="true" ondragstart="drag(event)">3</div>
+		<div class="block" id="block4" draggable="true" ondragstart="drag(event)">4</div>
+		<div class="block" id="block5" draggable="true" ondragstart="drag(event)">5</div>
+	</div>
+	<div class="wrap" ondrop="drop(event)" ondragover="dragover(event)">
+		<div class="block" id="block6" draggable="true" ondragstart="drag(event)">6</div>
+		<div class="block" id="block7" draggable="true" ondragstart="drag(event)">7</div>
+		<div class="block" id="block8" draggable="true" ondragstart="drag(event)">8</div>
+	</div>
+	<script type="text/javascript" src="js/task002_5.js"></script>
+</body>
+</html>

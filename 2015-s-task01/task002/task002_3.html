@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task002_3</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#wrap{
+			overflow: hidden;
+			/*height: 194px;*/
+			width: 259px;
+			position: relative;
+		}
+		#banner{
+			overflow: hidden;
+			height: 194px;
+			width: 777px;
+			font-size: 0px;
+			transition:all 1s ease-in 0s;
+		}
+		.round{
+			width: 8px;
+			height: 8px;
+			display: inline-block;
+			border: 1px solid #fff;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.selected{
+			border: 1px solid #000;
+			background-color: #fff;
+		}
+		#point{
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 图片数量及URL均在HTML中写好
+	可以配置轮播的顺序（正序、逆序）、是否循环、间隔时长
+	图片切换的动画要流畅
+	在轮播图下方自动生成对应图片的小点，点击小点，轮播图自动动画切换到对应的图片 -->
+	<div id="wrap">
+		<div id="banner">
+			<img src="img/1.jpg" alt="">
+			<img src="img/2.jpg" alt="">
+			<img src="img/3.jpg" alt="">
+		</div>
+		<div id="point">
+			<span class="round selected"></span>
+			<span class="round"></span>
+			<span class="round"></span>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/task002_3.js"></script>
+	<script type="text/javascript">
+		var b = new Banner({
+			banner:document.getElementById("banner"),
+			pointList:document.getElementsByClassName("round"),
+			width:259,
+			height:194,
+			imgNum:3,
+			order:false,
+			loop:false,
+			period:3
+		});
+	</script>
+</body>
+</html>

@@ -4,7 +4,9 @@
 @return {boolean}
 **/
 function isArray(arr){
-	return Array.isArray(arr);
+
+	return arr instanceof Array;
+	// return Array.isArray(arr);
 }
 /**
 @method 判断是否是函数
@@ -74,7 +76,7 @@ console.log(tarObj.b.b1[0]);
 function uniqArray(arr){
 	var result = [];
 	for(var i = 0;i < arr.length;i += 1){
-		if(result.indexOf(arr[i]) === -1 ){
+		if(arr[i] && result.indexOf(arr[i]) === -1 ){
 			result.push(arr[i]);
 		}
 	}
@@ -422,17 +424,5 @@ function ajax(url, options) {
 		}
 	};
 }
-// 使用示例：
-ajax(
-    'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=apple',
-    {
-        data: {
-            name: 'simon',
-            password: '123456'
-        },
-        onsuccess: function (responseText) {
-            console.log(responseText);
-        }
-    }
-);
+
 

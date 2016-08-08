@@ -3,12 +3,33 @@
 <head>
 	<meta charset="UTF-8">
 	<title>task002--js学习</title>
+	<style type="text/css">
+		#parent{
+			position: absolute;
+			top: 200px;
+			left: 200px;
+			width: 300px;
+			height: 300px;
+			background-color: black;
+		}
+		#son{
+			position: absolute;
+			top: 100px;
+			left: 100px;
+			height: 100px;
+			width: 100px;
+			background-color: red;
+		}
+	</style>
 </head>
 <body>
 	<input id="number1" type="text"/>
 	<input id="number2" type="text"/>
 	<span id="result"></span>
 	<button id="addbtn">add</button>
+	<div id="parent">
+		<div id="son"></div>
+	</div>
 	<script type="text/javascript" src="task002.js"></script>
 	<script type="text/javascript" src="until.js"></script>
 </body>

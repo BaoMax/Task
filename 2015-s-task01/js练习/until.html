@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>UNTILS</title>
+</head>
+<body>
+	<div id="dom"><div class="classa"><button>aaaaaa</button></div></div>
+	<div class="classa">1<div class="classb"></div></div>
+	<div class="classa">2</div>
+	<div data-log="aa"></div>
+	<div data-log="bb"></div>
+	<div data-time="2015"></div>
+	<div data-time="2017"></div>
+	<a>aaa</a>
+	<a>bbbb</a>
+	<p>pppp</p>
+	<ul id="list">
+	    <li id="item1">Simon</li>
+	    <li id="item2">Kenner</li>
+	    <li id="item3">Erik</li>
+	</ul>
+	<button id="btn">Change</button>
+	<script type="text/javascript" src="until.js"></script>
+	<script type="text/javascript">
+		console.log($("#dom"));
+		console.log($("a"));
+		console.log($(".classa"));
+		console.log($("[data-time=2015]"));
+		console.log($("[data-log]"));
+		console.log($("#dom .classa"));
+	</script>
+	<script type="text/javascript">
+		// $.click($("#item1"), clicklistener);
+		// $.click($("#item2"), clicklistener);
+		// $.click($("#item3"), clicklistener);
+		$.click("[data-log]", clicklistener);
+		$.delegate('#list', "li", "click", clicklistener);
+		$.click("#btn", renderList);
+
+		function renderList() {
+		    $("#list").innerHTML = '<li>new item</li>';
+		}
+
+		setCookie("name","aaa");
+		console.log(getCookie("name"));
+	</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task002_1</title>
+</head>
+<body>
+	<input type="text" id="hobby1">
+	<button id="submit1">提交</button>
+	<textarea id="hobby"></textarea>
+	<button id="submit">提交</button>
+	<span id="tip"></span>
+	<ul id="list"></ul>
+	<script type="text/javascript" src="js/task002_1.js"></script>
+	<script type="text/javascript">
+		$.on("#hobby","keyup",function(){
+			var str = $("#hobby").value;
+			$("#tip").innerHTML = "";
+			if(str == ""){
+				$("#tip").innerHTML = "不能为空";
+				return ;
+			}
+			list = str.split(/[, ;、，　\n]/);
+			if(list.length > 10){
+				$("#tip").innerHTML = "爱好不能超过10个";
+				return ;	
+			}
+		});
+		$.click("#submit",function(){
+			var list = handler();
+			$("#list").innerHTML = "";
+			each(list,function(item,index){
+				$("#list").innerHTML += "<li>" + item + "</li>";
+			});
+		});
+		function handler(){
+			var str = $("#hobby").value;
+			list = str.split(/[, ;、，　\n]/);
+			each(list,function(item,index){
+				list[index] = trim(item);
+			});
+			return uniqArray(list);
+		}
+	</script>
+</body>
+</html>
