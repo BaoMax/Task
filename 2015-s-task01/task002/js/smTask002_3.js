@@ -1,4 +1,6 @@
 var banner = new Banner({
     wrap: document.getElementById("banner"),
-    itemList: document.getElementById("banner").getElementsByTagName("img")
+    itemList: document.getElementById("banner").getElementsByTagName("img"),
+    isLoop: false,
+    order: false
 });
