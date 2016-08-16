@@ -1,0 +1,17 @@
+ul.list {
+    list-style: none;
+    background: #fff;
+    padding: 0px;
+    margin: 0px;
+    width: 200px;
+    border: 1px solid #dedede;
+}
+
+ul.list li:hover,
+ul.list li.select {
+    background: #aaa;
+}
+
+.hide {
+    display: none!important;
+}

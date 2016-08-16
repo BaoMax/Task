@@ -1,0 +1,24 @@
+.container {
+    width: 200px;
+    height: 400px;
+    background: #aaa;
+    border: 1px solid #000;
+    display: inline-block;
+    margin: 10px 20px;
+    vertical-align: top;
+}
+
+.item {
+    width: 200px;
+    height: 60px;
+    background: red;
+    border: 1px solid #000;
+    text-align: center;
+    font-size: 20px;
+    line-height: 60px;
+}
+
+.drag {
+    background: rgba(255, 0, 0, 0.7);
+    position: absolute;
+}

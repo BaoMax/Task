@@ -74,7 +74,7 @@ console.log(tarObj.b.b1[0]);
 function uniqArray(arr) {
     var result = [];
     for (var i = 0; i < arr.length; i += 1) {
-        if (arr[i] &&　result.indexOf(arr[i]) === -1) {
+        if (arr[i] && 　result.indexOf(arr[i]) === -1) {
             result.push(arr[i]);
         }
     }
@@ -160,10 +160,12 @@ function isMobilePhone(phone) {
 // 为element增加一个样式名为newClassName的新样式
 function addClass(element, newClassName) {
     // your implement
-    if (element.className) {
-        element.className += " " + newClassName;
-    } else {
-        element.className = newClassName;
+    if (element.className.indexOf(newClassName) === -1) {
+        if (element.className) {
+            element.className += " " + newClassName;
+        } else {
+            element.className = newClassName;
+        }
     }
 }
 
