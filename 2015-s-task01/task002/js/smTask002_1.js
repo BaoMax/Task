@@ -11,12 +11,14 @@
     }
 
     function render(ele, textList, tag, type) {
+        var str = "";
         tag = tag || "li";
         type = type || "";
         ele.innerHTML = "";
         each(textList, function(item, index) {
-            ele.innerHTML += "<" + tag + " type = '" + type + "'>" + item + "</" + tag + ">";
+            str += "<" + tag + " type = '" + type + "'>" + item + "</" + tag + ">";
         });
+        ele.innerHTML = str;
     }
     $.click("#submit1", function() {
         var hobbyList = splitStr(/,/g, $("#hobby1").value);
