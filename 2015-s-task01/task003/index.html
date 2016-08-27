@@ -6,10 +6,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/style.css" rel="stylesheet">
+    <!--<script src="js/data.js"></script>-->
 </head>
 
 <body>
-
+    <header>BaoMax Todo List Tools</header>
+    <div class="aside task-list">
+        <p class="title">所有任务（<span class="task-num"></span>）</p>
+        <p class="title">分类列表</p>
+        <ul class="floder-list">
+            <!--<li><i class="icon icon-floder"></i>宝宝计划（4）<i class="icon icon-delete"></i>
+                <ul class="file-list">
+                    <li class="selected"><i class="icon icon-file"></i>playA（3）</li>
+                    <li><i class="icon icon-file"></i>playB（1）</li>
+                </ul>
+            </li>
+            <li><i class="icon icon-floder"></i>默认分类（0）<i class="icon icon-delete"></i></li>-->
+        </ul>
+        <footer><i class="icon icon-add"></i>新建分类</footer>
+    </div>
+    <div class="aside task">
+        <div class="task-state">
+            <span class="selected">所有</span>
+            <span>未完成</span>
+            <span>已完成</span>
+        </div>
+        <!--<dl>
+            <dt>2016-07-07</dt>
+            <dd>plan-A-01</dd>
+            <dd>plan-A-02</dd>
+            <dd>plan-A-03</dd>
+            <dt>2016-08-08</dt>
+            <dd>plan-B-01</dd>
+        </dl>-->
+        <footer><i class="icon icon-add"></i>新建任务</footer>
+    </div>
+    <div class="task-detail">
+        <i class="icon icon-done"></i>
+        <i class="icon icon-edit"></i>
+        <input type="text" name="title" value="plan-A-01" class="title" disabled>
+        <label class="date">任务日期：<input type="text" name="date" value="2016-08-27" disabled></label>
+        <textarea class="content" disabled>内容啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</textarea>
+    </div>
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>
