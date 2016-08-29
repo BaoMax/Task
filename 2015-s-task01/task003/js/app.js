@@ -33,6 +33,7 @@ var localStorage = window.localStorage,
                     "content": "plan-A-03plan-A-03",
                     "state": 0
                 },
+                parent: "planA",
                 num: 3
             },
             "planB": {
@@ -42,22 +43,50 @@ var localStorage = window.localStorage,
                     "content": "plan-B-01plan-B-01",
                     "state": 0
                 },
+                parent: "planB",
                 num: 1
             },
+            parent: "宝贝计划",
             num: 4
         },
+        parent: null,
         num: 4
-    };
+    },
+    taskType = {},
+    tasks = {},
+    taskDetail = {};
+
+function analysisData(data) {
+    for (var key in data) {
+        if (data.hasOwnProperty(key) && key !== 'num' && key !== 'parent') {
+            var element = data[key];
+            taskType[key] = data[key];
+            if (element.num > 0) {
+                // analysisData(element, tasks);
+                for (var item in element) {
+                    if (element.hasOwnProperty(item) && item !== 'num' && item !== 'parent') {
+                        var task = element[item];
+                        tasks[item] = element[item];
+                        if (task.num > 0) {
+                            for (var o in task) {
+                                if (task.hasOwnProperty(o) && o !== 'num' && o !== 'parent') {
+                                    taskDetail[o] = task[o];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 function decodeData(data) {
-    var sum = document.getElementsByClassName("task-num")[0],
-        list = document.getElementsByClassName("floder-list")[0],
+    var list = document.getElementsByClassName("floder-list")[0],
         str = "";
-    sum.innerHTML = data.num || 0;
-
     for (item in data) {
-        if (data.hasOwnProperty(item) && item !== "num") {
-            str += '<li><i class="icon icon-floder"></i>' + item + '（' + data[item].num + '）<i class="icon icon-delete"></i>';
+        if (data.hasOwnProperty(item)) {
+            str += '<li data-title="' + item + '"><i class="icon icon-floder"></i>' + item + '（' + data[item].num + '）<i class="icon icon-delete"></i>';
             if (data[item].num !== 0) {
                 str += fileDecode(data[item]);
             }
@@ -70,8 +99,8 @@ function decodeData(data) {
 function fileDecode(data) {
     var str = '<ul class="file-list">';
     for (item in data) {
-        if (data.hasOwnProperty(item) && item !== "num") {
-            str += '<li><i class="icon icon-file"></i>' + item + '（' + data[item].num + '）</li>';
+        if (data.hasOwnProperty(item) && item !== "num" && item !== "parent") {
+            str += '<li data-title="' + item + '"><i class="icon icon-file"></i>' + item + '（' + data[item].num + '）</li>';
         }
     }
     str += "</ul>";
@@ -94,19 +123,33 @@ function detailDecode(data) {
     });
     for (var i = 0, l = temp.length; i < l; i += 1) {
         var item = temp[i],
-            date = item[date];
+            date = item['date'];
         if (result[date]) {
             result[date].push(item);
         } else {
-            result[date] = [];
-            result[data].push(item);
+            result[date] = new Array();
+            result[date].push(item);
         }
     }
     return result;
 }
 
 function showTask(data) {
-
+    var parentNode = document.getElementsByClassName("task")[0],
+        node = parentNode.getElementsByTagName("footer")[0],
+        dl = parentNode.getElementsByTagName("dl").length ? parentNode.getElementsByTagName("dl")[0] : document.createElement("dl"),
+        str = "";
+    for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+            var element = data[key];
+            str += '<dt>' + key + '</dt>';
+            for (var i = 0, l = element.length; i < l; i += 1) {
+                str += '<dd>' + element[i].title + '</dd>';
+            }
+        }
+    }
+    dl.innerHTML = str;
+    parentNode.insertBefore(dl, node);
 }
 
 function bindEvent() {
@@ -126,9 +169,10 @@ function bindEvent() {
                 }
             }
             if (parentNode.className === "file-list") {
-                var parentText = parentNode.parentNode.innerText,
-                    title = target.innerText,
+                var parentText = parentNode.parentNode.getElementsByClassName("icon-floder")[0].nextSibling.nodeValue.replace(/（\d+）/g, ''),
+                    title = target.innerText.replace(/（\d+）/g, ''),
                     obj = detailDecode(taskList[parentText][title]);
+                target.style.backgroundColor = "#fff";
                 showTask(obj);
             }
         }
@@ -137,7 +181,8 @@ function bindEvent() {
 }
 
 function init() {
-    decodeData(taskList);
-    bindEvent();
+    analysisData(taskList);
+    decodeData(taskType);
+    // bindEvent();
 }
 init();
