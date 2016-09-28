@@ -9,6 +9,7 @@ html {
     width: 100%;
     min-height: 600px;
     min-width: 1280px;
+    position: relative;
 }
 
 header {
@@ -41,6 +42,7 @@ header {
     line-height: 60px;
     box-sizing: border-box;
     border-top: 1px solid #cecece;
+    cursor: pointer;
 }
 
 .task-list {
@@ -69,8 +71,13 @@ ul li {
     line-height: 36px;
 }
 
+.task-list .floder-list .selected {
+    background: yellow;
+}
+
 .task-list .file-list {
     /*display: none;*/
+    background-color: #f2f2f2;
     transition: all 1s ease-in 0s;
 }
 
@@ -135,6 +142,7 @@ i.icon-add {
     padding-left: 10px;
     padding-right: 10px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .task-state .selected {
@@ -153,6 +161,19 @@ i.icon-add {
     font-size: 14px;
     line-height: 30px;
     text-indent: 2rem;
+    cursor: pointer;
+}
+
+.task dd.selected {
+    background-color: yellow;
+}
+
+.task .done {
+    color: green;
+}
+
+.task .undone {
+    color: #000;
 }
 
 .task-detail {
@@ -190,27 +211,29 @@ i.icon-add {
 }
 
 .date input {
-    border: none;
-    outline: none;
-    height: 100%;
+    /*height: 100%;*/
     /*width: 90%;*/
+    line-height: 200%;
     font-size: 14px;
     background-color: #fafaee;
     color: #000;
 }
 
 .content {
-    width: 100%;
-    height: 79.5%;
-    border: none;
-    outline: none;
-    /*margin-top: 1px;*/
-    padding: 18px;
+    width: 90%;
+    height: 39.5%;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding: 10px;
     font-size: 16px;
     box-sizing: border-box;
-    resize: none;
     background-color: #fff;
     color: #000;
+}
+
+.disableEdit {
+    border: none;
+    /*outline: none;*/
 }
 
 i.icon-done {
@@ -230,10 +253,99 @@ i.icon-edit {
     margin-right: -36px;
 }
 
+.dialog {
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.box {
+    width: 300px;
+    min-height: 200px;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+}
+
+.box .title {
+    font-size: 16px;
+    line-height: 30px;
+    line-height: 30px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.box label {
+    display: block;
+    margin-top: 20px;
+}
+
+.box input[name="typeName"] {
+    height: 30px;
+    width: 70%;
+}
+
+.box select {
+    height: 30px;
+    width: 70%;
+}
+
+.box button {
+    width: 72%;
+    height: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+}
+
+i.close {
+    background: url(../img/delete.png) no-repeat center center;
+    /*float: right;*/
+    /*display: inline-block;*/
+    float: right;
+}
+
+.hide {
+    display: none!important;
+}
+
 body:after {
     content: "";
     height: 0px;
     display: block;
     clear: both;
     visibility: hidden;
+}
+
+.hide {
+    display: none !important;
+}
+
+.save-cancel {
+    padding-right: 8%;
+}
+
+.save-cancel button {
+    width: 100px;
+    height: 40px;
+    border: none;
+    float: right;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.save {
+    background-color: #A5DE37;
+}
+
+.cancel {
+    background-color: #FF4351;
 }

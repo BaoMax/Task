@@ -11,7 +11,7 @@ function removeClass(node, name) {
         var arr = node.className.split(/\s+/g);
         for (var i = 0, l = arr.length; i < l; i += 1) {
             if (arr[i] === name) {
-                arr.slice(i, 1);
+                arr.splice(i, 1);
                 break;
             }
         }
@@ -31,5 +31,12 @@ function addClass(node, name) {
         node.className = [node.className, name].join(" ");
     } else {
         node.className = name;
+    }
+}
+
+function removeClassBat(node, type, name) {
+    var list = node.getElementsByTagName(type);
+    for (var i = 0, l = list.length; i < l; i += 1) {
+        removeClass(list[i], name);
     }
 }
