@@ -1,5 +1,5 @@
-var Task = function(titel, date, content, state, parent) {
-    this.title = titel;
+var Task = function(title, date, content, state, parent) {
+    this.title = title;
     this.date = date || new Date();
     this.content = content;
     this.state = state;
@@ -12,7 +12,7 @@ Task.prototype.fromDate = function() {
     return [yaer, month, day].join("-");
 }
 Task.prototype.change = function(task) {
-    this.title = task.titel;
+    this.title = task.title;
     this.date = task.date;
     this.content = task.content;
     this.state = task.state;

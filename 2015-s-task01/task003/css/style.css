@@ -295,6 +295,7 @@ i.icon-edit {
 .box select {
     height: 30px;
     width: 70%;
+    margin-left: 7px;
 }
 
 .box button {
