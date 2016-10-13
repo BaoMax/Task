@@ -414,6 +414,9 @@ var ChineseCalendar = {
             tail = head + 6;
         }
     },
+    isRunYear: function(year) {
+        return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
+    },
     getlunarYMD: function(date) {
         var result = {
             year: date.getFullYear(),
@@ -435,21 +438,27 @@ var ChineseCalendar = {
         var isLear = false,
             lunarMonth = ChineseCalendar.leapMonth(result.lunarYear);
         for (var i = 1; i < 13 && offset >= 0; i++) {
-            if (i === lunarMonth && !isLear) {
-                temp = ChineseCalendar.leapMonthLengths(result.lunarYear);
-                offset -= temp;
-                isLear = true;
-                i--;
-            } else {
-                temp = ChineseCalendar.lunarMonthLength(result.lunarYear, i);
-                offset -= temp;
-                isLear = false;
+            temp = ChineseCalendar.lunarMonthLength(result.lunarYear, i);
+            offset -= temp;
+            isLear = false;
+            if (i === lunarMonth) {
+                if (offset < 0) {
+                    i--;
+                    isLear = true;
+                } else {
+                    temp = ChineseCalendar.leapMonthLengths(result.lunarYear);
+                    offset -= temp;
+                }
             }
         }
         if (offset < 0) {
-            if (i === lunarMonth && !isLear) {
+            if (i === lunarMonth && isLear) {
+                offset += temp;
+                isLear = false;
+            } else if (i === (lunarMonth + 1)) {
                 offset += temp;
                 isLear = true;
+                i--;
             } else {
                 offset += temp;
                 i--;
@@ -498,21 +507,27 @@ var ChineseCalendar = {
         var isLear = false,
             lunarMonth = ChineseCalendar.leapMonth(result.lunarYear);
         for (var i = 1; i < 13 && offset >= 0; i++) {
-            if (i === lunarMonth && !isLear) {
-                temp = ChineseCalendar.leapMonthLengths(result.lunarYear);
-                offset -= temp;
-                isLear = true;
-                i--;
-            } else {
-                temp = ChineseCalendar.lunarMonthLength(result.lunarYear, i);
-                offset -= temp;
-                isLear = false;
+            temp = ChineseCalendar.lunarMonthLength(result.lunarYear, i);
+            offset -= temp;
+            isLear = false;
+            if (i === lunarMonth) {
+                if (offset < 0) {
+                    i--;
+                    isLear = true;
+                } else {
+                    temp = ChineseCalendar.leapMonthLengths(result.lunarYear);
+                    offset -= temp;
+                }
             }
         }
         if (offset < 0) {
-            if (i === lunarMonth && !isLear) {
+            if (i === lunarMonth && isLear) {
+                offset += temp;
+                isLear = false;
+            } else if (i === (lunarMonth + 1)) {
                 offset += temp;
                 isLear = true;
+                i--;
             } else {
                 offset += temp;
                 i--;

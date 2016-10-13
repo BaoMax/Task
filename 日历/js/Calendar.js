@@ -19,20 +19,34 @@ Calendar.prototype.date2arr = function() {
     var date = new Date(this.date);
     date.setDate(1);
     var week = date.getDay();
-    date.setDate(1 - week + 1);
+    date.setDate(1 - week);
     var month = date.getMonth() + 1;
-    while (month <= this.month) {
-        if (month < this.month) {
+    for (var i = 0; i < 42; i++) {
+        if (month !== this.month) {
             array.push({
                 day: date.getDate(),
                 lunarDay: ChineseCalendar.lunarTime(date),
                 state: 'expired'
             });
         } else if (this.isSameDay(date, this.date)) {
+            if (date.getDay() === 6 || date.getDay() === 0) {
+                array.push({
+                    day: date.getDate(),
+                    lunarDay: ChineseCalendar.lunarTime(date),
+                    state: 'selected weekDay'
+                });
+            } else {
+                array.push({
+                    day: date.getDate(),
+                    lunarDay: ChineseCalendar.lunarTime(date),
+                    state: 'selected'
+                });
+            }
+        } else if (date.getDay() === 6 || date.getDay() === 0) {
             array.push({
                 day: date.getDate(),
                 lunarDay: ChineseCalendar.lunarTime(date),
-                state: 'selected'
+                state: 'weekDay'
             });
         } else {
             array.push({
@@ -44,6 +58,32 @@ Calendar.prototype.date2arr = function() {
         date.setDate(date.getDate() + 1);
         month = date.getMonth() + 1;
     }
+    // while (month <= this.month || date.getFullYear() < this.year) {
+    //     if (date.getFullYear() > this.year) {
+    //         break;
+    //     }
+    //     if (month < this.month || date.getFullYear() < this.year) {
+    //         array.push({
+    //             day: date.getDate(),
+    //             lunarDay: ChineseCalendar.lunarTime(date),
+    //             state: 'expired'
+    //         });
+    //     } else if (this.isSameDay(date, this.date)) {
+    //         array.push({
+    //             day: date.getDate(),
+    //             lunarDay: ChineseCalendar.lunarTime(date),
+    //             state: 'selected'
+    //         });
+    //     } else {
+    //         array.push({
+    //             day: date.getDate(),
+    //             lunarDay: ChineseCalendar.lunarTime(date),
+    //             state: 'normal'
+    //         });
+    //     }
+    //     date.setDate(date.getDate() + 1);
+    //     month = date.getMonth() + 1;
+    // }
     return array;
 }
 Calendar.prototype.renderCalender = function() {
@@ -54,10 +94,6 @@ Calendar.prototype.renderCalender = function() {
         str += '<span class="' + temp.state + '"><p>' + temp.day + '</p><p>' + temp.lunarDay + '</p></span>';
     }
     this.wrap.innerHTML = str;
-
-    str = '';
-    str += '<p>' + this.formDate() + '</p><p>' + this.lunarObj.week + '</p><p class="big-day">' + this.day + '</p><p>农历' + this.lunarObj.lunarMonthChiness + this.lunarObj.lunarDayChiness + '</p><p>' + this.lunarObj.gzY + '年</p><p>' + this.lunarObj.gzM + '月' + this.lunarObj.gzD + '日</p><p>生肖：' + this.lunarObj.animal + '</p><p>星座：' + this.lunarObj.start + '</p>';
-    this.detailContainer.innerHTML = str;
 }
 Calendar.prototype.renderDetail = function() {
     var str = '';
@@ -77,6 +113,13 @@ Calendar.prototype.setYear = function(year) {
     this.render();
 }
 Calendar.prototype.setMonth = function(month) {
+    var monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    if (ChineseCalendar.isRunYear(this.year)) {
+        monthDays[1] = 29;
+    }
+    if (this.day > monthDays[month - 1]) {
+        this.day = 1;
+    }
     this.month = month;
     this.date = new Date(this.year, this.month - 1, this.day);
     this.week = this.date.getDay();
@@ -94,7 +137,7 @@ Calendar.prototype.preYear = function() {
     if (this.year === 1901) {
         return;
     }
-    this.setYear(ths.year - 1);
+    this.setYear(this.year - 1);
 }
 Calendar.prototype.nextYear = function() {
     if (this.year === 2100) {
@@ -106,13 +149,13 @@ Calendar.prototype.preMonth = function() {
     if (this.month === 1) {
         return;
     }
-    this.setMonth(ths.month - 1);
+    this.setMonth(this.month - 1);
 }
 Calendar.prototype.nextMonth = function() {
     if (this.month === 12) {
         return;
     }
-    this.setMonth(ths.month + 1);
+    this.setMonth(this.month + 1);
 }
 Calendar.prototype.goToday = function() {
     this.date = new Date();

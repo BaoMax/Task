@@ -1,4 +1,22 @@
 $color:#fff;
+$border:1px solid #d8d9db;
+$border-radius:10px;
+@mixin after {
+    content: '';
+    clear: both;
+    height: 0;
+    display: block;
+    visibility: hidden;
+}
+
+@mixin btn {
+    border: none;
+    min-width: 30px;
+    height: 25px;
+    font-family: 'SimHei';
+    font-size: 14px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,4 +26,149 @@ body,
 html {
     width: 100%;
     height: 100%;
+}
+
+#calendar {
+    width: 550px;
+    height: 450px;
+    border: $border;
+    border-radius: $border-radius;
+    margin: 10px;
+}
+
+h1 {
+    height: 50px;
+    background: #f4f6f7;
+    line-height: 50px;
+    color: #aaa;
+    font-size: 16px;
+    font-weight: normal;
+    padding-left: 10px;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+}
+
+.head {
+    height: 50px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    &::after {
+        @include after;
+    }
+}
+.gruop-select {
+    float: left;
+    margin-right: 10px;
+}
+.pre,
+.next {
+    @include btn;
+    font-size: 20px;
+    float: left;
+}
+
+.today {
+    @include btn;
+    padding: 5px;
+}
+
+select {
+    border: $border;
+    float: left;
+    min-width: 60px;
+    height: 25px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.year {
+    select {
+        min-width: 80px;
+    }
+}
+
+#content {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-top: 1px solid #a9cfec;
+    box-sizing: border-box;
+    &::after {
+        @include after;
+    }
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.calendar-body {
+    width: 350px;
+    height: 350px;
+    color: #535353;
+    font-size: 0px;
+    span {
+        display: inline-block;
+        width: 50px;
+        font-size: 14px;
+        text-align: center;
+    }
+    p {
+        line-height: 1.2;
+    }
+}
+
+.week {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.days {
+    span {
+        height: 50px;
+        padding-top: 8px;
+        box-sizing: border-box;
+        border: 1px solid transparent;
+    }
+}
+
+.normal {
+    &::hover {
+        border: 1px solid #f8d564;
+    }
+}
+
+.expired {
+    color: #eee;
+}
+
+.tody-detail {
+    width: 170px;
+    height: 350px;
+    border-left: 1px solid #d8d9db;
+    font-size: 14px;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    p {
+        text-align: center;
+        line-height: 1.5;
+    }
+}
+
+p.big-day {
+    font-size: 80px;
+    color: #c9161d;
+    line-height: 1;
+}
+
+.selected {
+    background-color: #c9161d;
+    color: #fff;
 }

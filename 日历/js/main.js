@@ -1,31 +1,43 @@
 var wrap = document.querySelector('.days'),
     detail = document.querySelector('.tody-detail');
-var c = new Calendar(wrap, detail);
+var c = new Calendar(wrap, detail, new Date(2016, 9, 16));
 var selects = document.querySelectorAll('select');
 
 function bindEvent() {
     selects[0].addEventListener('change', function() {
-        c.setYear(this.value);
+        c.setYear(parseInt(this.value));
     });
     selects[1].addEventListener('change', function() {
-        c.setMonth(this.value);
+        c.setMonth(parseInt(this.value));
     });
 
     var preYear = document.querySelector('.year .pre');
     preYear.addEventListener('click', function() {
+        if (selects[0].value > 1901) {
+            selects[0].value = parseInt(selects[0].value) - 1;
+        }
         c.preYear();
     });
     var nextYear = document.querySelector('.year .next');
-    preYear.addEventListener('click', function() {
+    nextYear.addEventListener('click', function() {
+        if (selects[0].value < 2100) {
+            selects[0].value = parseInt(selects[0].value) + 1;
+        }
         c.nextYear();
     });
 
     var preMonth = document.querySelector('.month .pre');
-    preYear.addEventListener('click', function() {
+    preMonth.addEventListener('click', function() {
+        if (selects[1].value > 1) {
+            selects[1].value = parseInt(selects[1].value) - 1;
+        }
         c.preMonth();
     });
     var nextMonth = document.querySelector('.month .next');
-    preYear.addEventListener('click', function() {
+    nextMonth.addEventListener('click', function() {
+        if (selects[1].value < 12) {
+            selects[1].value = parseInt(selects[1].value) + 1;
+        }
         c.nextMonth();
     });
 
@@ -46,8 +58,10 @@ function bindEvent() {
             var node = target.parentElement;
         }
         var day = parseInt(node.querySelector('p').innerHTML);
-        this.querySelector('.selected').className = 'normal';
-        node.className = 'selected';
+
+        var select = this.querySelector('.selected');
+        select.className = select.className.replace('selected', 'normal')
+        node.className = [node.className, 'selected'].join(' ');
         c.setDay(day);
     });
 }

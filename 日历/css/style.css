@@ -142,12 +142,22 @@ select {
     border: 1px solid transparent;
 }
 
-.normal:hover {
+.normal:hover,
+.weekDay:hover {
     border: 1px solid #f8d564;
 }
 
 .expired {
     color: #eee;
+}
+
+.weekDay {
+    color: #c9161d;
+}
+
+.selected {
+    background-color: #c9161d;
+    color: #fff;
 }
 
 .tody-detail {
@@ -169,9 +179,4 @@ p.big-day {
     font-size: 80px;
     color: #c9161d;
     line-height: 1;
-}
-
-.selected {
-    background-color: #c9161d;
-    color: #fff;
 }
