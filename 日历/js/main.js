@@ -31,6 +31,9 @@ function bindEvent() {
 
     var today = document.querySelector('.today');
     today.addEventListener('click', function() {
+        var date = new Date();
+        selects[0].value = date.getFullYear();
+        selects[1].value = date.getMonth() + 1;
         c.goToday();
     });
 
