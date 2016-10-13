@@ -414,6 +414,67 @@ var ChineseCalendar = {
             tail = head + 6;
         }
     },
+    getlunarYMD: function(date) {
+        var result = {
+            year: date.getFullYear(),
+            month: date.getMonth() + 1,
+            day: date.getDate()
+        };
+        var offset = (Date.UTC(result.year, result.month - 1, result.day) - Date.UTC(1900, 0, 31)) / (60 * 60 * 24 * 1000),
+            temp = 0;
+        for (var i = 1900; i < 2101 && offset > 0; i++) {
+            temp = ChineseCalendar.lunarYearLength(i);
+            offset -= temp;
+        }
+        if (offset < 0) {
+            offset += temp;
+            i--;
+        }
+        result.lunarYear = i;
+
+        var isLear = false,
+            lunarMonth = ChineseCalendar.leapMonth(result.lunarYear);
+        for (var i = 1; i < 13 && offset >= 0; i++) {
+            if (i === lunarMonth && !isLear) {
+                temp = ChineseCalendar.leapMonthLengths(result.lunarYear);
+                offset -= temp;
+                isLear = true;
+                i--;
+            } else {
+                temp = ChineseCalendar.lunarMonthLength(result.lunarYear, i);
+                offset -= temp;
+                isLear = false;
+            }
+        }
+        if (offset < 0) {
+            if (i === lunarMonth && !isLear) {
+                offset += temp;
+                isLear = true;
+            } else {
+                offset += temp;
+                i--;
+            }
+        }
+        result.lunarMonth = i;
+        result.lunarMonthChiness = ChineseCalendar.toLunarMonth(result.lunarMonth, isLear);
+
+        result.lunarDay = offset + 1;
+        result.lunarDayChiness = ChineseCalendar.toLunarDay(result.lunarDay);
+
+        return result;
+    },
+    lunarTime: function(date) {
+        var result = ChineseCalendar.getlunarYMD(date);
+        var festive = ChineseCalendar.isFestive(result.year, result.month, result.day, result.lunarYear, result.lunarMonth, result.lunarDay);
+        if (festive) {
+            return festive;
+        }
+        var term = ChineseCalendar.isTerm(result.year, result.month, result.day);
+        if (term) {
+            return term;
+        }
+        return result.lunarDayChiness;
+    },
     date2lunar: function(date) {
         date = date || new Date();
         var result = {
