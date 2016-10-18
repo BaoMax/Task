@@ -421,6 +421,50 @@ function bindEvent() {
         // addClass(document.querySelector('.edit-done'), 'hide');
         // removeClass(document.querySelector('.save-cancel'), 'hide');
         title.focus();
+
+        var cancel = document.querySelector('.save-cancel .cancel');
+        addEvent(cancel, 'click', function(e) {
+            var event = e || window.event,
+                target = event.target || event.srcElement;
+            var box = document.querySelector('.task-detail'),
+                date = box.querySelector('input[name="date"]'),
+                content = box.querySelector('textarea[name="content"]');
+            date.value = currentTaskDetail.fromDate();
+            content.value = currentTaskDetail.content;
+            date.setAttribute('disabled', true);
+            content.setAttribute('disabled', true);
+            addClass(date, 'disableEdit');
+            addClass(content, 'disableEdit');
+            removeClass(document.querySelector('.edit-done'), 'hide');
+            addClass(document.querySelector('.save-cancel'), 'hide');
+        });
+
+        var save = document.querySelector('.save-cancel .save');
+        addEvent(save, 'click', function(e) {
+            var event = e || window.event,
+                target = event.target || event.srcElement;
+            var box = document.querySelector('.task-detail'),
+                title = document.querySelector('input[name="title"]').value,
+                date = box.querySelector('input[name="date"]'),
+                content = box.querySelector('textarea[name="content"]');
+
+            // task = new Task(title, new Date(date.value), content.value, 0, );
+
+            currentTaskDetail.date = new Date(date.value);
+            currentTaskDetail.content = content.value;
+            changeTaskDetail(sumData, currentTaskDetail)
+            date.setAttribute('disabled', true);
+            content.setAttribute('disabled', true);
+            addClass(date, 'disableEdit');
+            addClass(content, 'disableEdit');
+            removeClass(document.querySelector('.edit-done'), 'hide');
+            addClass(document.querySelector('.save-cancel'), 'hide');
+
+            var grandNode = document.querySelector('.floder-list li.selected');
+            grandNode.click();
+            var father = document.querySelector('dd[data-title="' + title + '"]');
+            father.click();
+        });
     });
 
 }
