@@ -156,9 +156,9 @@ var TaskList = function(data) {
         return JSON.stringify(arr);
     };
 
-    this.removeTaskType = function(title) {
-        for (var)
-    }
+    // this.removeTaskType = function(title) {
+    //     for (var)
+    // }
 }
 
 
