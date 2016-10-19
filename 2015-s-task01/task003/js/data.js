@@ -20,6 +20,19 @@ function removeClass(node, name) {
     return;
 }
 
+function hasClass(node, name) {
+    if (node.className) {
+        var arr = node.className.split(/\s+/g);
+        for (var i = 0, l = arr.length; i < l; i += 1) {
+            if (arr[i] === name) {
+                return true;
+            }
+        }
+    } else {
+        return false;
+    }
+}
+
 function addClass(node, name) {
     if (node.className) {
         var arr = node.className.split(/\s+/g);

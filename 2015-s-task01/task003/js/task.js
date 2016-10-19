@@ -17,3 +17,11 @@ Task.prototype.change = function(task) {
     this.content = task.content;
     this.state = task.state;
 }
+Task.prototype.toJson = function() {
+    var obj = {};
+    obj.title = this.title;
+    obj.date = this.fromDate();
+    obj.content = this.content;
+    obj.state = this.state;
+    return obj;
+}

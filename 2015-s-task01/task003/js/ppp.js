@@ -1,14 +1,9 @@
 var localStorage = window.localStorage,
-    taskList = window.localStorage.taskList || [{
+    taskList = JSON.parse(window.localStorage.taskList) || [{
         'test': null
     }, {
         '默认分类': [{
-            'planA': [{
-                "title": "plan-A-01",
-                "date": "2016-07-07",
-                "content": "plan-A-01plan-A-01",
-                "state": 1
-            }]
+            'planA': []
         }]
     }, {
         '宝贝计划': [{
@@ -40,6 +35,7 @@ var localStorage = window.localStorage,
 var sumData = [];
 var currentTask = {};
 var currentTaskDetail = {};
+var currentTaskType = {};
 
 function jsonToData(data) {
     taskTypeChange(data, null, sumData);
@@ -58,7 +54,9 @@ function jsonToData(data) {
             for (var j = 0, ll = temp.length; j < ll; j += 1) {
                 var taskTitle = temp[j].title,
                     taskData = childData[j][taskTitle];
-                taskChange(taskData, temp[j], temp[j].children);
+                if (taskData && taskData.length > 0) {
+                    taskChange(taskData, temp[j], temp[j].children);
+                }
             }
         }
     }
@@ -246,6 +244,36 @@ function getTaskByTitle(data, title) {
     }
 }
 
+function getTaskType(obj, data) {
+    var title = obj.title,
+        parent = obj.parent;
+    for (var i = 0; i < data.length; i += 1) {
+        if (!parent) {
+            if (data[i].title === title) {
+                return data[i];
+            }
+        } else {
+            if (data[i].title === parent) {
+                var temp = data[i].children;
+                for (var j = 0; j < temp.length; j += 1) {
+                    if (temp[j].title === title) {
+                        return temp[j];
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function toJson(data) {
+    var arr = [];
+    for (var i = 0; i < data.length; i += 1) {
+        arr.push(data[i].toJson());
+    }
+    return JSON.stringify(arr);
+}
+
 function detailBind() {
     var edit = document.querySelector('.icon-edit');
     addEvent(edit, 'click', function(e) {
@@ -265,19 +293,7 @@ function detailBind() {
 
     var cancel = document.querySelector('.save-cancel .cancel');
     addEvent(cancel, 'click', function(e) {
-        var event = e || window.event,
-            target = event.target || event.srcElement;
-        var box = document.querySelector('.task-detail'),
-            date = box.querySelector('input[name="date"]'),
-            content = box.querySelector('textarea[name="content"]');
-        date.value = currentTaskDetail.fromDate();
-        content.value = currentTaskDetail.content;
-        date.setAttribute('disabled', true);
-        content.setAttribute('disabled', true);
-        addClass(date, 'disableEdit');
-        addClass(content, 'disableEdit');
-        removeClass(document.querySelector('.edit-done'), 'hide');
-        addClass(document.querySelector('.save-cancel'), 'hide');
+        renderTaskDetail(currentTaskDetail);
     });
 
     var save = document.querySelector('.save-cancel .save');
@@ -302,6 +318,8 @@ function detailBind() {
         grandNode.click();
         var father = document.querySelector('dd[data-title="' + title + '"]');
         father.click();
+
+        localStorage.setItem('taskList', toJson(sumData));
     });
 }
 
@@ -314,6 +332,8 @@ function bindEvent() {
             var title = target.getAttribute('data-title'),
                 parent = target.getAttribute('data-parent'),
                 task = getTasks(sumData, title, parent);
+            currentTaskType.title = title;
+            currentTaskType.parent = parent;
             currentTask = dateTask(task);
             renderTask(currentTask);
             removeClassBat(floder, 'li', 'selected');
@@ -397,6 +417,7 @@ function bindEvent() {
             addClass(selectedNode, 'selected');
 
             dialog.hide();
+            localStorage.setItem('taskList', toJson(sumData));
         });
 
     });
@@ -410,33 +431,11 @@ function bindEvent() {
             title = document.querySelector('input[name="title"]'),
             date = box.querySelector('input[name="date"]'),
             content = box.querySelector('textarea[name="content"]');
-        // title.removeAttribute('disabled');
-        // date.removeAttribute('disabled');
-        // content.removeAttribute('disabled');
-
-        // removeClass(title, 'disableEdit');
-        // removeClass(date, 'disableEdit');
-        // removeClass(content, 'disableEdit');
-
-        // addClass(document.querySelector('.edit-done'), 'hide');
-        // removeClass(document.querySelector('.save-cancel'), 'hide');
         title.focus();
 
         var cancel = document.querySelector('.save-cancel .cancel');
         addEvent(cancel, 'click', function(e) {
-            var event = e || window.event,
-                target = event.target || event.srcElement;
-            var box = document.querySelector('.task-detail'),
-                date = box.querySelector('input[name="date"]'),
-                content = box.querySelector('textarea[name="content"]');
-            date.value = currentTaskDetail.fromDate();
-            content.value = currentTaskDetail.content;
-            date.setAttribute('disabled', true);
-            content.setAttribute('disabled', true);
-            addClass(date, 'disableEdit');
-            addClass(content, 'disableEdit');
-            removeClass(document.querySelector('.edit-done'), 'hide');
-            addClass(document.querySelector('.save-cancel'), 'hide');
+            renderTaskDetail(currentTaskDetail);
         });
 
         var save = document.querySelector('.save-cancel .save');
@@ -447,23 +446,38 @@ function bindEvent() {
                 title = document.querySelector('input[name="title"]').value,
                 date = box.querySelector('input[name="date"]'),
                 content = box.querySelector('textarea[name="content"]');
+            if (!currentTaskType.parent) {
+                currentTaskType.parent = '默认分类';
+                currentTaskType.title = '默认子类';
+            }
+            var parent = getTaskType(currentTaskType, sumData);
+            task = new Task(title, new Date(date.value), content.value, 0, parent);
+            parent.children.push(task);
+            currentTaskDetail = task;
 
-            // task = new Task(title, new Date(date.value), content.value, 0, );
-
-            currentTaskDetail.date = new Date(date.value);
-            currentTaskDetail.content = content.value;
-            changeTaskDetail(sumData, currentTaskDetail)
-            date.setAttribute('disabled', true);
-            content.setAttribute('disabled', true);
-            addClass(date, 'disableEdit');
-            addClass(content, 'disableEdit');
-            removeClass(document.querySelector('.edit-done'), 'hide');
-            addClass(document.querySelector('.save-cancel'), 'hide');
+            renderTaskDetail(currentTaskDetail);
 
             var grandNode = document.querySelector('.floder-list li.selected');
-            grandNode.click();
+            var grandNode_title = grandNode.getAttribute('data-title');
+            var grandNode_parent = grandNode.getAttribute('data-parent');
+            renderFloder(sumData);
+            grandNode = document.querySelectorAll('li[data-title = "' + grandNode_title + '"]');
+            if (!grandNode_parent) {
+                grandNode[0].click();
+            } else {
+                for (var i = 0; i < grandNode.length; i += 1) {
+                    if (grandNode[i].getAttribute('data-parent') === grandNode_parent) {
+                        grandNode[i].click();
+                    }
+                }
+            }
+
             var father = document.querySelector('dd[data-title="' + title + '"]');
-            father.click();
+            if (father) {
+                father.click();
+            }
+
+            localStorage.setItem('taskList', toJson(sumData));
         });
     });
 
