@@ -126,6 +126,52 @@ var TaskList = function(data) {
         }
     };
 
+    this.deleteType = function(title, parent) {
+        if (parent) {
+            for (var i = 0, l = this.taskType.length; i < l; i += 1) {
+                var temp = this.taskType[i];
+                if (temp.title === parent) {
+                    var childData = temp.children;
+                    for (var j = 0, ll = childData.length; j < ll; j += 1) {
+                        if (childData[j].title === title) {
+                            var task = childData.splice(j, 1);
+                            this.subType.splice(this.subType.indexOf(task), 1);
+                            return;
+                        }
+                    }
+                }
+            }
+        } else {
+            for (var i = 0, l = this.taskType.length; i < l; i += 1) {
+                var temp = this.taskType[i];
+                if (temp.title === title) {
+                    this.taskType.splice(i, 1);
+                    this.taskList.splice(i, 1);
+                    break;
+                }
+            }
+            for (var i = 0; i < this.subType.length; i += 1) {
+                var temp = this.subType[i];
+                if (temp.parent.title === title) {
+                    this.subType.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+    };
+
+    this.deleteTask = function(date, title) {
+        var task = this.currentDategroupTask[date];
+        for (var i = 0, l = task.length; i < l; i += 1) {
+            if (task[i].title === title) {
+                var temp = task[i];
+                this.tasks.splice(this.tasks.indexOf(temp), 1);
+                var subType = temp.parent;
+                subType.children.splice(subType.children.indexOf(temp), 1);
+            }
+        }
+    };
+
     this.getTask = function(title, parent) {
         var temp = this.subType;
         for (var i = 0, l = temp.length; i < l; i += 1) {
@@ -138,7 +184,7 @@ var TaskList = function(data) {
     this.getDefaultTitle = function(title) {
         for (var i = 0, l = this.taskType.length; i < l; i += 1) {
             if (this.taskType[i].title === title) {
-                return this.taskType[i].children[0] ? this.taskType[i].children[0].title : '默认子分类';
+                return this.taskType[i].children[0] ? { parent: title, title: this.taskType[i].children[0].title } : { parent: '默认分类', title: '默认子分类' };
             }
         }
     };
@@ -155,10 +201,6 @@ var TaskList = function(data) {
         }
         return JSON.stringify(arr);
     };
-
-    // this.removeTaskType = function(title) {
-    //     for (var)
-    // }
 }
 
 

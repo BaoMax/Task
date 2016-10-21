@@ -63,7 +63,11 @@ ul li {
     cursor: pointer;
 }
 
-.task-list .floder-list li:hover i.icon-delete {
+.floder-list>li>div:hover>i.icon-delete {
+    visibility: visible;
+}
+
+.file-list>li>div:hover>i.icon-delete {
     visibility: visible;
 }
 
@@ -101,7 +105,7 @@ li i.icon-floder {
     background: url(../img/floder.png) no-repeat center center;
 }
 
-li i.icon-delete {
+i.icon-delete {
     float: right;
     visibility: hidden;
     background: url(../img/delete.png) no-repeat center center;
@@ -131,7 +135,7 @@ i.icon-add {
     padding-left: 13px;
 }
 
-.task-state > span {
+.task-state>span {
     display: inline-block;
     height: 24px;
     line-height: 24px;
@@ -162,6 +166,10 @@ i.icon-add {
     line-height: 30px;
     text-indent: 2rem;
     cursor: pointer;
+}
+
+dd:hover>i.icon-delete {
+    visibility: visible;
 }
 
 .task dd.selected {

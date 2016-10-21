@@ -15,12 +15,12 @@ function renderFloder(data) {
             for (var j = 0, ll = temp.children.length; j < ll; j += 1) {
                 var child = temp.children[j];
                 sum += child.children.length;
-                list += '<li data-title="' + child.title + '" data-parent="' + child.parent.title + '"><i class="icon icon-file"></i>' + child.title + '（' + child.children.length + '）</li>';
+                list += '<li><div data-title="' + child.title + '" data-parent="' + child.parent.title + '"><i class="icon icon-file"></i>' + child.title + '（' + child.children.length + '）<i class="icon icon-delete"></i></div></li>';
             }
             list += '</ul>';
-            str += '<li data-title="' + temp.title + '"><i class="icon icon-floder"></i>' + temp.title + '（' + sum + '）<i class="icon icon-delete"></i>' + list + '</li>'
+            str += '<li><div data-title="' + temp.title + '"><i class="icon icon-floder"></i>' + temp.title + '（' + sum + '）<i class="icon icon-delete"></i></div>' + list + '</li>'
         } else {
-            str += '<li data-title="' + temp.title + '"><i class="icon icon-floder"></i>' + temp.title + '（0）<i class="icon icon-delete"></i></li>';
+            str += '<li><div data-title="' + temp.title + '"><i class="icon icon-floder"></i>' + temp.title + '（0）<i class="icon icon-delete"></i></div></li>';
         }
         taskCount += sum;
     }
@@ -36,26 +36,9 @@ function renderTask(data) {
         str += '<dt>' + k + '</dt>';
         for (var i = 0, l = temp.length; i < l; i += 1) {
             if (temp[i].state === 1) {
-                str += '<dd class="done" data-date="' + k + '" data-title="' + temp[i].title + '">' + temp[i].title + '</dd>';
+                str += '<dd class="done" data-date="' + k + '" data-title="' + temp[i].title + '">' + temp[i].title + '<i class="icon icon-delete"></i></dd>';
             } else {
-                str += '<dd data-date="' + k + '" data-title="' + temp[i].title + '">' + temp[i].title + '</dd>';
-            }
-        }
-    }
-    node.innerHTML = str;
-}
-
-function renderTask(data) {
-    var str = '',
-        node = document.querySelector('.task dl');
-    for (var k in data) {
-        var temp = data[k];
-        str += '<dt>' + k + '</dt>';
-        for (var i = 0, l = temp.length; i < l; i += 1) {
-            if (temp[i].state === 1) {
-                str += '<dd class="done" data-date="' + k + '" data-title="' + temp[i].title + '">' + temp[i].title + '</dd>';
-            } else {
-                str += '<dd data-date="' + k + '" data-title="' + temp[i].title + '">' + temp[i].title + '</dd>';
+                str += '<dd data-date="' + k + '" data-title="' + temp[i].title + '">' + temp[i].title + '<i class="icon icon-delete"></i></dd>';
             }
         }
     }
@@ -147,7 +130,7 @@ function bindEvent() {
     addEvent(floder, 'click', function(e) {
         var event = e || window.event,
             target = event.target || event.srcElement;
-        if (target.nodeName.toUpperCase() === 'LI') {
+        if (target.nodeName.toUpperCase() === 'DIV') {
             var title = target.getAttribute('data-title'),
                 parent = target.getAttribute('data-parent');
 
@@ -160,7 +143,7 @@ function bindEvent() {
             list.currentDategroupTask = list.dateTask(list.currentTask);
             renderTask(list.currentDategroupTask);
             removeClassBat(floder, 'li', 'selected');
-            addClass(target, 'selected');
+            addClass(target.parentElement, 'selected');
 
             var state = document.querySelector('.task-state');
             removeClassBat(state, 'span', 'selected');
@@ -177,8 +160,31 @@ function bindEvent() {
     addEvent(floder, 'click', function(e) {
         var event = e || window.event,
             target = event.target || event.srcElement;
-        if (hasClass(target, 'icon - delete')) {
+        if (hasClass(target, 'icon-delete')) {
+            var node = target.parentElement,
+                parent = node.getAttribute('data-parent'),
+                title = node.getAttribute('data-title');
+            list.deleteType(title, parent);
 
+            if (parent && parent === selectedTaskTypeDom && title === selectedSubTypeDom) {
+                var o = list.getDefaultTitle(parent);
+            } else if (!parent && title === selectedTaskTypeDom) {
+                var o = {
+                    parent: '默认分类',
+                    title: '默认子分类'
+                }
+            } else {
+                var o = {
+                    parent: selectedTaskTypeDom,
+                    title: selectedSubTypeDom
+                }
+            }
+            renderFloder(list.taskList);
+            var selectedNode = document.querySelector('.floder-list div[data-title="' + o.parent + '"]').parentElement;
+            var node = selectedNode.querySelector('.file-list div[data-title="' + o.title + '"]');
+            node.click();
+
+            localStorage.setItem('taskList', list.toJson());
         }
     });
 
@@ -206,6 +212,34 @@ function bindEvent() {
     addEvent(dl, 'click', function(e) {
         var event = e || window.event,
             target = event.target || event.srcElement;
+        if (hasClass(target, 'icon-delete')) {
+            var node = target.parentElement,
+                date = node.getAttribute('data-date'),
+                title = node.innerText;
+            list.deleteTask(date, title);
+
+            var selectedTask = selectedTaskDom;
+
+            renderFloder(list.taskList);
+
+            if (selectedSubTypeDom) {
+                var selectedNode = document.querySelector('.floder-list div[data-title="' + selectedTaskTypeDom + '"]').parentElement;
+                var node = selectedNode.querySelector('.file-list div[data-title="' + selectedSubTypeDom + '"]');
+                node.click();
+            } else if (selectedTaskTypeDom) {
+                var selectedNode = document.querySelector('.floder-list div[data-title="' + selectedTaskTypeDom + '"]');
+                selectedNode.click();
+            }
+            if (selectedTask !== title) {
+                document.querySelector('dd[data-title="' + selectedTask + '"]').click();
+            }
+
+            localStorage.setItem('taskList', list.toJson());
+        }
+    });
+    addEvent(dl, 'click', function(e) {
+        var event = e || window.event,
+            target = event.target || event.srcElement;
         if (target.nodeName.toUpperCase() === 'DD') {
             var date = target.getAttribute('data-date'),
                 title = target.innerText;
@@ -217,7 +251,6 @@ function bindEvent() {
             selectedTaskDom = title;
         }
     });
-
 
     var addType = document.querySelector('.footer-taskType');
     addEvent(addType, 'click', function(e) {
@@ -257,14 +290,14 @@ function bindEvent() {
 
             renderFloder(list.taskList);
             if (selectedSubTypeDom) {
-                var selectedNode = document.querySelector('.floder-list li[data-title="' + selectedTaskTypeDom + '"]');
-                var node = selectedNode.querySelectorAll('.floder-list li[data-title="' + selectedSubTypeDom + '"]');
+                var selectedNode = document.querySelector('.floder-list  div[data-title="' + selectedTaskTypeDom + '"]').parentElement;
+                var node = selectedNode.querySelector('.file-list  div[data-title="' + selectedSubTypeDom + '"]');
 
-                addClass(node, 'selected');
+                addClass(node.parentElement, 'selected');
 
             } else if (selectedTaskTypeDom) {
-                var selectedNode = document.querySelector('.floder-list li[data-title="' + selectedTaskTypeDom + '"]');
-                addClass(selectedNode, 'selected');
+                var selectedNode = document.querySelector('.floder-list  div[data-title="' + selectedTaskTypeDom + '"]');
+                addClass(selectedNode.parentElement, 'selected');
             }
 
             dialog.hide();
@@ -298,34 +331,26 @@ function bindEvent() {
                 date = box.querySelector('input[name="date"]'),
                 content = box.querySelector('textarea[name="content"]');
             if (!list.currentTaskType.parent) {
-                list.currentTaskType.parent = list.currentTaskType.title;
-                list.currentTaskType.title = list.getDefaultTitle(list.currentTaskType.parent);
+                list.currentTaskType = list.getDefaultTitle(list.currentTaskType.title);
             }
             var parent = list.getTask(list.currentTaskType.title, list.currentTaskType.parent);
             task = new Task(title, new Date(date.value), content.value, 0, parent);
             list.addTask(parent, task);
-            // parent.children.push(task);
-            list.currentTaskDetail = task;
 
-            // renderTaskDetail('task', list.currentTaskDetail);
+            list.currentTaskDetail = task;
 
             renderFloder(list.taskList);
 
             if (selectedSubTypeDom) {
-                var selectedNode = document.querySelector('.floder-list li[data-title="' + selectedTaskTypeDom + '"]');
-                var node = selectedNode.querySelector('.floder-list li[data-title="' + selectedSubTypeDom + '"]');
+                var selectedNode = document.querySelector('.floder-list div[data-title="' + selectedTaskTypeDom + '"]').parentElement;
+                var node = selectedNode.querySelector('.file-list div[data-title="' + selectedSubTypeDom + '"]');
                 node.click();
             } else if (selectedTaskTypeDom) {
-                var selectedNode = document.querySelector('.floder-list li[data-title="' + selectedTaskTypeDom + '"]');
+                var selectedNode = document.querySelector('.floder-list div[data-title="' + selectedTaskTypeDom + '"]');
                 selectedNode.click();
             }
             selectedTaskDom = title;
             document.querySelector('dd[data-title="' + selectedTaskDom + '"]').click();
-            // if (list.currentState === "all") {
-            //     renderTask(list.currentDategroupTask);
-            // } else {
-            //     renderTask(list.getTasksByState(list.currentDategroupTask, Number(list.currentState)));
-            // }
 
             localStorage.setItem('taskList', list.toJson());
         });
