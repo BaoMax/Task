@@ -1,0 +1,371 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html,#app,.app {
+    height: 100%;
+    width: 100%;
+    min-height: 600px;
+    min-width: 1280px;
+    position: relative;
+}
+
+header {
+    min-height: 60px;
+    height: 10%;
+    background-color: #ddd;
+    text-align: left;
+    color: #9a9a9a;
+    font-size: 20px;
+    line-height: 60px;
+    text-indent: 1rem;
+}
+
+.aside {
+    position: relative;
+    width: 230px;
+    height: 90%;
+    min-height: 540px;
+    float: left;
+    border-right: 1px solid #cecece;
+}
+
+.aside footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 10%;
+    min-height: 60px;
+    line-height: 60px;
+    box-sizing: border-box;
+    border-top: 1px solid #cecece;
+    cursor: pointer;
+}
+
+.task-list {
+    background-color: #f2f2f2;
+}
+
+.task-list .title {
+    font-size: 14px;
+    margin: 25px 20px;
+}
+
+ul {
+    list-style: none;
+    overflow-y: auto;
+    max-height: 380px;
+}
+
+ul li {
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.floder-list>li>div:hover>i.icon-delete {
+    visibility: visible;
+}
+
+.file-list>li>div:hover>i.icon-delete {
+    visibility: visible;
+}
+
+.task-list .floder-list li {
+    line-height: 36px;
+}
+
+.task-list .floder-list .selected {
+    background: yellow;
+}
+
+.task-list .file-list {
+    /*display: none;*/
+    background-color: #f2f2f2;
+    transition: all 1s ease-in 0s;
+}
+
+.task-list .file-list li {
+    padding-left: 30px;
+    line-height: 28px;
+}
+
+.task-list .file-list .selected {
+    background-color: #fff;
+}
+
+i.icon {
+    width: 50px;
+    height: 36px;
+    background-size: 15px;
+}
+
+li i.icon-floder {
+    float: left;
+    background: url(../img/floder.png) no-repeat center center;
+}
+
+i.icon-delete {
+    float: right;
+    visibility: hidden;
+    background: url(../img/delete.png) no-repeat center center;
+}
+
+li i.icon-file {
+    width: 30px;
+    float: left;
+    background: url(../img/file.png) no-repeat center center;
+}
+
+i.icon-add {
+    /*width: 30px;*/
+    height: 100%;
+    float: left;
+    background: url(../img/add.png) no-repeat center center;
+}
+
+.task {
+    background-color: #fff;
+}
+
+.task-state {
+    height: 8%;
+    min-height: 40px;
+    background-color: #eee;
+    padding-left: 13px;
+}
+
+.task-state>span {
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    /*background-color: #fff;*/
+    font-size: 13px;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.task-state .selected {
+    background-color: #fff;
+    border: 1px solid #cecece;
+}
+dl{
+    overflow-y: auto;
+    max-height: 450px;
+}
+.task dt {
+    background-color: #fafaee;
+    font-size: 13px;
+    line-height: 28px;
+    padding-left: 15px;
+}
+
+.task dd {
+    font-size: 14px;
+    line-height: 30px;
+    text-indent: 2rem;
+    cursor: pointer;
+}
+
+dd:hover>i.icon-delete {
+    visibility: visible;
+}
+
+.task dd.selected {
+    background-color: yellow;
+}
+
+.task .done {
+    color: green;
+}
+
+.task .undone {
+    color: #000;
+}
+
+.task-detail {
+    height: 90%;
+    min-height: 540px;
+    background-color: #fff;
+    margin-left: 462px;
+    box-sizing: border-box;
+    position: relative;
+    /*width: 100%;*/
+}
+
+.task-detail .title {
+    height: 10%;
+    min-height: 50px;
+    background-color: #f2f2f2;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    width: 100%;
+    text-indent: 1rem;
+    color: #000;
+}
+
+.task-detail .date {
+    display: block;
+    border-top: 1px solid #cecece;
+    border-bottom: 1px solid #cecece;
+    height: 10%;
+    min-height: 50px;
+    box-sizing: border-box;
+    line-height: 50px;
+    text-indent: 1rem;
+    background-color: #fafaee;
+}
+
+.date input {
+    /*height: 100%;*/
+    /*width: 90%;*/
+    line-height: 200%;
+    font-size: 14px;
+    background-color: #fafaee;
+    color: #000;
+}
+
+.content {
+    width: 90%;
+    height: 39.5%;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #000;
+}
+
+.disableEdit {
+    border: none;
+    /*outline: none;*/
+}
+
+i.icon-done {
+    background: url(../img/done.png) no-repeat center center;
+    position: absolute;
+    top: 5%;
+    right: 6%;
+    margin-top: -18px;
+}
+
+i.icon-edit {
+    background: url(../img/edit.png) no-repeat center center;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    margin-top: -18px;
+    margin-right: -36px;
+}
+
+.dialog {
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.box {
+    width: 300px;
+    min-height: 200px;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+}
+
+.box .title {
+    font-size: 16px;
+    line-height: 30px;
+    line-height: 30px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.box label {
+    display: block;
+    margin-top: 20px;
+}
+
+.box input[name="typeName"] {
+    height: 30px;
+    width: 70%;
+}
+
+.box select {
+    height: 30px;
+    width: 70%;
+    margin-left: 7px;
+}
+
+.box button {
+    width: 72%;
+    height: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+}
+
+i.close {
+    background: url(../img/delete.png) no-repeat center center;
+    /*float: right;*/
+    /*display: inline-block;*/
+    float: right;
+}
+
+.hide {
+    display: none!important;
+}
+
+body:after {
+    content: "";
+    height: 0px;
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
+dd:after{
+    content: "";
+    height: 0px;
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
+.hide {
+    display: none !important;
+}
+
+.save-cancel {
+    padding-right: 8%;
+}
+
+.save-cancel button {
+    width: 100px;
+    height: 40px;
+    border: none;
+    float: right;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.save {
+    background-color: #A5DE37;
+}
+
+.cancel {
+    background-color: #FF4351;
+}

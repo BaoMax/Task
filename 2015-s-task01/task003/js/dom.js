@@ -61,6 +61,46 @@ function renderTaskDetail(type, task) {
     }
 }
 
+function floderClickHanlder(target) {
+    var floder = document.querySelector('.floder-list');
+    var title = target.getAttribute('data-title'),
+        parent = target.getAttribute('data-parent');
+    selectedTaskTypeDom = parent || title;
+    selectedSubTypeDom = parent ? title : '';
+
+    list.currentTask = list.getTasks(title, parent);
+    list.currentTaskType.title = title;
+    list.currentTaskType.parent = parent;
+    list.currentDategroupTask = list.dateTask(list.currentTask);
+    renderTask(list.currentDategroupTask);
+    removeClassBat(floder, 'li', 'selected');
+    addClass(target.parentElement, 'selected');
+
+    var state = document.querySelector('.task-state');
+    removeClassBat(state, 'span', 'selected');
+    addClass(state.querySelector('span[data-state="all"]'), 'selected');
+
+    var node = document.querySelector('dl dd');
+    if (node) {
+        dlClickHandle(node);
+    } else {
+        renderTaskDetail('null');
+    }
+}
+
+function dlClickHandle(target) {
+    var dl = document.querySelector('dl');
+    var date = target.getAttribute('data-date'),
+        title = target.innerText;
+    list.currentTaskDetail = list.getTaskDetail(date, title);
+    renderTaskDetail('task', list.currentTaskDetail);
+    removeClassBat(dl, 'dd', 'selected');
+    addClass(target, 'selected');
+
+    selectedTaskDom = title;
+}
+
+
 function editEvent() {
     var edit = document.querySelector('.icon-edit');
     addEvent(edit, 'click', function(e) {
@@ -119,7 +159,8 @@ function editEvent() {
             renderTask(list.getTasksByState(list.currentDategroupTask, Number(list.currentState)));
         }
 
-        document.querySelector('dd[data-title="' + selectedTaskDom + '"]').click();
+        dlClickHandle(document.querySelector('dd[data-title="' + selectedTaskDom + '"]'));
+        // .click();
 
         localStorage.setItem('taskList', list.toJson());
     });
@@ -131,30 +172,7 @@ function bindEvent() {
         var event = e || window.event,
             target = event.target || event.srcElement;
         if (target.nodeName.toUpperCase() === 'DIV') {
-            var title = target.getAttribute('data-title'),
-                parent = target.getAttribute('data-parent');
-
-            selectedTaskTypeDom = parent || title;
-            selectedSubTypeDom = parent ? title : '';
-
-            list.currentTask = list.getTasks(title, parent);
-            list.currentTaskType.title = title;
-            list.currentTaskType.parent = parent;
-            list.currentDategroupTask = list.dateTask(list.currentTask);
-            renderTask(list.currentDategroupTask);
-            removeClassBat(floder, 'li', 'selected');
-            addClass(target.parentElement, 'selected');
-
-            var state = document.querySelector('.task-state');
-            removeClassBat(state, 'span', 'selected');
-            addClass(state.querySelector('span[data-state="all"]'), 'selected');
-
-            var node = document.querySelector('dl dd');
-            if (node) {
-                node.click();
-            } else {
-                renderTaskDetail('null');
-            }
+            floderClickHanlder(target);
         }
     });
     addEvent(floder, 'click', function(e) {
@@ -182,7 +200,7 @@ function bindEvent() {
             renderFloder(list.taskList);
             var selectedNode = document.querySelector('.floder-list div[data-title="' + o.parent + '"]').parentElement;
             var node = selectedNode.querySelector('.file-list div[data-title="' + o.title + '"]');
-            node.click();
+            floderClickHanlder(node);
 
             localStorage.setItem('taskList', list.toJson());
         }
@@ -201,7 +219,7 @@ function bindEvent() {
             addClass(target, 'selected');
             var node = document.querySelector('dl dd');
             if (node) {
-                node.click();
+                dlClickHandle(node);
             } else {
                 renderTaskDetail('null');
             }
@@ -225,13 +243,16 @@ function bindEvent() {
             if (selectedSubTypeDom) {
                 var selectedNode = document.querySelector('.floder-list div[data-title="' + selectedTaskTypeDom + '"]').parentElement;
                 var node = selectedNode.querySelector('.file-list div[data-title="' + selectedSubTypeDom + '"]');
-                node.click();
+                // node.click();
+                floderClickHanlder(node);
             } else if (selectedTaskTypeDom) {
                 var selectedNode = document.querySelector('.floder-list div[data-title="' + selectedTaskTypeDom + '"]');
-                selectedNode.click();
+                // selectedNode.click();
+                floderClickHanlder(selectedNode);
             }
             if (selectedTask !== title) {
-                document.querySelector('dd[data-title="' + selectedTask + '"]').click();
+                dlClickHandle(document.querySelector('dd[data-title="' + selectedTask + '"]'));
+                // document.querySelector('dd[data-title="' + selectedTask + '"]').click();
             }
 
             localStorage.setItem('taskList', list.toJson());
@@ -241,14 +262,7 @@ function bindEvent() {
         var event = e || window.event,
             target = event.target || event.srcElement;
         if (target.nodeName.toUpperCase() === 'DD') {
-            var date = target.getAttribute('data-date'),
-                title = target.innerText;
-            list.currentTaskDetail = list.getTaskDetail(date, title);
-            renderTaskDetail('task', list.currentTaskDetail);
-            removeClassBat(dl, 'dd', 'selected');
-            addClass(target, 'selected');
-
-            selectedTaskDom = title;
+            dlClickHandle(target);
         }
     });
 
@@ -344,13 +358,16 @@ function bindEvent() {
             if (selectedSubTypeDom) {
                 var selectedNode = document.querySelector('.floder-list div[data-title="' + selectedTaskTypeDom + '"]').parentElement;
                 var node = selectedNode.querySelector('.file-list div[data-title="' + selectedSubTypeDom + '"]');
-                node.click();
+                // node.click();
+                floderClickHanlder(node);
             } else if (selectedTaskTypeDom) {
                 var selectedNode = document.querySelector('.floder-list div[data-title="' + selectedTaskTypeDom + '"]');
-                selectedNode.click();
+                // selectedNode.click();
+                floderClickHanlder(selectedNode);
             }
             selectedTaskDom = title;
-            document.querySelector('dd[data-title="' + selectedTaskDom + '"]').click();
+            dlClickHandle(document.querySelector('dd[data-title="' + selectedTaskDom + '"]'));
+            // document.querySelector('dd[data-title="' + selectedTaskDom + '"]').click();
 
             localStorage.setItem('taskList', list.toJson());
         });

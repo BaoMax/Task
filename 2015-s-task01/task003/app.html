@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>task003-任务管理器</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>BaoMax Todo List Tools</header>
+    <div class="aside task-list">
+        <p class="title">所有任务（<span class="task-num"></span>）</p>
+        <p class="title">分类列表</p>
+        <ul class="floder-list"></ul>
+        <footer class="footer-taskType"><i class="icon icon-add"></i>新建分类</footer>
+    </div>
+    <div class="aside task">
+        <i class="icon icon-back hide">《返回</i>
+        <div class="task-state">
+            <span class="selected" data-state="all">所有</span>
+            <span data-state="0">未完成</span>
+            <span data-state="1">已完成</span>
+        </div>
+        <dl></dl>
+        <footer class="footer-task"><i class="icon icon-add"></i>新建任务</footer>
+    </div>
+    <div class="detail">
+        <i class="icon icon-back hide">《返回</i>
+        <div class="task-detail"></div>
+    </div>
+    <script src="http://hostname|ip:port/target/target-script-min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/taskType.js"></script>
+    <script src="js/task.js"></script>
+    <script src="js/dialog.js"></script>
+    <!--<script src="js/ppp.js"></script>-->
+    <script src="js/TaskList.js"></script>
+    <script src="js/dom.js"></script>
+    <script src="js/test.js"></script>
+    <!--<script src="js/app.js"></script>-->
+    <!--<script src="js/index.js"></script>-->
+</body>
+
+</html>

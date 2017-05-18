@@ -75,11 +75,17 @@ var ChineseCalendar = {
         353350, 375494, 397447, 419210,
         440795, 462224, 483532, 504758
     ],
+    /**
+     * 前两位代表月份，第三位代表第几个星期，第四位代表星期几，其中0代表星期7
+     * **/
     wFestive: [
         '0520-母亲节',
         '0630-父亲节',
         '1144-感恩节'
     ],
+    /**公历节日
+     * 前两位代表月份，后两位代表日期     
+     **/
     cFestive: [
         '0101-元旦',
         '0214-情人节',
@@ -98,6 +104,9 @@ var ChineseCalendar = {
         '1224-平安夜',
         '1225-圣诞节',
     ],
+    /**农历节日
+     * 前两位代表月份，后两位代表日期     
+     **/
     lFestive: [
         '0101-春节',
         '0115-元宵节',
@@ -336,14 +345,14 @@ var ChineseCalendar = {
         return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth() && date.getDate() === now.getDate();
     },
     /**
-     * 参数为节日
+     * 参数为日期
      * @method 判断是不是节日
      * @param {int} 公历年份
      * @param {int} 公历月份
-     * @param {date} 公历日子
+     * @param {int} 公历日子
      * @param {int} 农历年份
      * @param {int} 农历月份
-     * @param {date} 农历日子
+     * @param {int} 农历日子
      * @return {boolean} 是否是节日，是返回节日名，不是返回false
      * **/
     isFestive: function(y, m, d, ly, lm, ld) {
@@ -393,6 +402,14 @@ var ChineseCalendar = {
 
         return false;
     },
+    /**
+     * 参数为日期
+     * @method 判断是第几周
+     * @param {int} 公历年份
+     * @param {int} 公历月份
+     * @param {int} 公历日子
+     * @return {init} 返回第几周
+     * **/
     theNoWeek: function(y, m, d) {
         var first = new Date(y, m - 1, d);
         first.setDate(1);
@@ -491,9 +508,12 @@ var ChineseCalendar = {
             month: date.getMonth() + 1,
             day: date.getDate()
         };
+        //date距离我们的base时间1900-1-31日有多少天
         var offset = (Date.UTC(result.year, result.month - 1, result.day) - Date.UTC(1900, 0, 31)) / (60 * 60 * 24 * 1000),
             temp = 0;
+        //干支记日    
         result.gzD = ChineseCalendar.day2GanZhe(offset);
+        //获取农历年
         for (var i = 1900; i < 2101 && offset > 0; i++) {
             temp = ChineseCalendar.lunarYearLength(i);
             offset -= temp;
@@ -503,7 +523,7 @@ var ChineseCalendar = {
             i--;
         }
         result.lunarYear = i;
-
+        //获取农历月
         var isLear = false,
             lunarMonth = ChineseCalendar.leapMonth(result.lunarYear);
         for (var i = 1; i < 13 && offset >= 0; i++) {
@@ -535,28 +555,29 @@ var ChineseCalendar = {
         }
         result.lunarMonth = i;
         result.lunarMonthChiness = ChineseCalendar.toLunarMonth(result.lunarMonth, isLear);
-
+        //获取农历日
         result.lunarDay = offset + 1;
         result.lunarDayChiness = ChineseCalendar.toLunarDay(result.lunarDay);
-
+        //获取生肖
         result.animal = ChineseCalendar.getAnimal(result.year);
-
+        //获取星期
         result.week = "星期" + ChineseCalendar.weekend[date.getDay()];
-
+        //获取星座
         result.start = ChineseCalendar.getStar(result.month, result.day);
+        //获取干支年
         result.gzY = ChineseCalendar.year2GanZhe(result.lunarYear);
 
         result.isTody = ChineseCalendar.isTody(date);
-
+        //获取干支月
         result.gzM = ChineseCalendar.month2GanZhe(result.lunarYear, result.lunarMonth);
 
-
+        //是否是节气，是返回节气名，不是返回false
         result.isTerm = ChineseCalendar.isTerm(result.year, result.month, result.day);
         if (result.isTerm) {
             result.term = result.isTerm;
             result.isTerm = true;
         }
-
+        //是否是节日，是返回节日名，不是返回false
         result.isFestive = ChineseCalendar.isFestive(result.year, result.month, result.day, result.lunarYear, result.lunarMonth, result.lunarDay);
         if (result.isFestive) {
             result.festive = result.isFestive;

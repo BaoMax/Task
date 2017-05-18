@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>快速排序</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <script>
+        var arr = [1, 4, 6, 2, 5, 8, 7, 6, 9, 12];
+        console.log('初始数组', arr);
+
+        function partion(array, low, high) {
+            var temp = array[high],
+                tt;
+            for (var i = low, j = i; i < high; i++) {
+                if (array[i] < temp) {
+                    var tt = array[i];
+                    array[i] = array[j];
+                    array[j] = tt;
+                    j++;
+                }
+            }
+            tt = array[i];
+            array[i] = array[j];
+            array[j] = tt;
+            return j;
+        }
+
+        function quickSort(array, low, high) {
+            if (low < high) {
+                var mid = partion(array, low, high);
+                console.log(arr);
+                quickSort(array, low, mid - 1);
+                quickSort(array, mid + 1, high);
+            }
+        }
+        quickSort(arr, 0, 9);
+        console.log('排序后的数组', arr);
+    </script>
+</body>
+
+</html>

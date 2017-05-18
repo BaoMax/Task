@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+    font-family: 'SimHei';
+    font-size: 14px;
+}
+
+header {
+    background-color: #4d7aff;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 30px;
+    position: relative;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    border-bottom: 1px solid #000;
+    min-height: 50px;
+    line-height: 50px;
+    padding-left: 10px;
+}
+
+.back {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+}
+
+.back span {
+    font-size: 30px;
+}

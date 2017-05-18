@@ -7,9 +7,102 @@ body,
 html {
     height: 100%;
     width: 100%;
-    min-height: 600px;
-    min-width: 1280px;
     position: relative;
+    overflow: hidden;
+}
+
+.task-detail {
+    height: 90%;
+    min-height: 540px;
+    background-color: #fff;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.slideLeft {
+    transform: translateX(-100%);
+}
+
+.slideRight {
+    transform: translateX(100%);
+}
+
+.slideRightIn {
+    animation: right2o .5s;
+}
+
+.slideLeftIn {
+    animation: left2o .5s;
+}
+
+.slideLeftOut {
+    animation: o2Left .5s;
+}
+
+.slideRightOut {
+    animation: o2Right .5s;
+}
+
+@keyframes o2Left {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes right2o {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes o2Right {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes left2o {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
+
+@media screen and (max-width:600px) {
+    .detail {
+        float: left;
+    }
+}
+
+@media screen and (min-width:600px) {
+    body,
+    html {
+        height: 100%;
+        width: 100%;
+        min-height: 600px;
+        min-width: 1280px;
+        position: relative;
+    }
+    .task-detail {
+        height: 90%;
+        min-height: 540px;
+        background-color: #fff;
+        margin-left: 462px;
+        box-sizing: border-box;
+        position: relative;
+        /*width: 100%;*/
+    }
 }
 
 header {
@@ -184,16 +277,6 @@ dd:hover>i.icon-delete {
     color: #000;
 }
 
-.task-detail {
-    height: 90%;
-    min-height: 540px;
-    background-color: #fff;
-    margin-left: 462px;
-    box-sizing: border-box;
-    position: relative;
-    /*width: 100%;*/
-}
-
 .task-detail .title {
     height: 10%;
     min-height: 50px;
@@ -248,7 +331,7 @@ i.icon-done {
     background: url(../img/done.png) no-repeat center center;
     position: absolute;
     top: 5%;
-    right: 6%;
+    right: 8%;
     margin-top: -18px;
 }
 
@@ -256,7 +339,7 @@ i.icon-edit {
     background: url(../img/edit.png) no-repeat center center;
     position: absolute;
     top: 5%;
-    right: 5%;
+    right: 8%;
     margin-top: -18px;
     margin-right: -36px;
 }
@@ -334,6 +417,14 @@ body:after {
     visibility: hidden;
 }
 
+dd:after {
+    content: "";
+    height: 0px;
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
+
 .hide {
     display: none !important;
 }
@@ -357,4 +448,8 @@ body:after {
 
 .cancel {
     background-color: #FF4351;
+}
+
+.app-adapt {
+    width: 100%;
 }
